@@ -24,7 +24,7 @@ public class CLI {
 	private void runOption(Scanner inputScanner) {
 		String userInput = inputScanner.nextLine();
 		while (!options.containsKey(userInput)) {
-			System.out.printf("Invalid option, please try again.%nPlease choose from below%n");
+			System.out.printf("Invalid option, please try again.%nPlease choose from below:%n");
 			showOptions();
 			userInput = inputScanner.nextLine();
 		}
