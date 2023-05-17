@@ -30,6 +30,7 @@ public class CLI {
 		}
 		options.get(userInput).run();
 	}
+	
 	public void run(GameEnvironment game) {
 		setupOptions();
 		game.isRunning = true;
