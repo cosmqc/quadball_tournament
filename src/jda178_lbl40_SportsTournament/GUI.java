@@ -30,6 +30,7 @@ public class GUI {
 		GameEnvironment game = new GameEnvironment();
 		GUI gui = new GUI();
 		
+		gui.game = game;
 		gui.launchGameOptions();
 	}
 }

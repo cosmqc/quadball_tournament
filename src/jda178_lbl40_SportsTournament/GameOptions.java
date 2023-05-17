@@ -7,7 +7,6 @@ import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 
-import gui.SetupScreen;
 
 import javax.swing.JTextField;
 import java.awt.Font;
@@ -50,7 +49,7 @@ public class GameOptions {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(gui.x, gui.y, gui.w, gui.h);
+		frame.setBounds(gui.x, gui.y, 900, 650);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		

@@ -3,11 +3,16 @@ package jda178_lbl40_SportsTournament;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
 
 public class BaseWindow {
 	private GUI gui;
 	private BaseWindow selfRef;
 	private JFrame frame;
+	public GameEnvironment game;
 
 	/**
 	 * Launch the application.
@@ -15,6 +20,7 @@ public class BaseWindow {
 	public BaseWindow(GUI gui) {
 		this.gui = gui;
 		this.selfRef = this;
+		this.game = gui.game;
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -32,8 +38,30 @@ public class BaseWindow {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(gui.x, gui.y, gui.w, gui.h);
+		frame.setBounds(gui.x, gui.y, 900, 650);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JLabel lblWeek = new JLabel("Week: " + String.valueOf(game.currentWeek));
+		lblWeek.setHorizontalAlignment(SwingConstants.LEFT);
+		lblWeek.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblWeek.setBounds(12, 0, 900, 44);
+		frame.getContentPane().add(lblWeek);
+		
+		JButton btnGoToShop = new JButton("Go To Shop");
+		btnGoToShop.setBounds(12, 552, 176, 44);
+		frame.getContentPane().add(btnGoToShop);
+		
+		JButton btnGoToClub = new JButton("Go To Club");
+		btnGoToClub.setBounds(200, 552, 176, 44);
+		frame.getContentPane().add(btnGoToClub);
+		
+		JButton btnGoToStadium = new JButton("Go To Stadium");
+		btnGoToStadium.setBounds(388, 552, 176, 44);
+		frame.getContentPane().add(btnGoToStadium);
+		
+		JButton btnTakeABye = new JButton("Take A Bye");
+		btnTakeABye.setBounds(576, 552, 176, 44);
+		frame.getContentPane().add(btnTakeABye);
 	}
-
 }
