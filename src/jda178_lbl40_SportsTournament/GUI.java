@@ -9,10 +9,10 @@ public class GUI {
 	public GameEnvironment game;
 	
 	public void launchGameOptions() {
-		GameOptions gameOptionWindow = new GameOptions(this);
+		GameOptionsWindow gameOptionWindow = new GameOptionsWindow(this);
 	}
 	
-	public void closeGameOptions(GameOptions gameOptionWindow) {
+	public void closeGameOptions(GameOptionsWindow gameOptionWindow) {
 		gameOptionWindow.closeWindow();
 		launchMainWindow();
 	}

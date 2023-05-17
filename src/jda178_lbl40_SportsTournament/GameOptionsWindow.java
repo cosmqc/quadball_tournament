@@ -17,9 +17,10 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class GameOptions {
+public class GameOptionsWindow {
 	private GUI gui;
-	public GameOptions selfRef;
+	private GameOptionsWindow selfRef;
+	
 	private JFrame frame;
 	private JTextField textField;
 	private JLabel lbltheLengthMust;
@@ -29,7 +30,7 @@ public class GameOptions {
 	/**
 	 * Create the application.
 	 */
-	public GameOptions(GUI gui) {
+	public GameOptionsWindow(GUI gui) {
 		this.gui = gui;
 		this.selfRef = this;
 		EventQueue.invokeLater(new Runnable() {
