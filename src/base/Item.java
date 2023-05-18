@@ -1,7 +1,5 @@
 package base;
 
-import java.util.Random;
-
 public class Item extends Purchasable {
 
 	String description;

@@ -39,11 +39,11 @@ public class GUI {
 
 	public void goToShop(BaseWindow baseWindow) {
 		baseWindow.closeWindow();
-		Shop shop = new Shop(this);
+		ShopWindow shopWindow = new ShopWindow(this);
 	}
 
-	public void returnFromShop(Shop shop) {
-		shop.closeWindow();
+	public void returnFromShop(ShopWindow shopWindow) {
+		shopWindow.closeWindow();
 		launchBaseWindow();
 	}
 
