@@ -9,7 +9,7 @@ import java.util.stream.*;
 
 enum Position { CHASER, BEATER, KEEPER, SEEKER }
 
-public class Athlete {
+public class Athlete extends Purchasable {
 	
 	public GameEnvironment game;
 	String name;

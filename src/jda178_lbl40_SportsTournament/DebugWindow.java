@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.print.Printable;
 import java.awt.event.ActionEvent;
+import java.util.Random;
 
 public class DebugWindow {
 
@@ -60,6 +61,13 @@ public class DebugWindow {
 		
 		JButton btnNewButton_2 = new JButton("Create Item");
 		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int n = new Random().nextInt(gui.game.itemList.items.length-1);
+				System.out.println(n);
+				System.out.println(gui.game.itemList.items[n]);
+			}
+		});
 		frame.getContentPane().add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("Go back ̿̿'̿'\\̵͇̿̿\\з=( ͠° ͟ʖ ͡°)=ε/̵͇̿̿/'̿̿ ̿ ̿ ̿ ̿ ̿");
