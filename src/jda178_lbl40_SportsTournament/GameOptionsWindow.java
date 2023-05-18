@@ -126,6 +126,15 @@ public class GameOptionsWindow {
 		});
 		btnNewButton.setBounds(665, 535, 176, 44);
 		frame.getContentPane().add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Debug ( im lazy :) )");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				gui.closeGameOptions(selfRef);
+			}
+		});
+		btnNewButton_1.setBounds(457, 535, 198, 44);
+		frame.getContentPane().add(btnNewButton_1);
 
 	}
 	

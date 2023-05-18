@@ -12,12 +12,26 @@ public class GUI {
 		GameOptionsWindow gameOptionWindow = new GameOptionsWindow(this);
 	}
 	
-	public void closeGameOptions(GameOptionsWindow gameOptionWindow, String teamName) {
+	public void closeGameOptions(GameOptionsWindow gameOptionWindow) {
 		gameOptionWindow.closeWindow();
-		launchMainWindow();
+		launchDebugWindow();
 	}
 	
-	public void launchMainWindow() {
+	public void launchDebugWindow() {
+		DebugWindow debugWindow = new DebugWindow(this);
+	}
+	
+	public void closeDebugWindow(DebugWindow debugWindow) {
+		debugWindow.closeWindow();
+		launchGameOptions();
+	}
+	
+	public void closeGameOptions(GameOptionsWindow gameOptionWindow, String teamName) {
+		gameOptionWindow.closeWindow();
+		launchBaseWindow();
+	}
+	
+	public void launchBaseWindow() {
 		BaseWindow baseWindow = new BaseWindow(this);
 	}
 	
@@ -28,12 +42,9 @@ public class GUI {
 	
 	public void returnFromShop(Shop shop) {
 		shop.closeWindow();
-		launchMainWindow();
+		launchBaseWindow();
 	}
-//	
-//	public void closeMainWindow() {
-//		SetupScreen gameOptionWindow = new SetupScreen();
-//	}
+
 	
 	public static void main(String[] args) {
 		// creates objects to save state, and to handle window management

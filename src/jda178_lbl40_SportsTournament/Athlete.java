@@ -28,7 +28,6 @@ public class Athlete {
 		this.defence = generateStat(1, 10);
 		this.speed = generateStat(1, 10);
 		this.stamina = this.maxStamina = generateStat(5, 10);
-		System.out.printf("Name: %s, off %d, def %d, spe %d, sta %d\n", this.name, this.offence, this.defence, this.speed, this.stamina);
     }
 	
 	public Athlete(GameEnvironment game, String name, int offence, int defence, int speed, int stamina, int maxStamina) {
@@ -40,6 +39,14 @@ public class Athlete {
         this.stamina = this.maxStamina = stamina;
     }
 	
+	public String toString() {
+		if (position != null) {
+			return String.format("Athlete %s in position %s with stats (%d, %d, %d, %d)", name, position, offence, defence, speed, stamina);
+			}
+		else {
+			return String.format("Athlete %s without a position with stats (%d, %d, %d, %d)", name, offence, defence, speed, stamina);
+			}
+	}
 	public String getName() {
         return name;
     }
