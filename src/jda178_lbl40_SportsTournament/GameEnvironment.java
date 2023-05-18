@@ -6,6 +6,7 @@ public class GameEnvironment {
 	
 	List<String> namesInUse = new ArrayList<String>();
 	boolean isRunning = true;
-	int currentWeek = 0;
-	
+	int currentWeek = 1;
+	int totalWeeks;
+
 }

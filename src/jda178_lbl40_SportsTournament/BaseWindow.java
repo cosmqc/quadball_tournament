@@ -7,6 +7,8 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class BaseWindow {
 	private GUI gui;
@@ -38,17 +40,23 @@ public class BaseWindow {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setResizable(false);
 		frame.setBounds(gui.x, gui.y, 900, 650);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblWeek = new JLabel("Week: " + String.valueOf(game.currentWeek));
+		JLabel lblWeek = new JLabel("Week: " + String.valueOf(game.currentWeek) + " of " + game.totalWeeks);
 		lblWeek.setHorizontalAlignment(SwingConstants.LEFT);
 		lblWeek.setFont(new Font("Dialog", Font.BOLD, 18));
-		lblWeek.setBounds(12, 0, 900, 44);
+		lblWeek.setBounds(12, 0, 534, 44);
 		frame.getContentPane().add(lblWeek);
 		
 		JButton btnGoToShop = new JButton("Go To Shop");
+		btnGoToShop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				gui.goToShop(selfRef);
+			}
+		});
 		btnGoToShop.setBounds(12, 552, 176, 44);
 		frame.getContentPane().add(btnGoToShop);
 		
@@ -63,5 +71,9 @@ public class BaseWindow {
 		JButton btnTakeABye = new JButton("Take A Bye");
 		btnTakeABye.setBounds(576, 552, 176, 44);
 		frame.getContentPane().add(btnTakeABye);
+	}
+	
+	public void closeWindow() {
+		frame.dispose();
 	}
 }

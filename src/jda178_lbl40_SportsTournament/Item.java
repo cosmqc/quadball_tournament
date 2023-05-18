@@ -5,8 +5,8 @@ public class Item {
 	String name;
 	String description;
 	int price;
-	// Lists effects on offence, defence and stamina respectively
-	int[] effect = new int[3];
+	// Lists effects on offence, defence, stamina and speed respectively
+	int[] effect = new int[4];
 	
 	public Item(String name, String description, int price, int[] effect) {
 		this.name = name;
