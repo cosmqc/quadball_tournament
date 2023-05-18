@@ -77,4 +77,5 @@ public class BaseWindow {
 	public void closeWindow() {
 		frame.dispose();
 	}
+	
 }

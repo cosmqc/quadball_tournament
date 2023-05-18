@@ -1,6 +1,7 @@
 package gui;
 
 import base.*;
+import javax.swing.JFrame;
 
 public class GUI {
 	public int x = 100;
@@ -9,7 +10,11 @@ public class GUI {
 	int h = 650;
 
 	public GameEnvironment game;
-
+	
+	public void refresh(JFrame frame) {
+		frame.revalidate();
+		frame.repaint();
+	}
 	public void launchGameOptions() {
 		GameOptionsWindow gameOptionWindow = new GameOptionsWindow(this);
 	}
@@ -30,6 +35,7 @@ public class GUI {
 
 	public void closeGameOptions(GameOptionsWindow gameOptionWindow, String teamName) {
 		gameOptionWindow.closeWindow();
+		game.shopManager.refreshShop(game);
 		launchBaseWindow();
 	}
 

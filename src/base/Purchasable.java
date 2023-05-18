@@ -11,12 +11,4 @@ public class Purchasable {
 	public int getPrice() {
 		return price;
 	}
-
-	// To Implement
-	public void buy() {
-	}
-
-	public void sell() {
-	}
-
 }
