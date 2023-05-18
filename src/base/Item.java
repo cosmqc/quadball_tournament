@@ -1,4 +1,6 @@
-package jda178_lbl40_SportsTournament;
+package base;
+
+import java.util.Random;
 
 public class Item extends Purchasable {
 
@@ -6,6 +8,9 @@ public class Item extends Purchasable {
 	// Lists effects on offence, defence, stamina and speed respectively
 	int[] effect = new int[4];
 	
+	public Item() {
+		
+	}
 	public Item(String name, int[] effect, int price, String description) {
 		this.name = name;
 		this.effect = effect;

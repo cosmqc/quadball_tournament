@@ -1,4 +1,4 @@
-package jda178_lbl40_SportsTournament;
+package base;
 
 import java.awt.EventQueue;
 
@@ -6,6 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
+import gui.GUI;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;

@@ -1,13 +1,12 @@
-package jda178_lbl40_SportsTournament;
+package gui;
 
+import base.*;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
-
-
 import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.JSlider;
@@ -120,7 +119,7 @@ public class GameOptionsWindow {
 		JButton btnNewButton = new JButton("LETS GO!!");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				gui.game.totalWeeks = slider.getValue();
+				gui.game.setTotalWeeks(slider.getValue());
 				gui.closeGameOptions(selfRef,lblWhatIsYour.getText());
 			}
 		});

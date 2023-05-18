@@ -1,5 +1,6 @@
-package jda178_lbl40_SportsTournament;
+package gui;
 
+import base.*;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -45,7 +46,7 @@ public class BaseWindow {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblWeek = new JLabel("Week: " + String.valueOf(game.currentWeek) + " of " + game.totalWeeks);
+		JLabel lblWeek = new JLabel("Week: " + String.valueOf(game.getCurrentWeek()) + " of " + game.getTotalWeeks());
 		lblWeek.setHorizontalAlignment(SwingConstants.LEFT);
 		lblWeek.setFont(new Font("Dialog", Font.BOLD, 18));
 		lblWeek.setBounds(12, 0, 534, 44);

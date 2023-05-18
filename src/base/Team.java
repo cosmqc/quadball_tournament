@@ -1,4 +1,4 @@
-package jda178_lbl40_SportsTournament;
+package base;
 
 import java.util.List;
 

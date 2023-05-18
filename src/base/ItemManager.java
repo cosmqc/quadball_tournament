@@ -1,9 +1,14 @@
-package jda178_lbl40_SportsTournament;
+package base;
 
-public class ItemList {
+import java.util.Random;
+
+public class ItemManager {
 	public Item[] items;
+	GameEnvironment game;
 	
-	public ItemList() {
+	public ItemManager(GameEnvironment game) {
+		this.game = game;
+		
 		items = new Item[64];
 	
 		items[0] = new Item("Rocket Shoes", new int[]{1, 0, 1, 0}, 3, "Zoom into the sky!");
@@ -70,5 +75,10 @@ public class ItemList {
 		items[61] = new Item("Swift Boots", new int[]{0, 0, 2, -1}, 5, "Gain swift movement with specialized boots!");
 		items[62] = new Item("Energy Sword", new int[]{1, 0, 0, 1}, 6, "Wield a sword infused with energy!");
 		items[63] = new Item("Stealth Helm", new int[]{0, 0, 0, 2}, 9, "Become stealthy with a specialized helmet!");
+	}
+	
+	public Item randomItem() {
+		int n = new Random().nextInt(items.length);
+		return items[n];
 	}
 }
