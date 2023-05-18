@@ -12,12 +12,12 @@ public class ItemList {
 		items[3] = new Item("Turbo Ball", new int[]{0, 0, 1, 1}, 4, "Speed up your throws!");
 		items[4] = new Item("Shield Barrier", new int[]{-1, 2, 0, 0}, 8, "Defend like a fortress!");
 		items[5] = new Item("Agility Band", new int[]{0, 0, 1, 1}, 5, "Enhance your agility!");
-		items[6] = new Item("Precision Arrow", new int[]{1, -1, 0, 1}, 6, "Hit your mark with precision!");
+		items[6] = new Item("Precision Goggles", new int[]{1, -1, 0, 1}, 6, "Hit your mark with precision!");
 		items[7] = new Item("Lightning Boots", new int[]{0, 0, 2, -1}, 5, "Run as fast as lightning!");
 		items[8] = new Item("Force Field", new int[]{1, 1, -1, 0}, 7, "Create an impenetrable barrier!");
 		items[9] = new Item("Boost Pad", new int[]{0, 0, 2, 0}, 3, "Get an instant speed boost!");
 		items[10] = new Item("Sticky Gloves", new int[]{0, 1, 0, 1}, 4, "Improve your grip!");
-		items[11] = new Item("Time Freeze", new int[]{0, 1, 0, -1}, 6, "Temporarily freeze time!");
+		items[11] = new Item("Time Freeze", new int[]{0, 1, 0, -1}, 6, "Insane reaction time!");
 		items[12] = new Item("Berserker Helm", new int[]{1, 0, 0, 1}, 6, "Tap into your berserker rage!");
 		items[13] = new Item("Super Whistle", new int[]{1, 1, -1, 0}, 5, "Command ultimate attention!");
 		items[14] = new Item("Stealth Cloak", new int[]{0, 0, 0, 2}, 7, "Become invisible to the opponent!");
