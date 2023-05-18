@@ -15,6 +15,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ButtonGroup;
 
 public class GameOptions {
 	private GUI gui;
@@ -24,6 +25,7 @@ public class GameOptions {
 	private JLabel lbltheLengthMust;
 	private JLabel lblHowLongWould;
 	private JLabel lblPleaseChooseA;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	/**
 	 * Create the application.
@@ -49,6 +51,7 @@ public class GameOptions {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setResizable(false);
 		frame.setBounds(gui.x, gui.y, 900, 650);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -100,21 +103,24 @@ public class GameOptions {
 		lblPleaseChooseA.setVerticalAlignment(SwingConstants.TOP);
 		lblPleaseChooseA.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPleaseChooseA.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblPleaseChooseA.setBounds(10, 177, 448, 44);
+		lblPleaseChooseA.setBounds(10, 177, 448, 26);
 		frame.getContentPane().add(lblPleaseChooseA);
 		
 		JRadioButton rdbtnEasy = new JRadioButton("Easy");
+		buttonGroup.add(rdbtnEasy);
 		rdbtnEasy.setBounds(20, 199, 149, 23);
 		frame.getContentPane().add(rdbtnEasy);
 		
 		JRadioButton rdbtnHard = new JRadioButton("Hard");
+		buttonGroup.add(rdbtnHard);
 		rdbtnHard.setBounds(20, 229, 149, 23);
 		frame.getContentPane().add(rdbtnHard);
 		
 		JButton btnNewButton = new JButton("LETS GO!!");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				gui.closeGameOptions(selfRef);
+				gui.game.totalWeeks = slider.getValue();
+				gui.closeGameOptions(selfRef,lblWhatIsYour.getText());
 			}
 		});
 		btnNewButton.setBounds(665, 535, 176, 44);

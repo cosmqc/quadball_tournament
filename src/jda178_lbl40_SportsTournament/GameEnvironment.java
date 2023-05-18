@@ -4,9 +4,10 @@ public class GameEnvironment {
 	
 	boolean isRunning;
 	int currentWeek;
+	int totalWeeks;
 	
 	public GameEnvironment() {
 		isRunning = true;
-		currentWeek = 0;
+		currentWeek = 1;
 	}
 }

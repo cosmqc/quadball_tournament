@@ -12,13 +12,23 @@ public class GUI {
 		GameOptions gameOptionWindow = new GameOptions(this);
 	}
 	
-	public void closeGameOptions(GameOptions gameOptionWindow) {
+	public void closeGameOptions(GameOptions gameOptionWindow, String teamName) {
 		gameOptionWindow.closeWindow();
 		launchMainWindow();
 	}
 	
 	public void launchMainWindow() {
 		BaseWindow baseWindow = new BaseWindow(this);
+	}
+	
+	public void goToShop(BaseWindow baseWindow) {
+		baseWindow.closeWindow();
+		Shop shop = new Shop(this);
+	}
+	
+	public void returnFromShop(Shop shop) {
+		shop.closeWindow();
+		launchMainWindow();
 	}
 //	
 //	public void closeMainWindow() {
