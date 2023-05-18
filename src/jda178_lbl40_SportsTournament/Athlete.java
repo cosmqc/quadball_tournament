@@ -4,36 +4,46 @@ import java.util.Random;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.*;
 
-public class Athlete {
+enum Position { CHASER, BEATER, KEEPER, SEEKER }
 
+public class Athlete {
+	
+	public GameEnvironment game;
 	String name;
-	String position;
+	String nickname = null;
+	Position position;
 	int offence;
 	int defence;
+	int speed;
 	int stamina;
 	int maxStamina;
 	
-	public Athlete() {
-		this.name = generateName();
+	public Athlete(GameEnvironment game) {
+		this.game = game;
+		this.name = generateValidName();
+		this.offence = generateStat(1, 10);
+		this.defence = generateStat(1, 10);
+		this.speed = generateStat(1, 10);
+		this.stamina = this.maxStamina = generateStat(5, 10);
+		System.out.printf("Name: %s, off %d, def %d, spe %d, sta %d\n", this.name, this.offence, this.defence, this.speed, this.stamina);
     }
 	
-	public Athlete(String name, String position, int offence, int defence, int stamina, int maxStamina) {
-        this.name = name;
-        this.position = position;
+	public Athlete(GameEnvironment game, String name, int offence, int defence, int speed, int stamina, int maxStamina) {
+        this.game = game;
+		this.name = name;
         this.offence = offence;
         this.defence = defence;
-        this.stamina = stamina;
-        this.maxStamina = maxStamina;
+        this.speed = speed;
+        this.stamina = this.maxStamina = stamina;
     }
 	
 	public String getName() {
         return name;
     }
-	public String getPosition() {
+	public Position getPosition() {
 		return position;
 	}
 	public int getOffence() {
@@ -70,9 +80,17 @@ public class Athlete {
 	    }
 		return line;
 	}
+	private String generateValidName() {
+		String name = generateName();
+		while (game.namesInUse.contains(name)) {
+			name = generateName();
+		}
+		game.namesInUse.add(name);
+		return name;
+	}
 	
-	public static void main(String[] args) {
-		Athlete joe = new Athlete();
-		System.out.println(joe.name);
+	private int generateStat(int lower, int upper) {
+		int stat = new Random().nextInt(lower, upper);
+		return stat;
 	}
 }

@@ -120,6 +120,7 @@ public class GameOptionsWindow {
 		});
 		btnNewButton.setBounds(665, 535, 176, 44);
 		frame.getContentPane().add(btnNewButton);
+
 	}
 	
 	public void closeWindow() {
