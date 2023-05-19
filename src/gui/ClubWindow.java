@@ -25,7 +25,6 @@ public class ClubWindow {
 	private GUI gui;
 	private ClubWindow selfRef;
 	private JFrame frame;
-	public GameEnvironment game;
 
 	/**
 	 * Launch the application.
@@ -33,7 +32,6 @@ public class ClubWindow {
 	public ClubWindow(GUI gui) {
 		this.gui = gui;
 		this.selfRef = this;
-		this.game = gui.game;
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -71,7 +69,7 @@ public class ClubWindow {
 		frame.getContentPane().add(tabbedPane);
 		
 		DefaultListModel<Athlete> athleteTeamModel = new DefaultListModel<>();
-		athleteTeamModel.addAll(game.athletesInTeam);
+		athleteTeamModel.addAll(gui.game.athletesInTeam);
 		
 		JPanel viewPanel = new JPanel();
 		tabbedPane.addTab("View Team", null, viewPanel, null);
@@ -106,13 +104,10 @@ public class ClubWindow {
 		
 		athleteTeamList.addListSelectionListener(new ListSelectionListener() {
 
-            public void valueChanged(ListSelectionEvent selectedAthlete) {
-                if (!selectedAthlete.getValueIsAdjusting()) {
-                	Athlete athleteInfo = athleteTeamList.getSelectedValue();
-                	//TODO: list equipped item??
-                	//TODO: Athlete.getEquipped() will return the item they're holding or null if its empty
-                	txtpnInfo.setText(String.format("Name: %s \nOffence: %s \nDefence: %s \nSpeed: %s \nStamina: %s/%s",
-                			athleteInfo.getName(),athleteInfo.getOffence(),athleteInfo.getDefence(),athleteInfo.getSpeed(),athleteInfo.getStamina(),athleteInfo.getRawStamina()));
+            public void valueChanged(ListSelectionEvent selection) {
+                if (!selection.getValueIsAdjusting()) {
+                	Athlete selectedAthlete = athleteTeamList.getSelectedValue();
+                	txtpnInfo.setText(selectedAthlete.toClubString());
                 }
             }
         });
@@ -131,7 +126,11 @@ public class ClubWindow {
 					JOptionPane.showMessageDialog(frame, "Please select an athlete to sub out", "No Athlete Selected",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
-					//TODO: Sub out athlete. Is this a Team.java?
+					Athlete athlete = athleteTeamList.getSelectedValue();
+//					String error = gui.game.playerTeam.sub(athlete);
+//					if (error != null) {
+//						// TODO: display error. backend sub will not have gone through but that needs to be shown to the player
+//					}
 				}
 			}
 		});
@@ -145,7 +144,11 @@ public class ClubWindow {
 					JOptionPane.showMessageDialog(frame, "Please select an athlete to sub in", "No Athlete Selected",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
-					//TODO: Sub in athlete. Is this a Team.java?
+					Athlete athlete = athleteReserveList.getSelectedValue();
+//					String error = gui.game.playerTeam.sub(athlete);
+//					if (error != null) {
+//						// TODO: display error. backend sub will not have gone through but that needs to be shown to the player
+//					}
 				}
 			}
 		});
@@ -163,7 +166,7 @@ public class ClubWindow {
 		inventoryPanel.add(lblItemsOwned);
 		
 		DefaultListModel<Item> inventoryModel = new DefaultListModel<>();
-		inventoryModel.addAll(game.itemsInInventory);
+		inventoryModel.addAll(gui.game.itemsInInventory);
 		
 		JList<Item> itemList = new JList<Item>(inventoryModel);
 		itemList.setBounds(10, 51, 300, 250);

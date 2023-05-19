@@ -4,7 +4,10 @@ public class Item extends Purchasable {
 	GameEnvironment game;
 	String description;
 	Athlete equippedTo;
-	
+	public int offence;
+	public int defence;
+	public int speed;
+	public int stamina;
 	// Lists effects on offence, defence, stamina and speed respectively
 	int[] effect = new int[4];
 
@@ -12,6 +15,10 @@ public class Item extends Purchasable {
 		this.game = game;
 		this.name = name;
 		this.effect = effect;
+		this.offence = effect[0];
+		this.defence = effect[1];
+		this.speed = effect[2];
+		this.stamina = effect[3];
 		this.price = price;
 		this.description = description;
 	}

@@ -8,7 +8,7 @@ public class GameEnvironment {
 	public List<String> namesInUse = new ArrayList<String>();
 	public List<String> teamsInUse = new ArrayList<String>();
 	
-	// Item and Shop use Random, so Random must be on the top.
+	// Random gets referenced by the others, so Random must be on the top.
 	public RandomManager randomManager = new RandomManager(this);
 	public ItemManager itemManager = new ItemManager(this);
 	public ShopManager shopManager = new ShopManager(this);

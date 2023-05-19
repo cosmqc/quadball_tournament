@@ -32,6 +32,7 @@ public class Athlete extends Purchasable {
 		this.defence = generateStat(1, 10);
 		this.speed = generateStat(1, 10);
 		this.stamina = this.maxStamina = generateStat(5, 10);
+		this.equippedItem = game.itemManager.randomItem();
 	}
 
 	public Athlete(GameEnvironment game, String name, int offence, int defence, int speed, int stamina,
@@ -93,6 +94,11 @@ public class Athlete extends Purchasable {
 	public int getRawStamina() {
 		return stamina;
 	}
+	
+	public int getRawMaxStamina() {
+		return stamina;
+	}
+	
 
 	public int getOffence() {
 		int item_val = 0;
@@ -124,6 +130,10 @@ public class Athlete extends Purchasable {
 			item_val = getEquippedItem().effect[3];
 		}
 		return Math.max(0, getRawStamina() + item_val);
+	}
+	
+	public int getMaxStamina() {
+		return maxStamina;
 	}
 
 	public void decreaseStamina(int staminaLoss) {
@@ -165,5 +175,38 @@ public class Athlete extends Purchasable {
 		// something
 		System.out.println(String.format("%s - Sell Athlete", name));
 		game.athletesInTeam.remove(this);
+	}
+	
+	public String toClubString() {
+		String text = "";
+		text += "Name: " + getName();
+		text += "\nOffence: " + getOffence();
+		if (getOffence() != getRawOffence()) {
+			text += " (";
+			if (equippedItem.offence > 0) { text += "+"; }
+			text += equippedItem.offence + ")";
+		}
+		text += "\nDefence: " + getDefence();
+		if (getDefence() != getRawDefence()) {
+			text += " (";
+			if (equippedItem.defence > 0) { text += "+"; }
+			text += equippedItem.defence + ")";
+		}
+		text += "\nSpeed: " + getSpeed();
+		if (getSpeed() != getRawSpeed()) {
+			text += " (";
+			if (equippedItem.speed > 0) { text += "+"; }
+			text += equippedItem.speed + ")";
+		}
+		text += "\nStamina: " + getStamina() + "/" + getMaxStamina();
+		if (getStamina() != getRawStamina()) {
+			text += " (";
+			if (equippedItem.stamina > 0) { text += "+"; }
+			text += equippedItem.stamina + ")";
+		}
+		text += "\n\nEquipped Item: " + equippedItem.name;
+		text += "\n" + equippedItem.description;
+		return text;
+//		Name: %s \nOffence: %s \nDefence: %s \nSpeed: %s \nStamina: %s/%s"
 	}
 }
