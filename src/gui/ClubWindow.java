@@ -80,20 +80,21 @@ public class ClubWindow {
 		JLabel lblAthletesInTeam = new JLabel("Athletes In Team");
 		lblAthletesInTeam.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAthletesInTeam.setFont(new Font("Dialog", Font.BOLD, 18));
-		lblAthletesInTeam.setBounds(10, 12, 300, 44);
+		lblAthletesInTeam.setBounds(10, 10, 300, 44);
 		viewPanel.add(lblAthletesInTeam);
+		
 		JList<Athlete> athleteTeamList = new JList<Athlete>(athleteTeamModel);
-		athleteTeamList.setBounds(20, 53, 300, 250);
+		athleteTeamList.setBounds(10, 53, 300, 250);
 		viewPanel.add(athleteTeamList);
 		
 		JLabel lblAthletesInReserve = new JLabel("Athletes In Reserve");
 		lblAthletesInReserve.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAthletesInReserve.setFont(new Font("Dialog", Font.BOLD, 18));
-		lblAthletesInReserve.setBounds(10, 313, 310, 44);
+		lblAthletesInReserve.setBounds(10, 313, 300, 44);
 		viewPanel.add(lblAthletesInReserve);
 		
 		JList<Athlete> athleteReserveList = new JList<Athlete>();
-		athleteReserveList.setBounds(20, 356, 300, 150);
+		athleteReserveList.setBounds(10, 356, 300, 150);
 		viewPanel.add(athleteReserveList);
 		
 		JTextPane txtpnInfo = new JTextPane();
@@ -102,11 +103,13 @@ public class ClubWindow {
 		txtpnInfo.setBounds(550, 53, 300, 250);
 		viewPanel.add(txtpnInfo);
 		txtpnInfo.setText("No Athlete Selected");
+		
 		athleteTeamList.addListSelectionListener(new ListSelectionListener() {
 
-            public void valueChanged(ListSelectionEvent selectedItem) {
-                if (!selectedItem.getValueIsAdjusting()) {
+            public void valueChanged(ListSelectionEvent selectedAthlete) {
+                if (!selectedAthlete.getValueIsAdjusting()) {
                 	Athlete athleteInfo = athleteTeamList.getSelectedValue();
+                	//TODO: list equipped item??
                 	txtpnInfo.setText(String.format("Name: %s \nOffence: %s \nDefence: %s \nSpeed: %s \nStamina: %s/%s",
                 			athleteInfo.getName(),athleteInfo.getOffence(),athleteInfo.getDefence(),athleteInfo.getSpeed(),athleteInfo.getStamina(),athleteInfo.getRawStamina()));
                 }
@@ -117,7 +120,7 @@ public class ClubWindow {
 		JLabel lblAthleteInfo = new JLabel("Athlete Info");
 		lblAthleteInfo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAthleteInfo.setFont(new Font("Dialog", Font.BOLD, 18));
-		lblAthleteInfo.setBounds(494, 12, 357, 44);
+		lblAthleteInfo.setBounds(550, 12, 301, 44);
 		viewPanel.add(lblAthleteInfo);
 		
 		JButton btnSubOut = new JButton("Sub Out");
@@ -131,7 +134,7 @@ public class ClubWindow {
 				}
 			}
 		});
-		btnSubOut.setBounds(330, 258, 97, 44);
+		btnSubOut.setBounds(320, 258, 97, 44);
 		viewPanel.add(btnSubOut);
 		
 		JButton btnSubIn = new JButton("Sub In");
@@ -145,12 +148,68 @@ public class ClubWindow {
 				}
 			}
 		});
-		btnSubIn.setBounds(330, 462, 97, 44);
+		btnSubIn.setBounds(320, 462, 97, 44);
 		viewPanel.add(btnSubIn);
 		
 		JPanel inventoryPanel = new JPanel();
 		tabbedPane.addTab("Inventory", null, inventoryPanel, null);
 		inventoryPanel.setLayout(null);
+		
+		JLabel lblItemsOwned = new JLabel("Items Owned");
+		lblItemsOwned.setHorizontalAlignment(SwingConstants.CENTER);
+		lblItemsOwned.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblItemsOwned.setBounds(10, 10, 300, 44);
+		inventoryPanel.add(lblItemsOwned);
+		
+		DefaultListModel<Item> inventoryModel = new DefaultListModel<>();
+		inventoryModel.addAll(game.itemsInInventory);
+		
+		JList<Item> itemList = new JList<Item>(inventoryModel);
+		itemList.setBounds(10, 51, 300, 250);
+		inventoryPanel.add(itemList);
+		
+		JTextPane txtpnItemInfo = new JTextPane();
+		txtpnItemInfo.setText("No Item Selected");
+		txtpnItemInfo.setFont(new Font("Dialog", Font.PLAIN, 18));
+		txtpnItemInfo.setEditable(false);
+		txtpnItemInfo.setBounds(550, 53, 300, 250);
+		inventoryPanel.add(txtpnItemInfo);
+		
+		itemList.addListSelectionListener(new ListSelectionListener() {
+
+            public void valueChanged(ListSelectionEvent selectedItem) {
+                if (!selectedItem.getValueIsAdjusting()) {
+                	Item itemInfo = itemList.getSelectedValue();
+                	txtpnItemInfo.setText(String.format("Name: %s \n%s \nEffects: \nOffence: %s\nDefence: %s\nSpeed: %s\nStamina: %s",
+                			itemInfo.getName(),itemInfo.getDescription(),itemInfo.getEffect()[0],itemInfo.getEffect()[1],itemInfo.getEffect()[2],itemInfo.getEffect()[3]));
+                }
+            }
+        });
+		
+		JLabel lblItemInfo = new JLabel("Item Info");
+		lblItemInfo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblItemInfo.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblItemInfo.setBounds(549, 10, 301, 44);
+		inventoryPanel.add(lblItemInfo);
+		
+		JButton btnUseItem = new JButton("Use Item On...");
+		btnUseItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (itemList.getSelectedValue() == null) {
+					JOptionPane.showMessageDialog(frame, "Please select an item to use", "No Item Selected",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+					Athlete athleteChosen = (Athlete) JOptionPane.showInputDialog(frame, "Which athlete would you like to give the item to?", "Use Item", JOptionPane.PLAIN_MESSAGE,
+		                    null, athleteTeamModel.toArray(), null);
+					if(athleteChosen != null) {
+						athleteChosen.equipItem(itemList.getSelectedValue());
+					}
+				}
+			}
+		});
+		btnUseItem.setBounds(320, 257, 97, 44);
+		inventoryPanel.add(btnUseItem);
+		
 		
 		
 		

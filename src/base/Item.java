@@ -13,6 +13,10 @@ public class Item extends Purchasable {
 		this.price = price;
 		this.description = description;
 	}
+	
+	public String getName() {
+		return name;
+	}
 
 	public String getDescription() {
 		return description;
