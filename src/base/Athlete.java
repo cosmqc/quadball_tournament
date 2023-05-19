@@ -179,6 +179,7 @@ public class Athlete extends Purchasable {
 	
 	public void sell() {
 		// TODO: Currently, if an athlete is drafted to shop, they cannot be bought back. Thoughts?
+		// could add them to be bought back, but increase their price by 25% or something
 		System.out.println(String.format("%s - Sell Athlete", name));
 		game.athletesInTeam.remove(this);
 	}

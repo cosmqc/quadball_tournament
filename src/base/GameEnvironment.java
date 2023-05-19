@@ -11,6 +11,9 @@ public class GameEnvironment {
 	boolean isRunning = true;
 	int currentWeek = 1;
 	int totalWeeks;
+	
+	public int playerMoney = 200;
+	public int playerPoints = 0;
 
 	// inventory state
 	public List<Athlete> athletesInTeam = new ArrayList<Athlete>();

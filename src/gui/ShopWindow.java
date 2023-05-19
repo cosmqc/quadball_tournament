@@ -24,7 +24,9 @@ public class ShopWindow {
 	private GUI gui;
 	private ShopWindow selfRef;
 	public GameEnvironment game;
-
+	
+	private JLabel lblBuyMoneyDisplay;
+	private JLabel lblSellMoneyDisplay;
 	/**
 	 * Launch the application.
 	 */
@@ -68,27 +70,27 @@ public class ShopWindow {
 		tabbedPane.setFont(new Font("Dialog", Font.BOLD, 18));
 		frame.getContentPane().add(tabbedPane);
 
-		JPanel panel = new JPanel();
-		tabbedPane.addTab("Buy", null, panel, null);
-		panel.setLayout(null);
+		JPanel buyPanel = new JPanel();
+		tabbedPane.addTab("Buy", null, buyPanel, null);
+		buyPanel.setLayout(null);
 
 		JLabel lblAthletesForSale = new JLabel("Athletes For Sale");
 		lblAthletesForSale.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAthletesForSale.setFont(new Font("Dialog", Font.BOLD, 18));
 		lblAthletesForSale.setBounds(10, 12, 357, 44);
-		panel.add(lblAthletesForSale);
+		buyPanel.add(lblAthletesForSale);
 
 		JLabel lblItemsForSale = new JLabel("Items For Sale");
 		lblItemsForSale.setHorizontalAlignment(SwingConstants.CENTER);
 		lblItemsForSale.setFont(new Font("Dialog", Font.BOLD, 18));
 		lblItemsForSale.setBounds(377, 12, 357, 44);
-		panel.add(lblItemsForSale);
+		buyPanel.add(lblItemsForSale);
 
 		DefaultListModel<Athlete> buyAthleteListModel = new DefaultListModel<>();
 		buyAthleteListModel.addAll(game.shopManager.athletesInShop);
 		JList<Athlete> athleteBuyList = new JList<Athlete>(buyAthleteListModel);
 		athleteBuyList.setBounds(20, 55, 357, 355);
-		panel.add(athleteBuyList);
+		buyPanel.add(athleteBuyList);
 
 		JButton btnBuyAthlete = new JButton("Buy Athlete");
 		btnBuyAthlete.addActionListener(new ActionListener() {
@@ -109,13 +111,13 @@ public class ShopWindow {
 			}
 		});
 		btnBuyAthlete.setBounds(95, 420, 176, 44);
-		panel.add(btnBuyAthlete);
+		buyPanel.add(btnBuyAthlete);
 
 		DefaultListModel<Item> buyItemListModel = new DefaultListModel<>();
 		buyItemListModel.addAll(game.shopManager.itemsInShop);
 		JList<Item> itemBuyList = new JList<Item>(buyItemListModel);
 		itemBuyList.setBounds(387, 55, 357, 355);
-		panel.add(itemBuyList);
+		buyPanel.add(itemBuyList);
 
 		JButton btnBuyItem = new JButton("Buy Item");
 		btnBuyItem.addActionListener(new ActionListener() {
@@ -134,35 +136,40 @@ public class ShopWindow {
 			}
 		});
 		btnBuyItem.setBounds(496, 420, 176, 44);
-		panel.add(btnBuyItem);
-
-		JPanel panel2 = new JPanel();
-		tabbedPane.addTab("Sell", null, panel2, null);
-		panel2.setLayout(null);
+		buyPanel.add(btnBuyItem);
+		
+		lblBuyMoneyDisplay = new JLabel(String.format("Money: $%d", game.playerMoney));
+		lblBuyMoneyDisplay.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblBuyMoneyDisplay.setBounds(20, 509, 161, 38);
+		buyPanel.add(lblBuyMoneyDisplay);
+		
+		JPanel sellPanel = new JPanel();
+		tabbedPane.addTab("Sell", null, sellPanel, null);
+		sellPanel.setLayout(null);
 
 		JLabel lblAthletesOwned = new JLabel("Athletes Owned");
 		lblAthletesOwned.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAthletesOwned.setFont(new Font("Dialog", Font.BOLD, 18));
 		lblAthletesOwned.setBounds(10, 10, 357, 44);
-		panel2.add(lblAthletesOwned);
+		sellPanel.add(lblAthletesOwned);
 
 		DefaultListModel<Athlete> sellAthleteListModel = new DefaultListModel<>();
 		sellAthleteListModel.addAll(game.athletesInTeam);
 		JList<Athlete> athleteSellList = new JList<Athlete>(sellAthleteListModel);
 		athleteSellList.setBounds(20, 53, 357, 355);
-		panel2.add(athleteSellList);
+		sellPanel.add(athleteSellList);
 
 		DefaultListModel<Item> sellItemListModel = new DefaultListModel<>();
 		sellItemListModel.addAll(game.itemsInInventory);
 		JList<Item> itemSellList = new JList<Item>(sellItemListModel);
 		itemSellList.setBounds(387, 53, 357, 355);
-		panel2.add(itemSellList);
+		sellPanel.add(itemSellList);
 
 		JLabel lblItemsOwned = new JLabel("Items Owned");
 		lblItemsOwned.setHorizontalAlignment(SwingConstants.CENTER);
 		lblItemsOwned.setFont(new Font("Dialog", Font.BOLD, 18));
 		lblItemsOwned.setBounds(377, 10, 357, 44);
-		panel2.add(lblItemsOwned);
+		sellPanel.add(lblItemsOwned);
 
 		JButton btnSellAthlete = new JButton("Sell Athlete");
 		btnSellAthlete.addActionListener(new ActionListener() {
@@ -181,7 +188,7 @@ public class ShopWindow {
 			}
 		});
 		btnSellAthlete.setBounds(95, 418, 176, 44);
-		panel2.add(btnSellAthlete);
+		sellPanel.add(btnSellAthlete);
 
 		JButton btnSellItem = new JButton("Sell Item");
 		btnSellItem.addActionListener(new ActionListener() {
@@ -200,7 +207,12 @@ public class ShopWindow {
 			}
 		});
 		btnSellItem.setBounds(496, 418, 176, 44);
-		panel2.add(btnSellItem);
+		sellPanel.add(btnSellItem);
+		
+		lblSellMoneyDisplay = new JLabel(String.format("Money: $%d", game.playerMoney));
+		lblSellMoneyDisplay.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblSellMoneyDisplay.setBounds(20, 509, 161, 38);
+		sellPanel.add(lblSellMoneyDisplay);
 		
 		// refreshes all lists on tab change.
 		tabbedPane.addChangeListener(new ChangeListener() {
@@ -219,26 +231,35 @@ public class ShopWindow {
 	}
 
 	public void refreshBuyAthlete(DefaultListModel<Athlete> list) {
+		refreshMoneyLabels();
 		list.removeAllElements();
 		list.addAll(game.shopManager.athletesInShop);
 		frame.repaint();
 	}
 
 	public void refreshBuyItem(DefaultListModel<Item> list) {
+		refreshMoneyLabels();
 		list.removeAllElements();
 		list.addAll(game.shopManager.itemsInShop);
 		frame.repaint();
 	}
 	
 	public void refreshSellAthlete(DefaultListModel<Athlete> list) {
+		refreshMoneyLabels();
 		list.removeAllElements();
 		list.addAll(game.athletesInTeam);
 		frame.repaint();
 	}
 
 	public void refreshSellItem(DefaultListModel<Item> list) {
+		refreshMoneyLabels();
 		list.removeAllElements();
 		list.addAll(game.itemsInInventory);
 		frame.repaint();
+	}
+	
+	public void refreshMoneyLabels() {
+		lblBuyMoneyDisplay.setText(String.format("Money: $%d", game.playerMoney));
+		lblSellMoneyDisplay.setText(String.format("Money: $%d", game.playerMoney));
 	}
 }
