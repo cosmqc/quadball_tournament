@@ -59,7 +59,7 @@ public class ShopWindow {
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				gui.returnFromShop(selfRef);
+				gui.closeShopWindow(selfRef);
 			}
 		});
 		btnBack.setBounds(682, 552, 176, 44);

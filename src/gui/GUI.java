@@ -43,12 +43,12 @@ public class GUI {
 		BaseWindow baseWindow = new BaseWindow(this);
 	}
 
-	public void goToShop(BaseWindow baseWindow) {
+	public void launchShopWindow(BaseWindow baseWindow) {
 		baseWindow.closeWindow();
 		ShopWindow shopWindow = new ShopWindow(this);
 	}
 
-	public void returnFromShop(ShopWindow shopWindow) {
+	public void closeShopWindow(ShopWindow shopWindow) {
 		shopWindow.closeWindow();
 		launchBaseWindow();
 	}
