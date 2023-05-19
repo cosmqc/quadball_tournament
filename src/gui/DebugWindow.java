@@ -86,6 +86,15 @@ public class DebugWindow {
 			}
 		});
 		frame.getContentPane().add(btnNewButton_3);
+		
+		JButton btnNewButton_5 = new JButton("Random Team");
+		btnNewButton_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Team team = new Team(gui.game);
+			}
+		});
+		btnNewButton_5.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		frame.getContentPane().add(btnNewButton_5);
 	}
 
 	public void closeWindow() {

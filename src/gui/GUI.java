@@ -10,11 +10,12 @@ public class GUI {
 	int h = 650;
 
 	public GameEnvironment game;
-	
+
 	public void refresh(JFrame frame) {
 		frame.revalidate();
 		frame.repaint();
 	}
+
 	public void launchGameOptions() {
 		GameOptionsWindow gameOptionWindow = new GameOptionsWindow(this);
 	}
@@ -52,7 +53,7 @@ public class GUI {
 		shopWindow.closeWindow();
 		launchBaseWindow();
 	}
-	
+
 	public void launchClubWindow(BaseWindow baseWindow) {
 		baseWindow.closeWindow();
 		ClubWindow clubWindow = new ClubWindow(this);
@@ -62,7 +63,7 @@ public class GUI {
 		clubWindow.closeWindow();
 		launchBaseWindow();
 	}
-	
+
 	public static void main(String[] args) {
 		// creates objects to save state, and to handle window management
 		GameEnvironment game = new GameEnvironment();

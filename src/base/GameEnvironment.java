@@ -6,15 +6,23 @@ import java.util.ArrayList;
 public class GameEnvironment {
 
 	public List<String> namesInUse = new ArrayList<String>();
+	public List<String> teamsInUse = new ArrayList<String>();
+	
+	// Item and Shop use Random, so Random must be on the top.
+	public RandomManager randomManager = new RandomManager(this);
 	public ItemManager itemManager = new ItemManager(this);
 	public ShopManager shopManager = new ShopManager(this);
+
 	boolean isRunning = true;
 	int currentWeek = 1;
 	int totalWeeks;
-	
+	int numPlayers = 4;
+	int numBench = 2;
+
 	public int playerMoney = 200;
 	public int playerPoints = 0;
-
+	public Team playerTeam;
+	
 	// inventory state
 	public List<Athlete> athletesInTeam = new ArrayList<Athlete>();
 	public List<Item> itemsInInventory = new ArrayList<Item>();

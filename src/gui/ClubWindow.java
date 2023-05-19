@@ -110,6 +110,7 @@ public class ClubWindow {
                 if (!selectedAthlete.getValueIsAdjusting()) {
                 	Athlete athleteInfo = athleteTeamList.getSelectedValue();
                 	//TODO: list equipped item??
+                	//TODO: Athlete.getEquipped() will return the item they're holding or null if its empty
                 	txtpnInfo.setText(String.format("Name: %s \nOffence: %s \nDefence: %s \nSpeed: %s \nStamina: %s/%s",
                 			athleteInfo.getName(),athleteInfo.getOffence(),athleteInfo.getDefence(),athleteInfo.getSpeed(),athleteInfo.getStamina(),athleteInfo.getRawStamina()));
                 }

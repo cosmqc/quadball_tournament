@@ -257,7 +257,7 @@ public class ShopWindow {
 		list.addAll(game.itemsInInventory);
 		frame.repaint();
 	}
-	
+
 	public void refreshMoneyLabels() {
 		lblBuyMoneyDisplay.setText(String.format("Money: $%d", game.playerMoney));
 		lblSellMoneyDisplay.setText(String.format("Money: $%d", game.playerMoney));

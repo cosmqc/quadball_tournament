@@ -44,30 +44,11 @@ public class Athlete extends Purchasable {
 		this.stamina = this.maxStamina = stamina;
 	}
 
-	private String generateName() {
-		String line = "";
-		try (Stream<String> firstnames = Files.lines(Paths.get("src/resources/firstnames"));
-				Stream<String> lastnames = Files.lines(Paths.get("src/resources/lastnames"))) {
 
-			int firstN = new Random().nextInt(2739);
-			line += firstnames.skip(firstN).findFirst().get();
-
-			int lastN = new Random().nextInt(1000);
-			line = line + " " + lastnames.skip(lastN).findFirst().get();
-		} catch (IOException | NoSuchElementException e) {
-			System.out.println(e);
-			System.exit(1);
-		}
-		return line;
-	}
-
-	private String generateValidName() {
-		String name = generateName();
-		while (game.namesInUse.contains(name)) {
-			name = generateName();
-		}
-		game.namesInUse.add(name);
-		return name;
+	String generateValidName() {
+		String firstName = game.randomManager.randomValidName("src/resources/firstnames", 2738, game.namesInUse);
+		String lastName = game.randomManager.randomValidName("src/resources/lastnames", 1000, game.namesInUse);
+		return firstName + " " + lastName;
 	}
 
 	private int generateStat(int lower, int upper) {
@@ -170,16 +151,18 @@ public class Athlete extends Purchasable {
 		}
 		equippedItem = null;
 	}
-	
+
 	public void buy() {
 		System.out.println(String.format("%s - Bought Athlete", name));
 		game.athletesInTeam.add(this);
 		game.shopManager.athletesInShop.remove(this);
 	}
-	
+
 	public void sell() {
-		// TODO: Currently, if an athlete is drafted to shop, they cannot be bought back. Thoughts?
-		// could add them to be bought back, but increase their price by 25% or something
+		// TODO: Currently, if an athlete is drafted to shop, they cannot be bought
+		// back. Thoughts?
+		// could add them to be bought back, but increase their price by 25% or
+		// something
 		System.out.println(String.format("%s - Sell Athlete", name));
 		game.athletesInTeam.remove(this);
 	}
