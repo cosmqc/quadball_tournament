@@ -55,7 +55,7 @@ public class BaseWindow {
 		JButton btnGoToShop = new JButton("Go To Shop");
 		btnGoToShop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				gui.goToShop(selfRef);
+				gui.launchShopWindow(selfRef);
 			}
 		});
 		btnGoToShop.setBounds(12, 552, 176, 44);
