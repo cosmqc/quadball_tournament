@@ -8,9 +8,6 @@ import java.nio.file.Paths;
 import java.util.stream.*;
 import java.lang.Math;
 
-enum Position {
-	CHASER, BEATER, KEEPER, SEEKER
-}
 
 public class Athlete extends Purchasable {
 
@@ -133,7 +130,11 @@ public class Athlete extends Purchasable {
 	}
 	
 	public int getMaxStamina() {
-		return maxStamina;
+		int item_val = 0;
+		if (getEquippedItem() != null) {
+			item_val = getEquippedItem().effect[3];
+		}
+		return Math.max(0, getRawMaxStamina() + item_val);
 	}
 
 	public void decreaseStamina(int staminaLoss) {
@@ -198,6 +199,7 @@ public class Athlete extends Purchasable {
 			if (equippedItem.speed > 0) { text += "+"; }
 			text += equippedItem.speed + ")";
 		}
+		// TODO: 
 		text += "\nStamina: " + getStamina() + "/" + getMaxStamina();
 		if (getStamina() != getRawStamina()) {
 			text += " (";

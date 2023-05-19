@@ -16,8 +16,8 @@ public class GameEnvironment {
 	boolean isRunning = true;
 	int currentWeek = 1;
 	int totalWeeks;
-	int numPlayers = 4;
-	int numBench = 2;
+	public int numPlayers = 4;
+	public int numBench = 2;
 
 	public int playerMoney = 200;
 	public int playerPoints = 0;

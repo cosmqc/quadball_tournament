@@ -1,13 +1,21 @@
 package base;
 
 import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
+import exceptions.TeamFullException;
+
+
+enum Position {
+	CHASER, BEATER, KEEPER, SEEKER
+}
 
 public class Team {
 	GameEnvironment game;
 	String name;
 	List<Athlete> athletes;
 	List<Athlete> subs;
+	Map<Position, Athlete> positionState;
 	
 	// completely random - for enemy team creation.
 	public Team(GameEnvironment game) {
@@ -49,30 +57,48 @@ public class Team {
 		return subs;
 	}
 
-	public void addAthlete(Athlete athlete) {
+	public void addAthlete(Athlete athlete) throws TeamFullException {
 		// add a new athlete to the team
-		athletes.add(athlete);
+		if (game.numPlayers < 4) {
+			athletes.add(athlete);
+		} else if (game.numBench < 5) {
+			subs.add(athlete);
+		} else {
+			throw new TeamFullException(game);
+		}
+	}
+	
+	public void removeAthlete(Athlete athlete) throws TeamFullException {
+		// add a new athlete to the team
+		if (athletes.contains(athlete)) {
+			athletes.remove(athlete);
+		} else if (subs.contains(athlete)) {
+			subs.remove(athlete);
+		} else {
+			throw new IllegalArgumentException(athlete.name + " doesn't exist on the players team.");
+		}
 	}
 
-	public boolean subOutAthlete(Athlete athlete) {
+	// TODO: I've left bench and promote alone while I sleep, but they'll be a massive pain
+	// if left like this. Gonna implement a swap feature / waterfall effect between subs and players
+	// so we're not stuck w a full bench and no team.
+	public void bench(Athlete athlete) {
 		// send an athlete to be a sub if it is in the team
 		if (athletes.contains(athlete)) {
 			subs.add(athlete);
 			athletes.remove(athlete);
-			return true;
 		} else {
-			return false;
+			throw new IllegalArgumentException(athlete.name + " is not on the field.");
 		}
 	}
 
-	public boolean subInAthlete(Athlete athlete) {
+	public void promote(Athlete athlete) {
 		// send a sub to be in the team if it exists
 		if (subs.contains(athlete)) {
 			athletes.add(athlete);
 			subs.remove(athlete);
-			return true;
 		} else {
-			return false;
+			throw new IllegalArgumentException(athlete.name + " is not on the bench.");
 		}
 	}
 	

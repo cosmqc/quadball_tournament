@@ -1,0 +1,7 @@
+ -  Club Window needs a "Remove Item" button, ideally under Athlete info box on Club > View Team.
+ 	Action should only need to Athlete.unequipItem(), then reload the frame like done with the buy/sell lists.
+ 	
+ -  Stadium :)
+ 
+ -  Take a bye training menu, week adjust shouldnt be too hard at the same time.
+ 

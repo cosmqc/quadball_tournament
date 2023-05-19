@@ -127,10 +127,12 @@ public class ClubWindow {
 							JOptionPane.ERROR_MESSAGE);
 				} else {
 					Athlete athlete = athleteTeamList.getSelectedValue();
-//					String error = gui.game.playerTeam.sub(athlete);
-//					if (error != null) {
-//						// TODO: display error. backend sub will not have gone through but that needs to be shown to the player
-//					}
+					try {
+						gui.game.playerTeam.bench(athlete);
+					} catch (IllegalArgumentException e1) {
+						System.out.println(e1);
+						// TODO: display error. backend sub will not have gone through but that needs to be shown to the player
+					}
 				}
 			}
 		});
@@ -145,10 +147,12 @@ public class ClubWindow {
 							JOptionPane.ERROR_MESSAGE);
 				} else {
 					Athlete athlete = athleteReserveList.getSelectedValue();
-//					String error = gui.game.playerTeam.sub(athlete);
-//					if (error != null) {
-//						// TODO: display error. backend sub will not have gone through but that needs to be shown to the player
-//					}
+					try {
+						gui.game.playerTeam.promote(athlete);
+					} catch (IllegalArgumentException e1) {
+						System.out.println(e1);
+						// TODO: display error. backend sub will not have gone through but that needs to be shown to the player
+					}
 				}
 			}
 		});
