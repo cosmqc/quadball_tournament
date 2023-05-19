@@ -107,7 +107,7 @@ public class ClubWindow {
             public void valueChanged(ListSelectionEvent selectedItem) {
                 if (!selectedItem.getValueIsAdjusting()) {
                 	Athlete athleteInfo = athleteTeamList.getSelectedValue();
-                	txtpnInfo.setText(String.format("Name: %s \nOffence: %s \nDefence: %s \nSpeed: %s \nStamina: %s \nMax Stamina: %s"
+                	txtpnInfo.setText(String.format("Name: %s \nOffence: %s \nDefence: %s \nSpeed: %s \nStamina: %s/%s"
                 			,athleteInfo.getName(),athleteInfo.getOffence(),athleteInfo.getDefence(),athleteInfo.getSpeed(),athleteInfo.getStamina(),athleteInfo.getRawStamina()));
                 }
             }
