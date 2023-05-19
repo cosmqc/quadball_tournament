@@ -62,6 +62,11 @@ public class BaseWindow {
 		frame.getContentPane().add(btnGoToShop);
 		
 		JButton btnGoToClub = new JButton("Go To Club");
+		btnGoToClub.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				gui.launchClubWindow(selfRef);
+			}
+		});
 		btnGoToClub.setBounds(200, 552, 176, 44);
 		frame.getContentPane().add(btnGoToClub);
 		

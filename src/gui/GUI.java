@@ -52,7 +52,17 @@ public class GUI {
 		shopWindow.closeWindow();
 		launchBaseWindow();
 	}
+	
+	public void launchClubWindow(BaseWindow baseWindow) {
+		baseWindow.closeWindow();
+		ClubWindow clubWindow = new ClubWindow(this);
+	}
 
+	public void closeClubWindow(ClubWindow clubWindow) {
+		clubWindow.closeWindow();
+		launchBaseWindow();
+	}
+	
 	public static void main(String[] args) {
 		// creates objects to save state, and to handle window management
 		GameEnvironment game = new GameEnvironment();
