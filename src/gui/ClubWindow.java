@@ -243,7 +243,7 @@ public class ClubWindow {
 				}
 			}
 		});
-		btnUseItem.setBounds(320, 257, 97, 44);
+		btnUseItem.setBounds(320, 257, 126, 44);
 		inventoryPanel.add(btnUseItem);
 	}
 	

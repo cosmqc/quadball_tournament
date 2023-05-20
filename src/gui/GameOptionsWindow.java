@@ -133,7 +133,13 @@ public class GameOptionsWindow {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				gui.game.setTotalWeeks(slider.getValue());
-				gui.closeGameOptions(selfRef, lblWhatIsYour.getText());
+				String teamName = textField.getText();
+				if (!teamName.matches("[a-zA-Z]{3,15}")) {
+					JOptionPane.showMessageDialog(frmSportsManager, "Your team name is invalid", "Invalid Team Name",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+					gui.closeGameOptions(selfRef, lblWhatIsYour.getText());
+				}
 				//TODO add chosen athletes to game info
 				//TODO require exactly four athletes before beginning
 			}
