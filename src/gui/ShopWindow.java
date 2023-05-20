@@ -20,7 +20,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 public class ShopWindow {
-	private JFrame frame;
+	private JFrame frmShop;
 	private GUI gui;
 	private ShopWindow selfRef;
 	public GameEnvironment game;
@@ -38,7 +38,7 @@ public class ShopWindow {
 			public void run() {
 				try {
 					initialize();
-					frame.setVisible(true);
+					frmShop.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -50,11 +50,12 @@ public class ShopWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setResizable(false);
-		frame.setBounds(gui.x, gui.y, 900, 650);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmShop = new JFrame();
+		frmShop.setTitle("Shop");
+		frmShop.setResizable(false);
+		frmShop.setBounds(gui.x, gui.y, 900, 650);
+		frmShop.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmShop.getContentPane().setLayout(null);
 
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener() {
@@ -63,12 +64,12 @@ public class ShopWindow {
 			}
 		});
 		btnBack.setBounds(682, 552, 176, 44);
-		frame.getContentPane().add(btnBack);
+		frmShop.getContentPane().add(btnBack);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(12, 12, 866, 596);
 		tabbedPane.setFont(new Font("Dialog", Font.BOLD, 18));
-		frame.getContentPane().add(tabbedPane);
+		frmShop.getContentPane().add(tabbedPane);
 
 		JPanel buyPanel = new JPanel();
 		tabbedPane.addTab("Buy", null, buyPanel, null);
@@ -96,10 +97,10 @@ public class ShopWindow {
 		btnBuyAthlete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (athleteBuyList.getSelectedValue() == null) {
-					JOptionPane.showMessageDialog(frame, "Please select an athlete to buy", "No Athlete Selected",
+					JOptionPane.showMessageDialog(frmShop, "Please select an athlete to buy", "No Athlete Selected",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
-					int choice = JOptionPane.showConfirmDialog(frame, "Are You Sure?", "Buy Athlete",
+					int choice = JOptionPane.showConfirmDialog(frmShop, "Are You Sure?", "Buy Athlete",
 							JOptionPane.YES_NO_OPTION);
 					if (choice == JOptionPane.YES_OPTION) {
 						// TODO: add cost implementation to purchasables
@@ -123,10 +124,10 @@ public class ShopWindow {
 		btnBuyItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (itemBuyList.getSelectedValue() == null) {
-					JOptionPane.showMessageDialog(frame, "Please select an item to buy", "No Item Selected",
+					JOptionPane.showMessageDialog(frmShop, "Please select an item to buy", "No Item Selected",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
-					int choice = JOptionPane.showConfirmDialog(frame, "Are You Sure?", "Buy Item",
+					int choice = JOptionPane.showConfirmDialog(frmShop, "Are You Sure?", "Buy Item",
 							JOptionPane.YES_NO_OPTION);
 					if (choice == JOptionPane.YES_OPTION) {
 						itemBuyList.getSelectedValue().buy();
@@ -175,10 +176,10 @@ public class ShopWindow {
 		btnSellAthlete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (athleteSellList.getSelectedValue() == null) {
-					JOptionPane.showMessageDialog(frame, "Please select an athlete to sell", "No Athlete Selected",
+					JOptionPane.showMessageDialog(frmShop, "Please select an athlete to sell", "No Athlete Selected",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
-					int choice = JOptionPane.showConfirmDialog(frame, "Are You Sure?", "Sell Athlete",
+					int choice = JOptionPane.showConfirmDialog(frmShop, "Are You Sure?", "Sell Athlete",
 							JOptionPane.YES_NO_OPTION);
 					if (choice == JOptionPane.YES_OPTION) {
 						athleteSellList.getSelectedValue().sell();
@@ -194,10 +195,10 @@ public class ShopWindow {
 		btnSellItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (itemSellList.getSelectedValue() == null) {
-					JOptionPane.showMessageDialog(frame, "Please select an item to sell", "No Item Selected",
+					JOptionPane.showMessageDialog(frmShop, "Please select an item to sell", "No Item Selected",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
-					int choice = JOptionPane.showConfirmDialog(frame, "Are You Sure?", "Sell Item",
+					int choice = JOptionPane.showConfirmDialog(frmShop, "Are You Sure?", "Sell Item",
 							JOptionPane.YES_NO_OPTION);
 					if (choice == JOptionPane.YES_OPTION) {
 						itemSellList.getSelectedValue().sell();
@@ -227,35 +228,35 @@ public class ShopWindow {
 	}
 
 	public void closeWindow() {
-		frame.dispose();
+		frmShop.dispose();
 	}
 
 	public void refreshBuyAthlete(DefaultListModel<Athlete> list) {
 		refreshMoneyLabels();
 		list.removeAllElements();
 		list.addAll(game.shopManager.athletesInShop);
-		frame.repaint();
+		frmShop.repaint();
 	}
 
 	public void refreshBuyItem(DefaultListModel<Item> list) {
 		refreshMoneyLabels();
 		list.removeAllElements();
 		list.addAll(game.shopManager.itemsInShop);
-		frame.repaint();
+		frmShop.repaint();
 	}
 	
 	public void refreshSellAthlete(DefaultListModel<Athlete> list) {
 		refreshMoneyLabels();
 		list.removeAllElements();
 		list.addAll(game.playerTeam.getAllPlayers());
-		frame.repaint();
+		frmShop.repaint();
 	}
 
 	public void refreshSellItem(DefaultListModel<Item> list) {
 		refreshMoneyLabels();
 		list.removeAllElements();
 		list.addAll(game.itemsInInventory);
-		frame.repaint();
+		frmShop.repaint();
 	}
 
 	public void refreshMoneyLabels() {

@@ -26,7 +26,7 @@ import javax.swing.JTextPane;
 public class ClubWindow {
 	private GUI gui;
 	private ClubWindow selfRef;
-	private JFrame frame;
+	private JFrame frmClub;
 
 	/**
 	 * Launch the application.
@@ -38,7 +38,7 @@ public class ClubWindow {
 			public void run() {
 				try {
 					initialize();
-					frame.setVisible(true);
+					frmClub.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -50,11 +50,12 @@ public class ClubWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setResizable(false);
-		frame.setBounds(gui.x, gui.y, 900, 650);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmClub = new JFrame();
+		frmClub.setTitle("Club");
+		frmClub.setResizable(false);
+		frmClub.setBounds(gui.x, gui.y, 900, 650);
+		frmClub.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmClub.getContentPane().setLayout(null);
 		
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener() {
@@ -63,12 +64,12 @@ public class ClubWindow {
 			}
 		});
 		btnBack.setBounds(682, 552, 176, 44);
-		frame.getContentPane().add(btnBack);
+		frmClub.getContentPane().add(btnBack);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setFont(new Font("Dialog", Font.BOLD, 18));
 		tabbedPane.setBounds(10, 10, 866, 593);
-		frame.getContentPane().add(tabbedPane);
+		frmClub.getContentPane().add(tabbedPane);
 		
 		DefaultListModel<Athlete> athleteTeamModel = new DefaultListModel<>();
 		athleteTeamModel.addAll(gui.game.playerTeam.getAthletes());
@@ -146,7 +147,7 @@ public class ClubWindow {
 		btnSubOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (athleteTeamList.getSelectedValue() == null) {
-					JOptionPane.showMessageDialog(frame, "Please select an athlete to sub out", "No Athlete Selected",
+					JOptionPane.showMessageDialog(frmClub, "Please select an athlete to sub out", "No Athlete Selected",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
 					Athlete athlete = athleteTeamList.getSelectedValue();
@@ -168,7 +169,7 @@ public class ClubWindow {
 		btnSubIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (athleteReserveList.getSelectedValue() == null) {
-					JOptionPane.showMessageDialog(frame, "Please select an athlete to sub in", "No Athlete Selected",
+					JOptionPane.showMessageDialog(frmClub, "Please select an athlete to sub in", "No Athlete Selected",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
 					Athlete athlete = athleteReserveList.getSelectedValue();
@@ -231,10 +232,10 @@ public class ClubWindow {
 		btnUseItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (itemList.getSelectedValue() == null) {
-					JOptionPane.showMessageDialog(frame, "Please select an item to use", "No Item Selected",
+					JOptionPane.showMessageDialog(frmClub, "Please select an item to use", "No Item Selected",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
-					Athlete athleteChosen = (Athlete) JOptionPane.showInputDialog(frame, "Which athlete would you like to give the item to?", "Use Item", JOptionPane.PLAIN_MESSAGE,
+					Athlete athleteChosen = (Athlete) JOptionPane.showInputDialog(frmClub, "Which athlete would you like to give the item to?", "Use Item", JOptionPane.PLAIN_MESSAGE,
 		                    null, athleteTeamModel.toArray(), null);
 					if(athleteChosen != null) {
 						athleteChosen.equipItem(itemList.getSelectedValue());
@@ -249,16 +250,16 @@ public class ClubWindow {
 	public void refreshAthleteList(DefaultListModel<Athlete> list) {
 		list.removeAllElements();
 		list.addAll(gui.game.playerTeam.getAthletes());
-		frame.repaint();
+		frmClub.repaint();
 	}
 	
 	public void refreshItemList(DefaultListModel<Item> list) {
 		list.removeAllElements();
 		list.addAll(gui.game.itemsInInventory);
-		frame.repaint();
+		frmClub.repaint();
 	}
 	
 	public void closeWindow() {
-		frame.dispose();
+		frmClub.dispose();
 	}
 }

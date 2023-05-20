@@ -14,7 +14,7 @@ import java.awt.event.ActionEvent;
 public class BaseWindow {
 	private GUI gui;
 	private BaseWindow selfRef;
-	private JFrame frame;
+	private JFrame frmMainScreen;
 	public GameEnvironment game;
 
 	/**
@@ -28,7 +28,7 @@ public class BaseWindow {
 			public void run() {
 				try {
 					initialize();
-					frame.setVisible(true);
+					frmMainScreen.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -40,17 +40,18 @@ public class BaseWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setResizable(false);
-		frame.setBounds(gui.x, gui.y, 900, 650);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmMainScreen = new JFrame();
+		frmMainScreen.setTitle("Main Screen");
+		frmMainScreen.setResizable(false);
+		frmMainScreen.setBounds(gui.x, gui.y, 900, 650);
+		frmMainScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmMainScreen.getContentPane().setLayout(null);
 		
 		JLabel lblWeek = new JLabel("Week: " + String.valueOf(game.getCurrentWeek()) + " of " + game.getTotalWeeks());
 		lblWeek.setHorizontalAlignment(SwingConstants.LEFT);
 		lblWeek.setFont(new Font("Dialog", Font.BOLD, 18));
 		lblWeek.setBounds(12, 0, 534, 44);
-		frame.getContentPane().add(lblWeek);
+		frmMainScreen.getContentPane().add(lblWeek);
 		
 		JButton btnGoToShop = new JButton("Go To Shop");
 		btnGoToShop.addActionListener(new ActionListener() {
@@ -59,7 +60,7 @@ public class BaseWindow {
 			}
 		});
 		btnGoToShop.setBounds(12, 552, 176, 44);
-		frame.getContentPane().add(btnGoToShop);
+		frmMainScreen.getContentPane().add(btnGoToShop);
 		
 		JButton btnGoToClub = new JButton("Go To Club");
 		btnGoToClub.addActionListener(new ActionListener() {
@@ -68,19 +69,19 @@ public class BaseWindow {
 			}
 		});
 		btnGoToClub.setBounds(200, 552, 176, 44);
-		frame.getContentPane().add(btnGoToClub);
+		frmMainScreen.getContentPane().add(btnGoToClub);
 		
 		JButton btnGoToStadium = new JButton("Go To Stadium");
 		btnGoToStadium.setBounds(388, 552, 176, 44);
-		frame.getContentPane().add(btnGoToStadium);
+		frmMainScreen.getContentPane().add(btnGoToStadium);
 		
 		JButton btnTakeABye = new JButton("Take A Bye");
 		btnTakeABye.setBounds(576, 552, 176, 44);
-		frame.getContentPane().add(btnTakeABye);
+		frmMainScreen.getContentPane().add(btnTakeABye);
 	}
 	
 	public void closeWindow() {
-		frame.dispose();
+		frmMainScreen.dispose();
 	}
 	
 }
