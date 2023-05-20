@@ -36,4 +36,9 @@ public class RandomManager {
 		}
 		return text;
 	}
+	
+	int generateNum(int lower, int upper) {
+		int stat = new Random().nextInt(lower, upper);
+		return stat;
+	}
 }

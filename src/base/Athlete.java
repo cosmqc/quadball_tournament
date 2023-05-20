@@ -1,22 +1,16 @@
 package base;
 
-import java.util.Random;
-import java.io.IOException;
 import java.util.NoSuchElementException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.stream.*;
-
 import exceptions.TeamFullException;
-
 import java.lang.Math;
 
 
 public class Athlete extends Purchasable {
 
 	public GameEnvironment game;
-	String name;
-	String nickname = null;
+	String firstName;
+	String nickName;
+	String lastName;
 	Position position;
 	int offence;
 	int defence;
@@ -27,35 +21,26 @@ public class Athlete extends Purchasable {
 
 	public Athlete(GameEnvironment game) {
 		this.game = game;
-		this.name = generateValidName();
-		this.offence = generateStat(1, 10);
-		this.defence = generateStat(1, 10);
-		this.speed = generateStat(1, 10);
-		this.stamina = this.maxStamina = generateStat(5, 10);
-		this.equippedItem = game.itemManager.randomItem();
+		this.firstName = game.randomManager.randomValidName("src/resources/firstnames", 2738, game.namesInUse);
+		this.lastName = game.randomManager.randomValidName("src/resources/lastnames", 1000, game.namesInUse);
+		this.offence = game.randomManager.generateNum(1, 10);
+		this.defence = game.randomManager.generateNum(1, 10);
+		this.speed = game.randomManager.generateNum(1, 10);
+		this.stamina = this.maxStamina = game.randomManager.generateNum(5, 10);
+		
 	}
 
-	public Athlete(GameEnvironment game, String name, int offence, int defence, int speed, int stamina,
+	public Athlete(GameEnvironment game, String firstName, String lastName, int offence, int defence, int speed, int stamina,
 			int maxStamina) {
 		this.game = game;
-		this.name = name;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.offence = offence;
 		this.defence = defence;
 		this.speed = speed;
 		this.stamina = this.maxStamina = stamina;
 	}
 
-
-	String generateValidName() {
-		String firstName = game.randomManager.randomValidName("src/resources/firstnames", 2738, game.namesInUse);
-		String lastName = game.randomManager.randomValidName("src/resources/lastnames", 1000, game.namesInUse);
-		return firstName + " " + lastName;
-	}
-
-	private int generateStat(int lower, int upper) {
-		int stat = new Random().nextInt(lower, upper);
-		return stat;
-	}
 
 	public String toDebugString() {
 		if (position != null) {
@@ -68,13 +53,29 @@ public class Athlete extends Purchasable {
 	}
 
 	public String toString() {
-		return String.format("%s OFF%d DEF%d SPE%d STA%d", name, offence, defence, speed, stamina);
+		return String.format("%s OFF%d DEF%d SPE%d STA%d", getName(), offence, defence, speed, stamina);
 	}
 
+	public String getRawName() {
+		return firstName + " " + lastName;
+	}
+	
 	public String getName() {
+		String name = firstName;
+		if (nickName != null) {
+			name += " \"" + nickName + "\"";
+		}
+		name += " " + lastName;
 		return name;
 	}
-
+	
+	public String getNickname() {
+		return nickName;
+	}
+	
+	public void setNickname(String nickName) {
+		this.nickName = nickName;
+	}
 	public Position getPosition() {
 		return position;
 	}
@@ -96,7 +97,7 @@ public class Athlete extends Purchasable {
 	}
 	
 	public int getRawMaxStamina() {
-		return stamina;
+		return maxStamina;
 	}
 	
 
@@ -152,18 +153,22 @@ public class Athlete extends Purchasable {
 		return equippedItem;
 	}
 
-	public void equipItem(Item item) {
+	public Item equipItem(Item item) {
+		Item oldItem = null;
 		if (equippedItem != null) {
-			unequipItem();
+			oldItem = unequipItem();
 		}
 		equippedItem = item;
+		return oldItem;
 	}
 
-	public void unequipItem() {
+	public Item unequipItem() {
 		if (equippedItem == null) {
 			throw new NoSuchElementException(String.format("Athlete %s has no item, so none can be removed.", name));
 		}
+		Item temp = equippedItem;
 		equippedItem = null;
+		return temp;
 	}
 
 	public void buy() {
@@ -178,12 +183,12 @@ public class Athlete extends Purchasable {
 	}
 
 	public void sell() {
-		// TODO: (Jake) Athlete/Item sold reappears in shop, but at a higher price
+		// TODO: Athlete/Item sold reappears in shop, but at a higher price
 		System.out.println(String.format("%s - Sell Athlete", name));
 		try {
 			game.playerTeam.removeAthlete(this);
 		} catch (IllegalArgumentException e) {
-			// TODO: (Leo) output error to player (popup?)
+			// TODO: output error to player (popup?)
 			System.out.println(e);
 		}
 	}
@@ -191,34 +196,35 @@ public class Athlete extends Purchasable {
 	public String toClubString() {
 		String text = "";
 		text += "Name: " + getName();
-		text += "\nOffence: " + getOffence();
-		if (getOffence() != getRawOffence()) {
-			text += " (";
-			if (equippedItem.offence > 0) { text += "+"; }
-			text += equippedItem.offence + ")";
-		}
-		text += "\nDefence: " + getDefence();
-		if (getDefence() != getRawDefence()) {
-			text += " (";
-			if (equippedItem.defence > 0) { text += "+"; }
-			text += equippedItem.defence + ")";
-		}
-		text += "\nSpeed: " + getSpeed();
-		if (getSpeed() != getRawSpeed()) {
-			text += " (";
-			if (equippedItem.speed > 0) { text += "+"; }
-			text += equippedItem.speed + ")";
-		}
-		// TODO: 
+		text += formatStat("Offence", getOffence(), getRawOffence());
+		text += formatStat("Defence", getDefence(), getRawDefence());
+		text += formatStat("Speed", getSpeed(), getRawSpeed());
 		text += "\nStamina: " + getStamina() + "/" + getMaxStamina();
 		if (getStamina() != getRawStamina()) {
 			text += " (";
-			if (equippedItem.stamina > 0) { text += "+"; }
-			text += equippedItem.stamina + ")";
+			int itemModifer = getStamina() - getRawStamina();
+			if (itemModifer > 0) {
+				text += "+";
+			}
+			text += itemModifer + ")";
 		}
-		text += "\n\nEquipped Item: " + equippedItem.name;
-		text += "\n" + equippedItem.description;
+		if (equippedItem != null) {
+			text += "\n\nEquipped Item: " + equippedItem.name;
+			text += "\n" + equippedItem.description;
+		}
 		return text;
-//		Name: %s \nOffence: %s \nDefence: %s \nSpeed: %s \nStamina: %s/%s"
+	}
+	
+	String formatStat(String stat, int curr, int rawCurr) {
+		String text = "\n" + stat + ": " + curr;
+		if (curr != rawCurr) {
+			text += " (";
+			int itemModifer = curr - rawCurr;
+			if (itemModifer > 0) {
+				text += "+";
+			}
+			text += itemModifer + ")";
+		}
+		return text;
 	}
 }

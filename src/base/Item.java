@@ -43,6 +43,11 @@ public class Item extends Purchasable {
 		return String.format("%s OFF%d DEF%d SPE%d STA%d", name, effect[0], effect[1], effect[2], effect[3]);
 	}
 
+	public String getClubString() {
+		return String.format("Name: %s \n%s \nEffects: \nOffence: %s\nDefence: %s\nSpeed: %s\nStamina: %s", name,
+				description, offence, defence, speed, stamina);
+	}
+
 	public void buy() {
 		System.out.println(String.format("%s - Bought Item", name));
 		game.itemsInInventory.add(this);

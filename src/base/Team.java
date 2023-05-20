@@ -99,13 +99,16 @@ public class Team {
 		}
 	}
 
-	public void promote(Athlete athlete) {
+	public void promote(Athlete athlete) throws TeamFullException {
 		// send a sub to be in the team if it exists
-		if (subs.contains(athlete)) {
+		if (!subs.contains(athlete)) {
+			throw new IllegalArgumentException(athlete.name + " is not on the bench.");
+		} else if (getNumOnField() >= game.numPlayers) {
+			throw new TeamFullException(game, "Team cannot have more than " + game.numPlayers + " players on the field at a time");
+		} else {
 			athletes.add(athlete);
 			subs.remove(athlete);
-		} else {
-			throw new IllegalArgumentException(athlete.name + " is not on the bench.");
+			return;
 		}
 	}
 	

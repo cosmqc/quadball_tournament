@@ -70,7 +70,7 @@ public class DebugWindow {
 		JButton btnNewButton_4 = new JButton("<html>Add +R Item to +R Athlete<html>");
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Athlete athlete = new Athlete(gui.game);
+				new Athlete(gui.game);
 
 			}
 		});
@@ -90,7 +90,7 @@ public class DebugWindow {
 		JButton btnNewButton_5 = new JButton("Random Team");
 		btnNewButton_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Team team = new Team(gui.game);
+				new Team(gui.game);
 			}
 		});
 		btnNewButton_5.setFont(new Font("Tahoma", Font.PLAIN, 30));

@@ -3,6 +3,7 @@ package gui;
 import base.*;
 import javax.swing.JFrame;
 
+@SuppressWarnings("unused")
 public class GUI {
 	public int x = 100;
 	public int y = 100;
@@ -20,7 +21,7 @@ public class GUI {
 		GameOptionsWindow gameOptionWindow = new GameOptionsWindow(this);
 	}
 
-	public void closeGameOptions(GameOptionsWindow gameOptionWindow) {
+	public void closeGameOptions(GameOptionsWindow gameOptionWindow, String foo) {
 		gameOptionWindow.closeWindow();
 		launchDebugWindow();
 	}
@@ -34,7 +35,7 @@ public class GUI {
 		launchGameOptions();
 	}
 
-	public void closeGameOptions(GameOptionsWindow gameOptionWindow, String teamName) {
+	public void closeGameOptions(GameOptionsWindow gameOptionWindow) {
 		gameOptionWindow.closeWindow();
 		game.shopManager.refreshShop(game);
 		launchBaseWindow();

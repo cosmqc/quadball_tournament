@@ -20,13 +20,18 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 public class ShopWindow {
-	private JFrame frmShop;
-	private GUI gui;
-	private ShopWindow selfRef;
-	public GameEnvironment game;
-	
-	private JLabel lblBuyMoneyDisplay;
-	private JLabel lblSellMoneyDisplay;
+
+	// TODO: Clear selection when switching lists, there shouldn't be a selection in
+	// both Item and Athlete lists
+
+	JFrame frmShop;
+	GUI gui;
+	ShopWindow selfRef;
+	GameEnvironment game;
+
+	JLabel lblBuyMoneyDisplay;
+	JLabel lblSellMoneyDisplay;
+
 	/**
 	 * Launch the application.
 	 */
@@ -93,6 +98,8 @@ public class ShopWindow {
 		athleteBuyList.setBounds(20, 55, 357, 355);
 		buyPanel.add(athleteBuyList);
 
+		// TODO: Condense buy athlete / buy item into "BUY"
+
 		JButton btnBuyAthlete = new JButton("Buy Athlete");
 		btnBuyAthlete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -138,12 +145,12 @@ public class ShopWindow {
 		});
 		btnBuyItem.setBounds(496, 420, 176, 44);
 		buyPanel.add(btnBuyItem);
-		
+
 		lblBuyMoneyDisplay = new JLabel(String.format("Money: $%d", game.playerMoney));
 		lblBuyMoneyDisplay.setFont(new Font("Dialog", Font.BOLD, 18));
 		lblBuyMoneyDisplay.setBounds(20, 509, 161, 38);
 		buyPanel.add(lblBuyMoneyDisplay);
-		
+
 		JPanel sellPanel = new JPanel();
 		tabbedPane.addTab("Sell", null, sellPanel, null);
 		sellPanel.setLayout(null);
@@ -171,6 +178,8 @@ public class ShopWindow {
 		lblItemsOwned.setFont(new Font("Dialog", Font.BOLD, 18));
 		lblItemsOwned.setBounds(377, 10, 357, 44);
 		sellPanel.add(lblItemsOwned);
+
+		// TODO: Condense sell athlete / sell item into "SELL"
 
 		JButton btnSellAthlete = new JButton("Sell Athlete");
 		btnSellAthlete.addActionListener(new ActionListener() {
@@ -209,20 +218,20 @@ public class ShopWindow {
 		});
 		btnSellItem.setBounds(496, 418, 176, 44);
 		sellPanel.add(btnSellItem);
-		
+
 		lblSellMoneyDisplay = new JLabel(String.format("Money: $%d", game.playerMoney));
 		lblSellMoneyDisplay.setFont(new Font("Dialog", Font.BOLD, 18));
 		lblSellMoneyDisplay.setBounds(20, 509, 161, 38);
 		sellPanel.add(lblSellMoneyDisplay);
-		
-		// refreshes all lists on tab change.
+
+		// refreshes all lists and selections on tab change.
 		tabbedPane.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				refreshBuyAthlete(buyAthleteListModel);
 				refreshBuyItem(buyItemListModel);
 				refreshSellAthlete(sellAthleteListModel);
 				refreshSellItem(sellItemListModel);
-				
+
 			}
 		});
 	}
@@ -244,7 +253,7 @@ public class ShopWindow {
 		list.addAll(game.shopManager.itemsInShop);
 		frmShop.repaint();
 	}
-	
+
 	public void refreshSellAthlete(DefaultListModel<Athlete> list) {
 		refreshMoneyLabels();
 		list.removeAllElements();
