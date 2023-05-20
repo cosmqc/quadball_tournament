@@ -56,6 +56,13 @@ public class Team {
 	public List<Athlete> getSubs() {
 		return subs;
 	}
+	
+	public List<Athlete> getAllPlayers() {
+		List<Athlete> total = new ArrayList<Athlete>();
+		total.addAll(getAthletes());
+		total.addAll(getSubs());
+		return total;
+	}
 
 	public void addAthlete(Athlete athlete) throws TeamFullException {
 		// add a new athlete to the team
@@ -68,7 +75,7 @@ public class Team {
 		}
 	}
 	
-	public void removeAthlete(Athlete athlete) throws TeamFullException {
+	public void removeAthlete(Athlete athlete) throws IllegalArgumentException {
 		// add a new athlete to the team
 		if (athletes.contains(athlete)) {
 			athletes.remove(athlete);

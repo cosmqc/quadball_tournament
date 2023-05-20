@@ -1,6 +1,8 @@
 package gui;
 
 import base.*;
+import exceptions.TeamFullException;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -69,7 +71,7 @@ public class ClubWindow {
 		frame.getContentPane().add(tabbedPane);
 		
 		DefaultListModel<Athlete> athleteTeamModel = new DefaultListModel<>();
-		athleteTeamModel.addAll(gui.game.athletesInTeam);
+		athleteTeamModel.addAll(gui.game.playerTeam.getAthletes());
 		
 		JPanel viewPanel = new JPanel();
 		tabbedPane.addTab("View Team", null, viewPanel, null);
@@ -85,13 +87,17 @@ public class ClubWindow {
 		athleteTeamList.setBounds(10, 53, 300, 250);
 		viewPanel.add(athleteTeamList);
 		
+		
+		DefaultListModel<Athlete> athleteReserveModel = new DefaultListModel<>();
+		athleteReserveModel.addAll(gui.game.playerTeam.getSubs());
+		
 		JLabel lblAthletesInReserve = new JLabel("Athletes In Reserve");
 		lblAthletesInReserve.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAthletesInReserve.setFont(new Font("Dialog", Font.BOLD, 18));
 		lblAthletesInReserve.setBounds(10, 313, 300, 44);
 		viewPanel.add(lblAthletesInReserve);
 		
-		JList<Athlete> athleteReserveList = new JList<Athlete>();
+		JList<Athlete> athleteReserveList = new JList<Athlete>(athleteReserveModel);
 		athleteReserveList.setBounds(10, 356, 300, 150);
 		viewPanel.add(athleteReserveList);
 		
@@ -101,17 +107,34 @@ public class ClubWindow {
 		txtpnInfo.setBounds(550, 53, 300, 250);
 		viewPanel.add(txtpnInfo);
 		txtpnInfo.setText("No Athlete Selected");
-		
+
 		athleteTeamList.addListSelectionListener(new ListSelectionListener() {
 
+			public void valueChanged(ListSelectionEvent selection) {
+				// removes selection from the other list
+				athleteReserveList.clearSelection();
+				if (!selection.getValueIsAdjusting()) {
+					Athlete selectedAthlete = athleteTeamList.getSelectedValue();
+					if (selectedAthlete != null) {
+						txtpnInfo.setText(selectedAthlete.toClubString());
+					}
+				}
+			}
+		});
+		
+		athleteReserveList.addListSelectionListener(new ListSelectionListener() {
+
             public void valueChanged(ListSelectionEvent selection) {
+            	// removes selection from the other list
+            	athleteTeamList.clearSelection();
                 if (!selection.getValueIsAdjusting()) {
-                	Athlete selectedAthlete = athleteTeamList.getSelectedValue();
-                	txtpnInfo.setText(selectedAthlete.toClubString());
+                	Athlete selectedAthlete = athleteReserveList.getSelectedValue();
+					if (selectedAthlete != null) {
+						txtpnInfo.setText(selectedAthlete.toClubString());
+					}
                 }
             }
         });
-		
 		
 		JLabel lblAthleteInfo = new JLabel("Athlete Info");
 		lblAthleteInfo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -129,8 +152,10 @@ public class ClubWindow {
 					Athlete athlete = athleteTeamList.getSelectedValue();
 					try {
 						gui.game.playerTeam.bench(athlete);
-					} catch (IllegalArgumentException e1) {
-						System.out.println(e1);
+						refreshAthleteList(athleteTeamModel);
+						refreshAthleteList(athleteReserveModel);
+					} catch (IllegalArgumentException error) {
+						System.out.println(error);
 						// TODO: display error. backend sub will not have gone through but that needs to be shown to the player
 					}
 				}
@@ -149,8 +174,10 @@ public class ClubWindow {
 					Athlete athlete = athleteReserveList.getSelectedValue();
 					try {
 						gui.game.playerTeam.promote(athlete);
-					} catch (IllegalArgumentException e1) {
-						System.out.println(e1);
+						refreshAthleteList(athleteTeamModel);
+						refreshAthleteList(athleteReserveModel);
+					} catch (IllegalArgumentException error) {
+						System.out.println(error);
 						// TODO: display error. backend sub will not have gone through but that needs to be shown to the player
 					}
 				}
@@ -169,7 +196,7 @@ public class ClubWindow {
 		lblItemsOwned.setBounds(10, 10, 300, 44);
 		inventoryPanel.add(lblItemsOwned);
 		
-		DefaultListModel<Item> inventoryModel = new DefaultListModel<>();
+		DefaultListModel<Item> inventoryModel = new DefaultListModel<Item>();
 		inventoryModel.addAll(gui.game.itemsInInventory);
 		
 		JList<Item> itemList = new JList<Item>(inventoryModel);
@@ -217,10 +244,18 @@ public class ClubWindow {
 		});
 		btnUseItem.setBounds(320, 257, 97, 44);
 		inventoryPanel.add(btnUseItem);
-		
-		
-		
-		
+	}
+	
+	public void refreshAthleteList(DefaultListModel<Athlete> list) {
+		list.removeAllElements();
+		list.addAll(gui.game.playerTeam.getAthletes());
+		frame.repaint();
+	}
+	
+	public void refreshItemList(DefaultListModel<Item> list) {
+		list.removeAllElements();
+		list.addAll(gui.game.itemsInInventory);
+		frame.repaint();
 	}
 	
 	public void closeWindow() {

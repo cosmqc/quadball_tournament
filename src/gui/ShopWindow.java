@@ -154,7 +154,7 @@ public class ShopWindow {
 		sellPanel.add(lblAthletesOwned);
 
 		DefaultListModel<Athlete> sellAthleteListModel = new DefaultListModel<>();
-		sellAthleteListModel.addAll(game.athletesInTeam);
+		sellAthleteListModel.addAll(game.playerTeam.getAllPlayers());
 		JList<Athlete> athleteSellList = new JList<Athlete>(sellAthleteListModel);
 		athleteSellList.setBounds(20, 53, 357, 355);
 		sellPanel.add(athleteSellList);
@@ -247,7 +247,7 @@ public class ShopWindow {
 	public void refreshSellAthlete(DefaultListModel<Athlete> list) {
 		refreshMoneyLabels();
 		list.removeAllElements();
-		list.addAll(game.athletesInTeam);
+		list.addAll(game.playerTeam.getAllPlayers());
 		frame.repaint();
 	}
 

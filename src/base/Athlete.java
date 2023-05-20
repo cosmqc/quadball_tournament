@@ -6,6 +6,9 @@ import java.util.NoSuchElementException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.*;
+
+import exceptions.TeamFullException;
+
 import java.lang.Math;
 
 
@@ -165,17 +168,24 @@ public class Athlete extends Purchasable {
 
 	public void buy() {
 		System.out.println(String.format("%s - Bought Athlete", name));
-		game.athletesInTeam.add(this);
+		try {
+			game.playerTeam.addAthlete(this);
+		} catch (TeamFullException e){
+			// TODO: output error to player (popup?)
+			System.out.println(e);
+		}
 		game.shopManager.athletesInShop.remove(this);
 	}
 
 	public void sell() {
-		// TODO: Currently, if an athlete is drafted to shop, they cannot be bought
-		// back. Thoughts?
-		// could add them to be bought back, but increase their price by 25% or
-		// something
+		// TODO: (Jake) Athlete/Item sold reappears in shop, but at a higher price
 		System.out.println(String.format("%s - Sell Athlete", name));
-		game.athletesInTeam.remove(this);
+		try {
+			game.playerTeam.removeAthlete(this);
+		} catch (IllegalArgumentException e) {
+			// TODO: (Leo) output error to player (popup?)
+			System.out.println(e);
+		}
 	}
 	
 	public String toClubString() {

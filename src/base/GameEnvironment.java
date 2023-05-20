@@ -21,10 +21,10 @@ public class GameEnvironment {
 
 	public int playerMoney = 200;
 	public int playerPoints = 0;
-	public Team playerTeam;
+	public Team playerTeam = new Team(this);
 	
 	// inventory state
-	public List<Athlete> athletesInTeam = new ArrayList<Athlete>();
+//	public List<Athlete> athletesInTeam = new ArrayList<Athlete>();
 	public List<Item> itemsInInventory = new ArrayList<Item>();
 
 	public int getCurrentWeek() {
