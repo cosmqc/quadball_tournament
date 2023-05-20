@@ -2,11 +2,13 @@ package gui;
 
 import base.*;
 import java.awt.EventQueue;
+import java.util.HashMap;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
 import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.JSlider;
@@ -26,11 +28,13 @@ public class GameOptionsWindow {
 	private int athleteSlotsFilled;
 	private ArrayList<Athlete> selectedAthletes;
 
-	private JFrame frmSportsManager;
-	private JTextField textField;
-	private JLabel lbltheLengthMust;
-	private JLabel lblHowLongWould;
-	private JLabel lblPleaseChooseA;
+	JFrame frmSportsManager;
+	JTextField teamNameField;
+	JTextPane athleteInfoBox;
+	
+	HashMap<JButton, Athlete> buttonAthleteMap = new HashMap<JButton, Athlete>();
+	ArrayList<JButton> selectedButtons = new ArrayList<JButton>();
+	
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	/**
@@ -73,11 +77,11 @@ public class GameOptionsWindow {
 		lblWhatIsYour.setBounds(10, 60, 448, 44);
 		frmSportsManager.getContentPane().add(lblWhatIsYour);
 
-		textField = new JTextField();
-		textField.setFont(new Font("Dialog", Font.PLAIN, 16));
-		textField.setBounds(247, 56, 595, 26);
-		frmSportsManager.getContentPane().add(textField);
-		textField.setColumns(10);
+		teamNameField = new JTextField();
+		teamNameField.setFont(new Font("Dialog", Font.PLAIN, 16));
+		teamNameField.setBounds(247, 56, 595, 26);
+		frmSportsManager.getContentPane().add(teamNameField);
+		teamNameField.setColumns(10);
 
 		JLabel lblWelcomeToSports = new JLabel("Welcome to Sports Manager!");
 		lblWelcomeToSports.setFont(new Font("Dialog", Font.BOLD, 18));
@@ -85,13 +89,13 @@ public class GameOptionsWindow {
 		lblWelcomeToSports.setHorizontalAlignment(SwingConstants.CENTER);
 		frmSportsManager.getContentPane().add(lblWelcomeToSports);
 
-		lbltheLengthMust = new JLabel(
+		JLabel lbltheLengthMust = new JLabel(
 				"(The length must be between 3 and 15 characters and must not include special characters)");
 		lbltheLengthMust.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lbltheLengthMust.setBounds(20, 82, 595, 15);
 		frmSportsManager.getContentPane().add(lbltheLengthMust);
 
-		lblHowLongWould = new JLabel("How long would you like the season to last?");
+		JLabel lblHowLongWould = new JLabel("How long would you like the season to last?");
 		lblHowLongWould.setVerticalAlignment(SwingConstants.TOP);
 		lblHowLongWould.setHorizontalAlignment(SwingConstants.LEFT);
 		lblHowLongWould.setFont(new Font("Dialog", Font.BOLD, 16));
@@ -110,7 +114,7 @@ public class GameOptionsWindow {
 		slider.setBounds(431, 113, 411, 50);
 		frmSportsManager.getContentPane().add(slider);
 
-		lblPleaseChooseA = new JLabel("Please choose a difficulty:");
+		JLabel lblPleaseChooseA = new JLabel("Please choose a difficulty:");
 		lblPleaseChooseA.setVerticalAlignment(SwingConstants.TOP);
 		lblPleaseChooseA.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPleaseChooseA.setFont(new Font("Dialog", Font.BOLD, 16));
@@ -133,11 +137,11 @@ public class GameOptionsWindow {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				gui.game.setTotalWeeks(slider.getValue());
-				String teamName = textField.getText();
+				String teamName = teamNameField.getText();
 				if (!teamName.matches("[a-zA-Z]{3,15}")) {
 					JOptionPane.showMessageDialog(frmSportsManager, "Your team name is invalid", "Invalid Team Name",
 							JOptionPane.ERROR_MESSAGE);
-				} else if (athleteSlotsFilled != 4) { 
+				} else if (selectedButtons.size() != 4) { 
 					JOptionPane.showMessageDialog(frmSportsManager, "Please select four athletes", "Not Enough Athletes",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
@@ -166,12 +170,12 @@ public class GameOptionsWindow {
 		lblPleaseChooseFour.setBounds(10, 258, 448, 26);
 		frmSportsManager.getContentPane().add(lblPleaseChooseFour);
 		
-		JTextPane txtpnInfo = new JTextPane();
-		txtpnInfo.setText("No Athlete Selected");
-		txtpnInfo.setFont(new Font("Dialog", Font.PLAIN, 18));
-		txtpnInfo.setEditable(false);
-		txtpnInfo.setBounds(575, 275, 300, 250);
-		frmSportsManager.getContentPane().add(txtpnInfo);
+		athleteInfoBox = new JTextPane();
+		athleteInfoBox.setText("No Athlete Selected");
+		athleteInfoBox.setFont(new Font("Dialog", Font.PLAIN, 18));
+		athleteInfoBox.setEditable(false);
+		athleteInfoBox.setBounds(575, 275, 300, 250);
+		frmSportsManager.getContentPane().add(athleteInfoBox);
 		
 		JLabel lblAthleteInfo = new JLabel("Athlete Info");
 		lblAthleteInfo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -179,343 +183,76 @@ public class GameOptionsWindow {
 		lblAthleteInfo.setBounds(575, 234, 301, 44);
 		frmSportsManager.getContentPane().add(lblAthleteInfo);
 		
-		JLabel lblAthletesSelected = new JLabel("Athletes selected:");
-		lblAthletesSelected.setVerticalAlignment(SwingConstants.TOP);
-		lblAthletesSelected.setHorizontalAlignment(SwingConstants.LEFT);
-		lblAthletesSelected.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblAthletesSelected.setBounds(10, 420, 448, 26);
-		frmSportsManager.getContentPane().add(lblAthletesSelected);
-		
-		Athlete option1 = new Athlete(gui.game);
-		JButton btnAthlete1 = new JButton(option1.getName());
-		btnAthlete1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				txtpnInfo.setText(option1.toClubString());
-			}
-		});
+		// Add athlete buttons
+		JButton btnAthlete1 = new JButton();
+		setupAthleteButton(btnAthlete1);
 		btnAthlete1.setBounds(10, 294, 150, 50);
 		frmSportsManager.getContentPane().add(btnAthlete1);
 		
-		Athlete option2 = new Athlete(gui.game);
-		JButton btnAthlete2 = new JButton(option2.getName());
-		btnAthlete2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				txtpnInfo.setText(option2.toClubString());
-			}
-		});
+		JButton btnAthlete2 = new JButton();
+		setupAthleteButton(btnAthlete2);
 		btnAthlete2.setBounds(170, 294, 150, 50);
 		frmSportsManager.getContentPane().add(btnAthlete2);
 		
-		Athlete option3 = new Athlete(gui.game);
-		JButton btnAthlete3 = new JButton(option3.getName());
-		btnAthlete3.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				txtpnInfo.setText(option3.toClubString());
-			}
-		});
+		JButton btnAthlete3 = new JButton();
+		setupAthleteButton(btnAthlete3);
 		btnAthlete3.setBounds(330, 294, 150, 50);
 		frmSportsManager.getContentPane().add(btnAthlete3);
 		
-		Athlete option4 = new Athlete(gui.game);
-		JButton btnAthlete4 = new JButton(option4.getName());
-		btnAthlete4.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				txtpnInfo.setText(option4.toClubString());
-			}
-		});
+		JButton btnAthlete4 = new JButton();
+		setupAthleteButton(btnAthlete4);
 		btnAthlete4.setBounds(10, 354, 150, 50);
 		frmSportsManager.getContentPane().add(btnAthlete4);
 		
-		Athlete option5 = new Athlete(gui.game);
-		JButton btnAthlete5 = new JButton(option5.getName());
-		btnAthlete5.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				txtpnInfo.setText(option5.toClubString());
-			}
-		});
+		JButton btnAthlete5 = new JButton();
+		setupAthleteButton(btnAthlete5);
 		btnAthlete5.setBounds(170, 354, 150, 50);
 		frmSportsManager.getContentPane().add(btnAthlete5);
 		
-		Athlete option6 = new Athlete(gui.game);
-		JButton btnAthlete6 = new JButton(option6.getName());
-		btnAthlete6.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				txtpnInfo.setText(option6.toClubString());
-			}
-		});
+		JButton btnAthlete6 = new JButton();
+		setupAthleteButton(btnAthlete6);
 		btnAthlete6.setBounds(330, 354, 150, 50);
 		frmSportsManager.getContentPane().add(btnAthlete6);
-				
-		
-		JButton btnSelected1 = new JButton("");
-		btnSelected1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				if (athleteSlotsFilled >= 1) {
-					txtpnInfo.setText(selectedAthletes.get(0).toClubString());
-				}
-			}
-		});
-		btnSelected1.setBounds(10, 469, 150, 50);
-		if (selectedAthletes.size() >= 1) {
-			btnSelected1.setText(selectedAthletes.get(0).getName());
-		}
-		frmSportsManager.getContentPane().add(btnSelected1);
-		
-		JButton btnSelected2 = new JButton("");
-		btnSelected2.setBounds(170, 469, 150, 50);
-		btnSelected2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				if (athleteSlotsFilled >= 2) {
-					txtpnInfo.setText(selectedAthletes.get(1).toClubString());
-				}
-			}
-		});
-		if (selectedAthletes.size() >= 2) {
-			btnSelected2.setText(selectedAthletes.get(1).getName());
-		}
-		frmSportsManager.getContentPane().add(btnSelected2);
-		
-		JButton btnSelected3 = new JButton("");
-		btnSelected3.setBounds(10, 529, 150, 50);
-		btnSelected3.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				if (athleteSlotsFilled >= 3) {
-					txtpnInfo.setText(selectedAthletes.get(2).toClubString());
-				}
-			}
-		});
-		if (selectedAthletes.size() >= 3) {
-			btnSelected3.setText(selectedAthletes.get(2).getName());
-		}
-		frmSportsManager.getContentPane().add(btnSelected3);
-		
-		JButton btnSelected4 = new JButton("");
-		btnSelected4.setBounds(170, 529, 150, 50);
-		btnSelected4.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				if (athleteSlotsFilled == 4) {
-					txtpnInfo.setText(selectedAthletes.get(3).toClubString());
-				}
-			}
-		});
-		if (selectedAthletes.size() >= 4) {
-			btnSelected4.setText(selectedAthletes.get(3).getName());
-		}
-		frmSportsManager.getContentPane().add(btnSelected4);
-		
-		// Updates the UI to display the selected athletes
-		btnAthlete1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (athleteSlotsFilled == 4) {
-					JOptionPane.showMessageDialog(frmSportsManager, "You may only select four athletes", "Too Many Athletes",
-							JOptionPane.ERROR_MESSAGE);
-				} else if (!selectedAthletes.contains(option1)) {
-					selectedAthletes.add(option1);
-					athleteSlotsFilled += 1;
-					if (athleteSlotsFilled == 1) {
-						btnSelected1.setText(option1.getName());
-					} else if (athleteSlotsFilled == 2) {
-						btnSelected2.setText(option1.getName());
-					} else if (athleteSlotsFilled == 3) {
-						btnSelected3.setText(option1.getName());
-					} else {
-						btnSelected4.setText(option1.getName());
-					}
-				}
-			}
-		});
-		
-		btnAthlete2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (athleteSlotsFilled == 4) {
-					JOptionPane.showMessageDialog(frmSportsManager, "You may only select four athletes", "Too Many Athletes",
-							JOptionPane.ERROR_MESSAGE);
-				} else if (!selectedAthletes.contains(option2)) {
-					selectedAthletes.add(option2);
-					athleteSlotsFilled += 1;
-					if (athleteSlotsFilled == 1) {
-						btnSelected1.setText(option2.getName());
-					} else if (athleteSlotsFilled == 2) {
-						btnSelected2.setText(option2.getName());
-					} else if (athleteSlotsFilled == 3) {
-						btnSelected3.setText(option2.getName());
-					} else {
-						btnSelected4.setText(option2.getName());
-					}
-				}
-			}
-		});
-		
-		btnAthlete3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (athleteSlotsFilled == 4) {
-					JOptionPane.showMessageDialog(frmSportsManager, "You may only select four athletes", "Too Many Athletes",
-							JOptionPane.ERROR_MESSAGE);
-				} else if (!selectedAthletes.contains(option3)) {
-					selectedAthletes.add(option3);
-					athleteSlotsFilled += 1;
-					if (athleteSlotsFilled == 1) {
-						btnSelected1.setText(option3.getName());
-					} else if (athleteSlotsFilled == 2) {
-						btnSelected2.setText(option3.getName());
-					} else if (athleteSlotsFilled == 3) {
-						btnSelected3.setText(option3.getName());
-					} else {
-						btnSelected4.setText(option3.getName());
-					}
-				}
-			}
-		});
-		
-		btnAthlete4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (athleteSlotsFilled == 4) {
-					JOptionPane.showMessageDialog(frmSportsManager, "You may only select four athletes", "Too Many Athletes",
-							JOptionPane.ERROR_MESSAGE);
-				} else if (!selectedAthletes.contains(option4)) {
-					selectedAthletes.add(option4);
-					athleteSlotsFilled += 1;
-					if (athleteSlotsFilled == 1) {
-						btnSelected1.setText(option4.getName());
-					} else if (athleteSlotsFilled == 2) {
-						btnSelected2.setText(option4.getName());
-					} else if (athleteSlotsFilled == 3) {
-						btnSelected3.setText(option4.getName());
-					} else {
-						btnSelected4.setText(option4.getName());
-					}
-				}
-			}
-		});
-		
-		btnAthlete5.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (athleteSlotsFilled == 4) {
-					JOptionPane.showMessageDialog(frmSportsManager, "You may only select four athletes", "Too Many Athletes",
-							JOptionPane.ERROR_MESSAGE);
-				} else if (!selectedAthletes.contains(option5)) {
-					selectedAthletes.add(option5);
-					athleteSlotsFilled += 1;
-					if (athleteSlotsFilled == 1) {
-						btnSelected1.setText(option5.getName());
-					} else if (athleteSlotsFilled == 2) {
-						btnSelected2.setText(option5.getName());
-					} else if (athleteSlotsFilled == 3) {
-						btnSelected3.setText(option5.getName());
-					} else {
-						btnSelected4.setText(option5.getName());
-					}
-				}
-			}
-		});
-		
-		btnAthlete6.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (athleteSlotsFilled == 4) {
-					JOptionPane.showMessageDialog(frmSportsManager, "You may only select four athletes", "Too Many Athletes",
-							JOptionPane.ERROR_MESSAGE);
-				} else if (!selectedAthletes.contains(option6)) {
-					selectedAthletes.add(option6);
-					athleteSlotsFilled += 1;
-					if (athleteSlotsFilled == 1) {
-						btnSelected1.setText(option6.getName());
-					} else if (athleteSlotsFilled == 2) {
-						btnSelected2.setText(option6.getName());
-					} else if (athleteSlotsFilled == 3) {
-						btnSelected3.setText(option6.getName());
-					} else {
-						btnSelected4.setText(option6.getName());
-					}
-				}
-			}
-		});
-		
-		btnSelected1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (athleteSlotsFilled >= 1) {
-					selectedAthletes.remove(0);
-					athleteSlotsFilled -= 1;
-				}
-				if (athleteSlotsFilled == 0) {
-					btnSelected1.setText("");
-				} else if (athleteSlotsFilled == 1) {
-					btnSelected1.setText(selectedAthletes.get(0).getName());
-					btnSelected2.setText("");
-				} else if (athleteSlotsFilled == 2) {
-					btnSelected1.setText(selectedAthletes.get(0).getName());
-					btnSelected2.setText(selectedAthletes.get(1).getName());
-					btnSelected3.setText("");
-				} else if (athleteSlotsFilled == 3) {
-					btnSelected1.setText(selectedAthletes.get(0).getName());
-					btnSelected2.setText(selectedAthletes.get(1).getName());
-					btnSelected3.setText(selectedAthletes.get(2).getName());
-					btnSelected4.setText("");
-				}
-			}
-		});
-		
-		btnSelected2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (athleteSlotsFilled >= 2) {
-					selectedAthletes.remove(1);
-					athleteSlotsFilled -= 1;
-				}
-				if (athleteSlotsFilled == 1) {
-					btnSelected2.setText("");
-				} else if (athleteSlotsFilled == 2) {
-					btnSelected2.setText(selectedAthletes.get(1).getName());
-					btnSelected3.setText("");
-				} else if (athleteSlotsFilled == 3) {
-					btnSelected2.setText(selectedAthletes.get(1).getName());
-					btnSelected3.setText(selectedAthletes.get(2).getName());
-					btnSelected4.setText("");
-				}
-			}
-		});
-		
-		btnSelected3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (athleteSlotsFilled >= 3) {
-					selectedAthletes.remove(2);
-					athleteSlotsFilled -= 1;
-				}
-				if (athleteSlotsFilled == 2) {
-					btnSelected3.setText("");
-				} else if (athleteSlotsFilled == 3) {
-					btnSelected3.setText(selectedAthletes.get(2).getName());
-					btnSelected4.setText("");
-				}
-			}
-		});
-		
-		btnSelected4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (athleteSlotsFilled == 4) {
-					selectedAthletes.remove(3);
-					athleteSlotsFilled -= 1;
-				}
-				btnSelected4.setText("");
-			}
-		});
-		
-		JLabel lblclickToDeselect = new JLabel("(Click on an athlete to deselect it)");
-		lblclickToDeselect.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblclickToDeselect.setBounds(10, 444, 595, 15);
-		frmSportsManager.getContentPane().add(lblclickToDeselect);
-
 	}
 
 	public void closeWindow() {
 		frmSportsManager.dispose();
+	}
+	
+	void setupAthleteButton(JButton button) {
+		Athlete athlete = new Athlete(gui.game);
+		buttonAthleteMap.put(button, athlete);
+		button.setText(athlete.getName());
+		button.setFocusPainted(false);
+		button.setBorder(new BevelBorder(BevelBorder.RAISED));
+		
+		// hover listener
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				athleteInfoBox.setText(buttonAthleteMap.get(button).toClubString());
+			}
+		});
+		
+		// click listener
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (!selectedButtons.contains(button)) {
+					if (selectedButtons.size() >= 4) {
+						JOptionPane.showMessageDialog(frmSportsManager, 
+								"You may only select four athletes", 
+								"Too Many Athletes",
+								JOptionPane.ERROR_MESSAGE);
+					} else {
+						button.setBorder(new BevelBorder(BevelBorder.LOWERED));
+						selectedButtons.add(button);
+					}
+
+				} else {
+					button.setBorder(new BevelBorder(BevelBorder.RAISED));
+					selectedButtons.remove(button);
+				}
+			}
+		});
 	}
 }
