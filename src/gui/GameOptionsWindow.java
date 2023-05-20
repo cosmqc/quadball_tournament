@@ -137,6 +137,9 @@ public class GameOptionsWindow {
 				if (!teamName.matches("[a-zA-Z]{3,15}")) {
 					JOptionPane.showMessageDialog(frmSportsManager, "Your team name is invalid", "Invalid Team Name",
 							JOptionPane.ERROR_MESSAGE);
+				} else if (athleteSlotsFilled != 4) { 
+					JOptionPane.showMessageDialog(frmSportsManager, "Please select four athletes", "Not Enough Athletes",
+							JOptionPane.ERROR_MESSAGE);
 				} else {
 					gui.closeGameOptions(selfRef, lblWhatIsYour.getText());
 				}
