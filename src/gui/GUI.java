@@ -75,6 +75,16 @@ public class GUI {
 		launchBaseWindow();
 	}
 	
+	public void launchRestWeekWindow(BaseWindow baseWindow) {
+		baseWindow.closeWindow();
+		RestWeekWindow restWeekWindow = new RestWeekWindow(this);
+	}
+	
+	public void closeRestWeekWindow(RestWeekWindow restWeekWindow) {
+		restWeekWindow.closeWindow();
+		launchBaseWindow();
+	}
+	
 	public void launchMatchWindow(StadiumWindow stadiumWindow) {
 		stadiumWindow.closeWindow();
 		MatchWindow matchWindow = new MatchWindow(this);

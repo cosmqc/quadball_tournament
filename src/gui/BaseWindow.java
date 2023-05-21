@@ -81,6 +81,11 @@ public class BaseWindow {
 		frmMainScreen.getContentPane().add(btnGoToStadium);
 		
 		JButton btnTakeABye = new JButton("Take A Bye");
+		btnTakeABye.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				gui.launchRestWeekWindow(selfRef);
+			}
+		});
 		btnTakeABye.setBounds(576, 552, 176, 44);
 		frmMainScreen.getContentPane().add(btnTakeABye);
 	}
