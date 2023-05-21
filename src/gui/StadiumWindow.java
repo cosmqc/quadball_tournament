@@ -159,7 +159,7 @@ public class StadiumWindow {
 				}
 			}
 		});
-		btnBegin.setBounds(695, 559, 176, 44);
+		btnBegin.setBounds(695, 552, 176, 44);
 		frmStadium.getContentPane().add(btnBegin);
 		
 		JButton btnBack = new JButton("Back");
@@ -168,7 +168,7 @@ public class StadiumWindow {
 				gui.closeStadiumWindow(selfRef);
 			}
 		});
-		btnBack.setBounds(509, 559, 176, 44);
+		btnBack.setBounds(509, 552, 176, 44);
 		frmStadium.getContentPane().add(btnBack);
 		
 	}

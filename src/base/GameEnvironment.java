@@ -53,5 +53,14 @@ public class GameEnvironment {
 	public String getDifficulty() {
 		return difficulty;
 	}
+	
+	public void nextWeek() {
+		currentWeek += 1;
+		if (currentWeek > totalWeeks) {
+			// TODO: End of game!!
+		}
+		playerMoney += 1000;
+		shopManager.refreshShop(this);		
+	}
 
 }

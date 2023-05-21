@@ -70,7 +70,7 @@ public class GameOptionsWindow {
 		frmSportsManager.getContentPane().add(teamNameField);
 		teamNameField.setColumns(10);
 
-		JLabel lblWelcomeToSports = new JLabel("Welcome to Sports Manager!");
+		JLabel lblWelcomeToSports = new JLabel("Welcome to Quadball Quest!");
 		lblWelcomeToSports.setFont(new Font("Dialog", Font.BOLD, 18));
 		lblWelcomeToSports.setBounds(0, 0, 900, 44);
 		lblWelcomeToSports.setHorizontalAlignment(SwingConstants.CENTER);
