@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.ListModel;
 
 public class StadiumWindow {
@@ -148,7 +149,16 @@ public class StadiumWindow {
 		btnAthlete3_4.setBounds(695, 54, 150, 110);
 		frmStadium.getContentPane().add(btnAthlete3_4);
 		
-		JButton btnBegin = new JButton("Begin!");
+		JButton btnBegin = new JButton("Prepare For Battle!");
+		btnBegin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int choice = JOptionPane.showConfirmDialog(frmStadium, "Are You Sure?\nYou can't turn back after this", "Confirm Match",
+						JOptionPane.YES_NO_OPTION);
+				if (choice == JOptionPane.YES_OPTION) {
+					gui.launchMatchWindow(selfRef);
+				}
+			}
+		});
 		btnBegin.setBounds(695, 559, 176, 44);
 		frmStadium.getContentPane().add(btnBegin);
 		

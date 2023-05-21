@@ -74,6 +74,11 @@ public class GUI {
 		stadiumWindow.closeWindow();
 		launchBaseWindow();
 	}
+	
+	public void launchMatchWindow(StadiumWindow stadiumWindow) {
+		stadiumWindow.closeWindow();
+		MatchWindow matchWindow = new MatchWindow(this);
+	}
 
 	public static void main(String[] args) {
 		// creates objects to save state, and to handle window management
