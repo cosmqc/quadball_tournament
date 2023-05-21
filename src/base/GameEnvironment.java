@@ -17,6 +17,8 @@ public class GameEnvironment {
 	boolean isRunning = true;
 	public int numPlayers = 4;
 	public int numBench = 2;
+	public int numShopAthleteSlots = 6;
+	public int numShopItemSlots = 6;
 
 	// variable game options
 	String difficulty;

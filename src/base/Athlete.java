@@ -41,21 +41,6 @@ public class Athlete extends Purchasable {
 		this.stamina = this.maxStamina = stamina;
 	}
 
-
-	public String toDebugString() {
-		if (position != null) {
-			return String.format("Athlete %s in position %s with stats (%d, %d, %d, %d)", name, position, offence,
-					defence, speed, stamina);
-		} else {
-			return String.format("Athlete %s without a position with stats (%d, %d, %d, %d)", name, offence, defence,
-					speed, stamina);
-		}
-	}
-
-	public String toString() {
-		return String.format("%s OFF%d DEF%d SPE%d STA%d", getName(), offence, defence, speed, stamina);
-	}
-
 	public String getRawName() {
 		return firstName + " " + lastName;
 	}
@@ -164,7 +149,7 @@ public class Athlete extends Purchasable {
 
 	public Item unequipItem() {
 		if (equippedItem == null) {
-			throw new NoSuchElementException(String.format("Athlete %s has no item, so none can be removed.", name));
+			throw new NoSuchElementException(String.format("Athlete %s has no item, so none can be removed.", getName()));
 		}
 		Item temp = equippedItem;
 		equippedItem = null;
@@ -172,7 +157,7 @@ public class Athlete extends Purchasable {
 	}
 
 	public void buy() {
-		System.out.println(String.format("%s - Bought Athlete", name));
+		System.out.println(String.format("%s - Bought Athlete", getName()));
 		try {
 			game.playerTeam.addAthlete(this);
 		} catch (TeamFullException e){
@@ -184,7 +169,7 @@ public class Athlete extends Purchasable {
 
 	public void sell() {
 		// TODO: Athlete/Item sold reappears in shop, but at a higher price
-		System.out.println(String.format("%s - Sell Athlete", name));
+		System.out.println(String.format("%s - Sell Athlete", getName()));
 		try {
 			game.playerTeam.removeAthlete(this);
 		} catch (IllegalArgumentException e) {
@@ -226,5 +211,19 @@ public class Athlete extends Purchasable {
 			text += itemModifer + ")";
 		}
 		return text;
+	}
+	
+	public String toDebugString() {
+		if (position != null) {
+			return String.format("Athlete %s in position %s with stats (%d, %d, %d, %d)", getName(), position, offence,
+					defence, speed, stamina);
+		} else {
+			return String.format("Athlete %s without a position with stats (%d, %d, %d, %d)", getName(), offence, defence,
+					speed, stamina);
+		}
+	}
+
+	public String toString() {
+		return String.format("%s OFF%d DEF%d SPE%d STA%d", getName(), offence, defence, speed, stamina);
 	}
 }

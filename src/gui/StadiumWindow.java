@@ -10,10 +10,10 @@ import javax.swing.SwingConstants;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.ListModel;
 
 public class StadiumWindow {
 	private GUI gui;
@@ -58,7 +58,7 @@ public class StadiumWindow {
 		frmStadium.getContentPane().add(lblWeek);
 		
 		DefaultListModel<Athlete> athleteTeamModel = new DefaultListModel<>();
-		athleteTeamModel.addAll(gui.game.playerTeam.getAthletes());
+		athleteTeamModel.addAll(Arrays.asList(game.playerTeam.getAthletes()));
 		
 		JList<Athlete> athleteTeamList = new JList<Athlete>(athleteTeamModel);
 		athleteTeamList.setBounds(10, 228, 360, 285);

@@ -240,9 +240,11 @@ public class GameOptionsWindow {
 
 		gui.game.setTotalWeeks(weekSlider.getValue());
 		gui.game.setDifficulty(difficultyButtons.getSelection().getActionCommand());
-		ArrayList<Athlete> selectedAthletes = new ArrayList<Athlete>();
+		Athlete[] selectedAthletes = new Athlete[gui.game.numPlayers];
+		int i = 0;
 		for (JButton button : selectedButtons) {
-			selectedAthletes.add(buttonAthleteMap.get(button));
+			selectedAthletes[i] = buttonAthleteMap.get(button);
+			i++;
 		}
 		gui.game.playerTeam = new Team(gui.game, teamNameField.getText(), selectedAthletes, new ArrayList<Athlete>());
 		gui.closeGameOptions(selfRef);

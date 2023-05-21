@@ -1,7 +1,7 @@
 package gui;
 
 import base.*;
-import exceptions.TeamFullException;
+import exceptions.InvalidSwapException;
 
 import java.awt.EventQueue;
 
@@ -19,15 +19,18 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.awt.event.ActionEvent;
 import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
+import javax.swing.ListSelectionModel;
 
 public class ClubWindow {
 	GUI gui;
 	ClubWindow selfRef;
 	JFrame frmClub;
+	Athlete oldSelectedAthlete;
 	Athlete selectedAthlete;
 	Item selectedItem;
 
@@ -77,8 +80,8 @@ public class ClubWindow {
 		tabbedPane.setBounds(10, 10, 866, 593);
 		frmClub.getContentPane().add(tabbedPane);
 
-		DefaultListModel<Athlete> athleteTeamModel = new DefaultListModel<>();
-		athleteTeamModel.addAll(gui.game.playerTeam.getAthletes());
+		DefaultListModel<Athlete> athleteTeamModel = new DefaultListModel<Athlete>();
+		athleteTeamModel.addAll(Arrays.asList(gui.game.playerTeam.getAthletes()));
 
 		JPanel viewPanel = new JPanel();
 		tabbedPane.addTab("View Team", null, viewPanel, null);
@@ -91,10 +94,11 @@ public class ClubWindow {
 		viewPanel.add(lblAthletesInTeam);
 
 		JList<Athlete> athleteTeamList = new JList<Athlete>(athleteTeamModel);
+		athleteTeamList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		athleteTeamList.setBounds(10, 53, 300, 250);
 		viewPanel.add(athleteTeamList);
 
-		DefaultListModel<Athlete> athleteReserveModel = new DefaultListModel<>();
+		DefaultListModel<Athlete> athleteReserveModel = new DefaultListModel<Athlete>();
 		athleteReserveModel.addAll(gui.game.playerTeam.getSubs());
 
 		JLabel lblAthletesInReserve = new JLabel("Athletes In Reserve");
@@ -113,7 +117,7 @@ public class ClubWindow {
 		txtpnInfo.setBounds(550, 53, 300, 250);
 		viewPanel.add(txtpnInfo);
 		txtpnInfo.setText("No Athlete Selected");
-
+		
 		athleteTeamList.addListSelectionListener(new ListSelectionListener() {
 
 			public void valueChanged(ListSelectionEvent selection) {
@@ -133,7 +137,6 @@ public class ClubWindow {
 		athleteReserveList.addListSelectionListener(new ListSelectionListener() {
 
 			public void valueChanged(ListSelectionEvent selection) {
-				// removes selection from the other list
 				athleteTeamList.clearSelection();
 				if (!selection.getValueIsAdjusting()) {
 					selectedAthlete = athleteReserveList.getSelectedValue();
@@ -152,55 +155,53 @@ public class ClubWindow {
 		lblAthleteInfo.setBounds(550, 12, 301, 44);
 		viewPanel.add(lblAthleteInfo);
 
-		JButton btnSubOut = new JButton("Sub Out");
-		btnSubOut.addActionListener(new ActionListener() {
+		JButton btnSwapUp = new JButton("↑");
+		btnSwapUp.setFont(new Font("Tahoma", Font.BOLD, 30));
+		btnSwapUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (athleteTeamList.getSelectedValue() == null) {
-					JOptionPane.showMessageDialog(frmClub, "Please select an athlete to sub out", "No Athlete Selected",
-							JOptionPane.ERROR_MESSAGE);
-				} else {
-					Athlete athlete = athleteTeamList.getSelectedValue();
+				if (selectedAthlete != null) {
 					try {
-						gui.game.playerTeam.bench(athlete);
+						gui.game.playerTeam.swapUp(selectedAthlete);
 						refreshAthleteList(athleteTeamModel);
 						refreshSubList(athleteReserveModel);
 					} catch (IllegalArgumentException error) {
 						System.out.println(error);
-						// TODO: display error. backend sub will not have gone through but that needs to
-						// be shown to the player
-					}
-				}
-			}
-		});
-		btnSubOut.setBounds(320, 258, 97, 44);
-		viewPanel.add(btnSubOut);
-
-		JButton btnSubIn = new JButton("Sub In");
-		btnSubIn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (athleteReserveList.getSelectedValue() == null) {
-					JOptionPane.showMessageDialog(frmClub, "Please select an athlete to sub in", "No Athlete Selected",
-							JOptionPane.ERROR_MESSAGE);
-				} else {
-					Athlete athlete = athleteReserveList.getSelectedValue();
-					try {
-						gui.game.playerTeam.promote(athlete);
-						refreshAthleteList(athleteTeamModel);
-						refreshSubList(athleteReserveModel);
-					} catch (TeamFullException error) {
-						JOptionPane.showMessageDialog(frmClub, error.getMessage(), "Team Full!",
+						JOptionPane.showMessageDialog(frmClub, error.getMessage(), "No Athlete Selected",
 								JOptionPane.ERROR_MESSAGE);
-					} catch (IllegalArgumentException error) {
-						System.out.println(error);
-						System.exit(1);
-						// TODO: display error. backend sub will not have gone through but that needs to
-						// be shown to the player
+					} catch (InvalidSwapException error) {
+						JOptionPane.showMessageDialog(frmClub, error.getMessage(), "Cannot move Athlete",
+								JOptionPane.ERROR_MESSAGE);
 					}
+					txtpnInfo.setText("No Athlete selected");
 				}
 			}
 		});
-		btnSubIn.setBounds(320, 462, 97, 44);
-		viewPanel.add(btnSubIn);
+		btnSwapUp.setBounds(320, 279, 97, 44);
+		viewPanel.add(btnSwapUp);
+
+		JButton btnSwapDown = new JButton("↓");
+		btnSwapDown.setFont(new Font("Tahoma", Font.BOLD, 30));
+		btnSwapDown.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (selectedAthlete != null) {
+					try {
+						gui.game.playerTeam.swapDown(selectedAthlete);
+						refreshAthleteList(athleteTeamModel);
+						refreshSubList(athleteReserveModel);
+					} catch (IllegalArgumentException error) {
+						System.out.println(error);
+						JOptionPane.showMessageDialog(frmClub, error.getMessage(), "No Athlete Selected",
+								JOptionPane.ERROR_MESSAGE);
+					} catch (InvalidSwapException error) {
+						JOptionPane.showMessageDialog(frmClub, error.getMessage(), "Cannot move Athlete",
+								JOptionPane.ERROR_MESSAGE);
+					}
+					txtpnInfo.setText("No Athlete selected");
+				}
+			}
+		});
+		btnSwapDown.setBounds(320, 334, 97, 44);
+		viewPanel.add(btnSwapDown);
 
 		itemButton = new JButton("Unequip Item");
 		itemButton.setBounds(705, 313, 140, 37);
@@ -208,6 +209,8 @@ public class ClubWindow {
 			public void actionPerformed(ActionEvent e) {
 				Item item = selectedAthlete.unequipItem();
 				gui.game.itemsInInventory.add(item);
+				refreshItemButton();
+				txtpnInfo.setText(selectedAthlete.toClubString());
 			}
 		});
 		viewPanel.add(itemButton);
@@ -285,7 +288,7 @@ public class ClubWindow {
 				} else {
 					Athlete athleteChosen = (Athlete) JOptionPane.showInputDialog(frmClub,
 							"Which athlete would you like to give the item to?", "Use Item", JOptionPane.PLAIN_MESSAGE,
-							null, gui.game.playerTeam.getAllPlayers().toArray(), null);
+							null, gui.game.playerTeam.getAthletes(), null);
 					if (athleteChosen != null) {
 						Item oldItem = athleteChosen.equipItem(itemList.getSelectedValue());
 						if (oldItem != null) {
@@ -302,12 +305,18 @@ public class ClubWindow {
 		btnUseItem.setBounds(320, 257, 126, 44);
 		inventoryPanel.add(btnUseItem);
 
-		// makes sure something can't be selected on another tab, reduces edge cases
+		// refresh all on tab change
 		tabbedPane.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				selectedAthlete = null;
+				refreshNickButton();
+				refreshAthleteList(athleteTeamModel);
+				refreshSubList(athleteReserveModel);
+
 				selectedItem = null;
+				txtpnItemInfo.setText("No item selected");
 				refreshItemButton();
+				refreshItemList(inventoryModel);
 			}
 		});
 
@@ -337,7 +346,7 @@ public class ClubWindow {
 
 	public void refreshAthleteList(DefaultListModel<Athlete> list) {
 		list.removeAllElements();
-		list.addAll(gui.game.playerTeam.getAthletes());
+		list.addAll(Arrays.asList(gui.game.playerTeam.getAthletes()));
 		frmClub.repaint();
 	}
 

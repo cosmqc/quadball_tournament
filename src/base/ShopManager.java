@@ -19,10 +19,10 @@ public class ShopManager {
 		// remove current purchasables
 		athletesInShop.removeAll(athletesInShop);
 		itemsInShop.removeAll(itemsInShop);
-		for (int i = 0; i <= 3; i++) {
+		for (int i = 0; i <= game.numShopAthleteSlots; i++) {
 			athletesInShop.add(new Athlete(game));
 		}
-		for (int i = 0; i <= 3; i++) {
+		for (int i = 0; i <= game.numShopItemSlots; i++) {
 			itemsInShop.add(game.itemManager.randomItem());
 		}
 	}
