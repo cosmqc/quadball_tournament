@@ -210,14 +210,8 @@ public class GameOptionsWindow {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!selectedButtons.contains(button)) {
-					if (selectedButtons.size() >= 4) {
-						JOptionPane.showMessageDialog(frmSportsManager, "You may only select four athletes",
-								"Too Many Athletes", JOptionPane.ERROR_MESSAGE);
-					} else {
-						button.setBorder(new BevelBorder(BevelBorder.LOWERED));
-						selectedButtons.add(button);
-					}
-
+					button.setBorder(new BevelBorder(BevelBorder.LOWERED));
+					selectedButtons.add(button);
 				} else {
 					button.setBorder(new BevelBorder(BevelBorder.RAISED));
 					selectedButtons.remove(button);
@@ -238,8 +232,8 @@ public class GameOptionsWindow {
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		if (selectedButtons.size() < 4) {
-			JOptionPane.showMessageDialog(frmSportsManager, "Please select four athletes", "Not Enough Athletes",
+		if (selectedButtons.size() != 4) {
+			JOptionPane.showMessageDialog(frmSportsManager, "Please select exactly four athletes", "Not Enough Athletes",
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
