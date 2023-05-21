@@ -64,6 +64,16 @@ public class GUI {
 		clubWindow.closeWindow();
 		launchBaseWindow();
 	}
+	
+	public void launchStadiumWindow(BaseWindow baseWindow) {
+		baseWindow.closeWindow();
+		StadiumWindow stadiumWindow = new StadiumWindow(this);
+	}
+	
+	public void closeStadiumWindow(StadiumWindow stadiumWindow) {
+		stadiumWindow.closeWindow();
+		launchBaseWindow();
+	}
 
 	public static void main(String[] args) {
 		// creates objects to save state, and to handle window management

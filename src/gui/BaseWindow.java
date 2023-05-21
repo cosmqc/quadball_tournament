@@ -72,6 +72,11 @@ public class BaseWindow {
 		frmMainScreen.getContentPane().add(btnGoToClub);
 		
 		JButton btnGoToStadium = new JButton("Go To Stadium");
+		btnGoToStadium.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				gui.launchStadiumWindow(selfRef);
+			}
+		});
 		btnGoToStadium.setBounds(388, 552, 176, 44);
 		frmMainScreen.getContentPane().add(btnGoToStadium);
 		
