@@ -296,7 +296,7 @@ public class ClubWindow {
 				}
 			}
 		});
-		btnUseItem.setBounds(320, 257, 126, 44);
+		btnUseItem.setBounds(320, 257, 135, 44);
 		inventoryPanel.add(btnUseItem);
 
 		// refresh all on tab change
