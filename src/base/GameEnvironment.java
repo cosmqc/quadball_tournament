@@ -14,6 +14,10 @@ public class GameEnvironment {
 	public int numMatches = 5;
 	public int minAthletePrice = 10;
 	public int maxAthletePrice = 20;
+	public int maxTeamNameLength = 18; // dependant on size of boxes in Stadium
+	public int maxAthleteNameLength = 22; // dependant on size of box in Stadium when debug string added
+	
+	
 	// variable game options
 	String difficulty;
 	int totalWeeks;

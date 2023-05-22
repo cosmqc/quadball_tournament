@@ -225,6 +225,13 @@ public class ClubWindow {
 				String nick = (String) JOptionPane.showInputDialog(frmClub,
 						"What do you want to nickname " + selectedAthlete.getRawName() + "?", "");
 				if (nick != null) {
+					while (nick.length() > gui.game.maxAthleteNameLength) {
+						JOptionPane.showMessageDialog(frmClub,
+								"Entered nickname is too long. Max length is " + gui.game.maxAthleteNameLength,
+								"Nickname too long", JOptionPane.ERROR_MESSAGE);
+						nick = (String) JOptionPane.showInputDialog(frmClub,
+								"What do you want to nickname " + selectedAthlete.getRawName() + "?", "");
+					}
 					if (nick.isBlank()) {
 						nick = null;
 					}
@@ -313,6 +320,7 @@ public class ClubWindow {
 		tabbedPane.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				selectedAthlete = null;
+				athleteInfo.setText("No athlete selected");
 				refreshNickButton();
 				refreshAthleteList(athleteTeamModel);
 				refreshSubList(athleteReserveModel);

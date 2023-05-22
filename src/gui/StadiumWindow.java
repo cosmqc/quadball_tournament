@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.AbstractListModel;
 
 public class StadiumWindow {
 	private GUI gui;
@@ -207,7 +208,7 @@ public class StadiumWindow {
 class StadiumListCellRenderer extends DefaultListCellRenderer {
 	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 		JLabel c = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-		c.setText(((Athlete) value).toExtendedString());
+		c.setText(((Athlete) value).toStadiumString());
 		return c;
 	}
 }

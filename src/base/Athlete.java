@@ -21,8 +21,14 @@ public class Athlete extends Purchasable {
 	// randomly generated
 	public Athlete(GameEnvironment game) {
 		this.game = game;
+		
+		// ensures length of full name will fit on a line
 		this.firstName = game.randomManager.randomValidName("src/resources/firstnames", game.namesInUse);
 		this.lastName = game.randomManager.randomValidName("src/resources/lastnames", game.namesInUse);
+		while (getRawName().length() > game.maxAthleteNameLength) {
+			this.firstName = game.randomManager.randomValidName("src/resources/firstnames", game.namesInUse);
+			this.lastName = game.randomManager.randomValidName("src/resources/lastnames", game.namesInUse);
+		}
 		this.offence = game.randomManager.generateNum(1, 10);
 		this.defence = game.randomManager.generateNum(1, 10);
 		this.speed = game.randomManager.generateNum(1, 10);
@@ -30,7 +36,16 @@ public class Athlete extends Purchasable {
 		this.price = game.randomManager.generateNum(game.minAthletePrice, game.maxAthletePrice);
 
 	}
-
+	//debug
+	public Athlete(GameEnvironment game, String firstName) {
+		this.firstName = firstName;
+		this.lastName = "";
+		this.offence = 10;
+		this.defence = 10;
+		this.speed = 10;
+		this.stamina = this.maxStamina = 10010;
+		this.price = game.randomManager.generateNum(game.minAthletePrice, game.maxAthletePrice);
+	}
 	// hardcoded, just for debug
 	public Athlete(GameEnvironment game, String firstName, String lastName, int offence, int defence, int speed,
 			int stamina, int maxStamina) {
@@ -217,13 +232,20 @@ public class Athlete extends Purchasable {
 		return text;
 	}
 
-	public String toExtendedString() {
-		return String.format("%s OFF%d DEF%d SPE%d STA%d", getName(), getOffence(), getDefence(), getSpeed(),
-				getStamina());
+	public String toDebugString() {
+		return String.format("OFF%d DEF%d SPE%d STA%d/%d", getOffence(), getDefence(), getSpeed(), getStamina(), getMaxStamina());
 	}
 	
 	public String toShopString() {
 		return String.format("%s - $%d", getName(), getPrice());
+	}
+	
+	public String toStadiumString() {
+		if (nickName != null) {
+			return nickName + " " + toDebugString();
+		} else {
+			return getRawName() + " " + toDebugString();
+		}
 	}
 	
 	public String toString() {

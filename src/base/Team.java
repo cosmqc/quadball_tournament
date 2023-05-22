@@ -169,6 +169,10 @@ public class Team {
 	String generateValidName() {
 		String country = game.randomManager.randomValidName("src/resources/countrynames", game.teamsInUse);
 		String team = game.randomManager.randomValidName("src/resources/teamnames", game.teamsInUse);
+		while (country.length() + team.length() > game.maxTeamNameLength) {
+			country = game.randomManager.randomValidName("src/resources/countrynames", game.teamsInUse);
+			team = game.randomManager.randomValidName("src/resources/teamnames", game.teamsInUse);
+		}
 		return country + " " + team;
 	}
 
