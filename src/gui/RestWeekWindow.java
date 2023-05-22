@@ -120,6 +120,9 @@ public class RestWeekWindow {
 				int choice = JOptionPane.showConfirmDialog(frmRestWeek, "Are You Sure?", "Skip Week",
 						JOptionPane.YES_NO_OPTION);
 				if (choice == JOptionPane.YES_OPTION) {
+					if (comboBox.getSelectedIndex() != 0) {
+						((Athlete) comboBox.getSelectedItem()).boostStats();
+					}
 					gui.game.nextWeek();
 					gui.closeRestWeekWindow(selfRef);
 				}

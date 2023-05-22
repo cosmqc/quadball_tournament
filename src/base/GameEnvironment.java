@@ -62,6 +62,12 @@ public class GameEnvironment {
 		//TODO: calculate stats to decide match winner
 	}
 	
+	public void resetTeamStamina(Team team) {
+		for (Athlete athlete: team.athletes) {
+			athlete.resetStamina();
+		}
+	}
+	
 	public void nextWeek() {
 		currentWeek += 1;
 		if (currentWeek > totalWeeks) {

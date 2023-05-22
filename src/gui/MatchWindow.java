@@ -12,6 +12,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.JSeparator;
+import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
 
 public class MatchWindow {
 	private GUI gui;
@@ -156,6 +158,11 @@ public class MatchWindow {
 		lblStamina_1_2.setFont(new Font("Dialog", Font.PLAIN, 18));
 		lblStamina_1_2.setBounds(12, 440, 440, 44);
 		frmStadium.getContentPane().add(lblStamina_1_2);
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new LineBorder(new Color(0, 0, 0), 3));
+		panel.setBounds(448, 112, 3, 410);
+		frmStadium.getContentPane().add(panel);
 		
 		
 		
