@@ -42,7 +42,7 @@ public class Item extends Purchasable {
 	public String toString() {
 		// return String.format("%s (%s, %s, %s, %s) %d %s", name, effect[0], effect[1],
 		// effect[2], effect[3], price, description);
-		return String.format("%s OFF%d DEF%d SPE%d STA%d", name, effect[0], effect[1], effect[2], effect[3]);
+		return name;
 	}
 
 	public String getClubString() {
