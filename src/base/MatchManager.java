@@ -19,6 +19,14 @@ public class MatchManager {
 		}
 	}
 	
+	public int winMoney() {
+		return game.randomManager.randomMoneyValue(15, 20);
+	}
+	
+	public int lossMoney() {
+		return game.randomManager.randomMoneyValue(3, 7);
+	}
+	
 	public boolean matchWon(Team yourTeam, Team enemyTeam) {
 		/* Calculates the winner based on one stat per player, with a small random element */
 		int points = 0;

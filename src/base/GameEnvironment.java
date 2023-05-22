@@ -63,12 +63,12 @@ public class GameEnvironment {
 		}
 	}
 	
-	public void nextWeek() {
+	public void nextWeek(int moneyGained) {
 		currentWeek += 1;
 		if (currentWeek > totalWeeks) {
 			// TODO: End of game!!
 		}
-		playerMoney += 1000;
+		playerMoney += moneyGained;
 		shopManager.refreshShop(this);		
 		matchManager.refreshMatches(this);
 	}

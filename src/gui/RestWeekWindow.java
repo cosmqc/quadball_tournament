@@ -123,7 +123,7 @@ public class RestWeekWindow {
 					if (comboBox.getSelectedIndex() != 0) {
 						((Athlete) comboBox.getSelectedItem()).boostStats();
 					}
-					gui.game.nextWeek();
+					gui.game.nextWeek(10);
 					gui.closeRestWeekWindow(selfRef);
 				}
 			}
