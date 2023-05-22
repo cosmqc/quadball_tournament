@@ -3,8 +3,6 @@ package gui;
 import base.*;
 import exceptions.InvalidSwapException;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -18,7 +16,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.naming.directory.InvalidAttributesException;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -27,7 +24,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
-import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 
 public class ClubWindow {

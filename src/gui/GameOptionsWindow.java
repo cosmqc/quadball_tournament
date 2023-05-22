@@ -186,11 +186,7 @@ public class GameOptionsWindow {
 		btnAthlete6.setBounds(330, 405, 150, 110);
 		frmSportsManager.getContentPane().add(btnAthlete6);
 	}
-
-	public void closeWindow() {
-		frmSportsManager.dispose();
-	}
-
+	
 	void setupAthleteButton(JButton button) {
 		Athlete athlete = new Athlete(gui.game);
 		buttonAthleteMap.put(button, athlete);
@@ -249,4 +245,9 @@ public class GameOptionsWindow {
 		gui.game.playerTeam = new Team(gui.game, teamNameField.getText(), selectedAthletes, new ArrayList<Athlete>());
 		gui.closeGameOptions(selfRef);
 	}
+	
+	public void closeWindow() {
+		frmSportsManager.dispose();
+	}
+
 }

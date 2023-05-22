@@ -4,6 +4,20 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class GameEnvironment {
+	
+	// hardcoded game options
+	boolean isRunning = true;
+	public int numPlayers = 4;
+	public int numBench = 2;
+	public int numShopAthleteSlots = 6;
+	public int numShopItemSlots = 6;
+	public int numMatches = 5;
+	public int minAthletePrice = 10;
+	public int maxAthletePrice = 20;
+	// variable game options
+	String difficulty;
+	int totalWeeks;
+
 	// keeps track of which player names and team names have been used so they don't repeat
 	public List<String> namesInUse = new ArrayList<String>();
 	public List<String> teamsInUse = new ArrayList<String>();
@@ -13,18 +27,6 @@ public class GameEnvironment {
 	public ItemManager itemManager = new ItemManager(this);
 	public ShopManager shopManager = new ShopManager(this);
 	public MatchManager matchManager = new MatchManager(this);
-	
-	// hardcoded game options
-	boolean isRunning = true;
-	public int numPlayers = 4;
-	public int numBench = 2;
-	public int numShopAthleteSlots = 6;
-	public int numShopItemSlots = 6;
-	public int numMatches = 5;
-
-	// variable game options
-	String difficulty;
-	int totalWeeks;
 	
 	// game state
 	int currentWeek = 1;

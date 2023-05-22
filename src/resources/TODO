@@ -1,4 +1,6 @@
  -  When clicking between different JLists, 1st click -> thin grey box then 2nd click -> actually selected. this shouldn't happen.
  
- -  Take a bye training menu, week adjust shouldnt be too hard at the same time.
+ -  Athlete/Item sold reappears in shop, but at a higher price
  
+ -  Condense (Buy Athlete) / (Buy Item) -> Buy
+ -  Condense (Sell Athlete) / (Sell Item) -> Sell

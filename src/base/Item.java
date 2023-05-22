@@ -1,5 +1,7 @@
 package base;
 
+import exceptions.NotEnoughMoneyException;
+
 public class Item extends Purchasable {
 	GameEnvironment game;
 	String description;
@@ -48,16 +50,19 @@ public class Item extends Purchasable {
 				description, offence, defence, speed, stamina);
 	}
 
-	public void buy() {
-		System.out.println(String.format("%s - Bought Item", name));
-		game.itemsInInventory.add(this);
-		game.shopManager.itemsInShop.remove(this);
+	public void buy() throws NotEnoughMoneyException {
+		if (game.playerMoney >= getPrice()) {
+			game.itemsInInventory.add(this);
+			game.shopManager.itemsInShop.remove(this);
+			game.playerMoney -= getPrice();
+		} else {
+			throw new NotEnoughMoneyException(game,
+					String.format("You don't have enough money to buy the %s", getName()));
+		}
 	}
 
 	public void sell() {
-		// TODO: Currently, if an item is sold to shop, it cannot be bought back.
-		// Thoughts?
-		System.out.println(String.format("%s - Sell Item", name));
 		game.itemsInInventory.remove(this);
+		game.playerMoney += getPrice();
 	}
 }

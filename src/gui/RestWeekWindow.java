@@ -7,17 +7,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.ListModel;
 import javax.swing.JComboBox;
-import javax.swing.JCheckBox;
 
 public class RestWeekWindow {
 	private GUI gui;

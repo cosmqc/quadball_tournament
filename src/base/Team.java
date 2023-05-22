@@ -1,7 +1,6 @@
 package base;
 
 import java.util.List;
-import java.util.Map;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -55,11 +54,11 @@ public class Team {
 	public Athlete[] getAthletes() {
 		return (Athlete[]) athletes;
 	}
-	
+
 	public List<Athlete> getAthletesList() {
 		return Arrays.asList(getAthletes());
 	}
-	
+
 	public List<Athlete> getSubs() {
 		return subs;
 	}
@@ -122,7 +121,7 @@ public class Team {
 			throw new IndexOutOfBoundsException();
 		}
 	}
-	
+
 	public int getAthleteIndex(Athlete athlete) {
 		return Arrays.asList(athletes).indexOf(athlete);
 	}
@@ -164,8 +163,8 @@ public class Team {
 	}
 
 	String generateValidName() {
-		String country = game.randomManager.randomValidName("src/resources/countrynames", 198, game.teamsInUse);
-		String team = game.randomManager.randomValidName("src/resources/teamnames", 105, game.teamsInUse);
+		String country = game.randomManager.randomValidName("src/resources/countrynames", game.teamsInUse);
+		String team = game.randomManager.randomValidName("src/resources/teamnames", game.teamsInUse);
 		return country + " " + team;
 	}
 

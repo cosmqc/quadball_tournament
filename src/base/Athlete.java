@@ -2,8 +2,8 @@ package base;
 
 import java.util.NoSuchElementException;
 import exceptions.TeamFullException;
+import exceptions.NotEnoughMoneyException;
 import java.lang.Math;
-
 
 public class Athlete extends Purchasable {
 
@@ -18,19 +18,22 @@ public class Athlete extends Purchasable {
 	int maxStamina;
 	Item equippedItem;
 
+	// randomly generated
 	public Athlete(GameEnvironment game) {
 		this.game = game;
-		this.firstName = game.randomManager.randomValidName("src/resources/firstnames", 2738, game.namesInUse);
-		this.lastName = game.randomManager.randomValidName("src/resources/lastnames", 1000, game.namesInUse);
+		this.firstName = game.randomManager.randomValidName("src/resources/firstnames", game.namesInUse);
+		this.lastName = game.randomManager.randomValidName("src/resources/lastnames", game.namesInUse);
 		this.offence = game.randomManager.generateNum(1, 10);
 		this.defence = game.randomManager.generateNum(1, 10);
 		this.speed = game.randomManager.generateNum(1, 10);
 		this.stamina = this.maxStamina = game.randomManager.generateNum(5, 10);
-		
+		this.price = game.randomManager.generateNum(game.minAthletePrice, game.maxAthletePrice);
+
 	}
 
-	public Athlete(GameEnvironment game, String firstName, String lastName, int offence, int defence, int speed, int stamina,
-			int maxStamina) {
+	// hardcoded, just for debug
+	public Athlete(GameEnvironment game, String firstName, String lastName, int offence, int defence, int speed,
+			int stamina, int maxStamina) {
 		this.game = game;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -43,7 +46,7 @@ public class Athlete extends Purchasable {
 	public String getRawName() {
 		return firstName + " " + lastName;
 	}
-	
+
 	public String getName() {
 		String name = firstName;
 		if (nickName != null) {
@@ -52,11 +55,11 @@ public class Athlete extends Purchasable {
 		name += " " + lastName;
 		return name;
 	}
-	
+
 	public String getNickname() {
 		return nickName;
 	}
-	
+
 	public void setNickname(String nickName) {
 		this.nickName = nickName;
 	}
@@ -76,11 +79,10 @@ public class Athlete extends Purchasable {
 	public int getRawStamina() {
 		return stamina;
 	}
-	
+
 	public int getRawMaxStamina() {
 		return maxStamina;
 	}
-	
 
 	public int getOffence() {
 		int item_val = 0;
@@ -113,7 +115,7 @@ public class Athlete extends Purchasable {
 		}
 		return Math.max(0, getRawStamina() + item_val);
 	}
-	
+
 	public int getMaxStamina() {
 		int item_val = 0;
 		if (getEquippedItem() != null) {
@@ -129,7 +131,7 @@ public class Athlete extends Purchasable {
 	public void resetStamina() {
 		stamina = maxStamina;
 	}
-	
+
 	public void boostStats() {
 		if (offence < 9) {
 			offence += 1;
@@ -157,35 +159,29 @@ public class Athlete extends Purchasable {
 
 	public Item unequipItem() {
 		if (equippedItem == null) {
-			throw new NoSuchElementException(String.format("Athlete %s has no item, so none can be removed.", getName()));
+			throw new NoSuchElementException(
+					String.format("Athlete %s has no item, so none can be removed.", getName()));
 		}
 		Item temp = equippedItem;
 		equippedItem = null;
 		return temp;
 	}
 
-	public void buy() {
-		System.out.println(String.format("%s - Bought Athlete", getName()));
-		try {
+	public void buy() throws NotEnoughMoneyException, TeamFullException {
+		if (game.playerMoney >= getPrice()) {
 			game.playerTeam.addAthlete(this);
-		} catch (TeamFullException e){
-			// TODO: output error to player (popup?)
-			System.out.println(e);
+			game.shopManager.athletesInShop.remove(this);
+			game.playerMoney -= getPrice();
+		} else {
+			throw new NotEnoughMoneyException(game, String.format("You don't have enough money to buy %s", getName()));
 		}
-		game.shopManager.athletesInShop.remove(this);
 	}
 
 	public void sell() {
-		// TODO: Athlete/Item sold reappears in shop, but at a higher price
-		System.out.println(String.format("%s - Sell Athlete", getName()));
-		try {
-			game.playerTeam.removeAthlete(this);
-		} catch (IllegalArgumentException e) {
-			// TODO: output error to player (popup?)
-			System.out.println(e);
-		}
+		game.playerTeam.removeAthlete(this);
+		game.playerMoney += getPrice();
 	}
-	
+
 	public String toClubString() {
 		String text = "";
 		text += "Name: " + getName();
@@ -204,10 +200,10 @@ public class Athlete extends Purchasable {
 		if (equippedItem != null) {
 			text += "\n\nEquipped Item: " + equippedItem.name;
 			text += "\n" + equippedItem.description;
-		}	
+		}
 		return text;
 	}
-	
+
 	String formatStat(String stat, int curr, int rawCurr) {
 		String text = "\n" + stat + ": " + curr;
 		if (curr != rawCurr) {
@@ -220,9 +216,16 @@ public class Athlete extends Purchasable {
 		}
 		return text;
 	}
+
 	public String toExtendedString() {
-		return String.format("%s OFF%d DEF%d SPE%d STA%d", getName(), getOffence(), getDefence(), getSpeed(), getStamina());
+		return String.format("%s OFF%d DEF%d SPE%d STA%d", getName(), getOffence(), getDefence(), getSpeed(),
+				getStamina());
 	}
+	
+	public String toShopString() {
+		return String.format("%s - $%d", getName(), getPrice());
+	}
+	
 	public String toString() {
 		return getName();
 	}

@@ -1,13 +1,11 @@
 package gui;
 
 import base.*;
+import exceptions.NotEnoughMoneyException;
+import exceptions.TeamFullException;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.EventQueue;
 
-import javax.swing.BorderFactory;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,7 +17,6 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTabbedPane;
-import javax.swing.ListCellRenderer;
 import javax.swing.JPanel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -103,8 +100,6 @@ public class ShopWindow {
 		athleteBuyList.setBounds(20, 55, 357, 355);
 		buyPanel.add(athleteBuyList);
 
-		// TODO: Condense buy athlete / buy item into "BUY"
-
 		JButton btnBuyAthlete = new JButton("Buy Athlete");
 		btnBuyAthlete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -115,9 +110,16 @@ public class ShopWindow {
 					int choice = JOptionPane.showConfirmDialog(frmShop, "Are You Sure?", "Buy Athlete",
 							JOptionPane.YES_NO_OPTION);
 					if (choice == JOptionPane.YES_OPTION) {
-						// TODO: add cost implementation to purchasables
-						athleteBuyList.getSelectedValue().buy();
-						refreshBuyAthlete(buyAthleteListModel);
+						try {
+							athleteBuyList.getSelectedValue().buy();
+							refreshBuyAthlete(buyAthleteListModel);
+						} catch (TeamFullException error) {
+							JOptionPane.showMessageDialog(frmShop, "Your team and bench are full.", "Team Full",
+									JOptionPane.ERROR_MESSAGE);
+						} catch (NotEnoughMoneyException error) {
+							JOptionPane.showMessageDialog(frmShop, error.getMessage(), "Not enough money",
+									JOptionPane.ERROR_MESSAGE);
+						}
 
 					}
 				}
@@ -142,8 +144,13 @@ public class ShopWindow {
 					int choice = JOptionPane.showConfirmDialog(frmShop, "Are You Sure?", "Buy Item",
 							JOptionPane.YES_NO_OPTION);
 					if (choice == JOptionPane.YES_OPTION) {
-						itemBuyList.getSelectedValue().buy();
-						refreshBuyItem(buyItemListModel);
+						try {
+							itemBuyList.getSelectedValue().buy();
+							refreshBuyItem(buyItemListModel);
+						} catch (NotEnoughMoneyException error) {
+							JOptionPane.showMessageDialog(frmShop, error.getMessage(), "Not enough money",
+									JOptionPane.ERROR_MESSAGE);
+						}
 					}
 				}
 			}
@@ -184,16 +191,19 @@ public class ShopWindow {
 		lblItemsOwned.setBounds(377, 10, 357, 44);
 		sellPanel.add(lblItemsOwned);
 
-		// TODO: Condense sell athlete / sell item into "SELL"
-
 		JButton btnSellAthlete = new JButton("Sell Athlete");
 		btnSellAthlete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (athleteSellList.getSelectedValue() == null) {
+				Athlete athlete = athleteSellList.getSelectedValue();
+				if (athlete == null) {
 					JOptionPane.showMessageDialog(frmShop, "Please select an athlete to sell", "No Athlete Selected",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
-					int choice = JOptionPane.showConfirmDialog(frmShop, "Are You Sure?", "Sell Athlete",
+					String message = "Are you sure?";
+					if ((game.playerMoney + athlete.getPrice() < game.maxAthletePrice) && game.playerTeam.getNumTotal() <= 4) {
+						message += " If you sell this athlete, you may not be able to buy any more.";
+					}
+					int choice = JOptionPane.showConfirmDialog(frmShop, message, "Sell Athlete",
 							JOptionPane.YES_NO_OPTION);
 					if (choice == JOptionPane.YES_OPTION) {
 						athleteSellList.getSelectedValue().sell();
@@ -208,14 +218,15 @@ public class ShopWindow {
 		JButton btnSellItem = new JButton("Sell Item");
 		btnSellItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (itemSellList.getSelectedValue() == null) {
+				Item item = itemSellList.getSelectedValue();
+				if (item == null) {
 					JOptionPane.showMessageDialog(frmShop, "Please select an item to sell", "No Item Selected",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
-					int choice = JOptionPane.showConfirmDialog(frmShop, "Are You Sure?", "Sell Item",
+					int choice = JOptionPane.showConfirmDialog(frmShop, String.format("Sell %s for $%d?", item.getName(), item.getPrice()), "Sell Item",
 							JOptionPane.YES_NO_OPTION);
 					if (choice == JOptionPane.YES_OPTION) {
-						itemSellList.getSelectedValue().sell();
+						item.sell();
 						refreshSellItem(sellItemListModel);
 					}
 				}

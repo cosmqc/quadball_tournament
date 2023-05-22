@@ -17,22 +17,29 @@ public class RandomManager {
 		this.random = new Random();
 	}
 	
-	public String randomValidName(String filePath, int fileLength, List<String> containingList) {
-		String name = randomName(filePath, fileLength);
+	public String randomValidName(String filePath, List<String> containingList) {
+		String name = randomName(filePath);
 		while (containingList.contains(name)) {
-			name = randomName(filePath, fileLength);
+			name = randomName(filePath);
 		}
 		containingList.add(name);
 		return name;
 	}
 
-	String randomName(String filePath, int fileLength) {
+	
+	// TODO: Needs to be thoroughly tested, closing system is a bit scuffed.
+	String randomName(String filePath) {
+		Stream<String> file = null;
 		String text = "";
-		try (Stream<String> file = Files.lines(Paths.get(filePath))) {
+		try {
+			int fileLength = (int) Files.lines(Paths.get(filePath)).count();
+			file = Files.lines(Paths.get(filePath));
 			text = file.skip(new Random().nextInt(fileLength)).findFirst().get();
 		} catch (NoSuchElementException | IOException e) {
-			System.out.println(e);
+			e.printStackTrace();
 			System.exit(1);
+		} finally {
+			file.close();
 		}
 		return text;
 	}
