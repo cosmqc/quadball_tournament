@@ -135,36 +135,36 @@ public class MatchWindow {
 		lblYourTeam.setBounds(12, 201, 440, 44);
 		frmStadium.getContentPane().add(lblYourTeam);
 		
-		JLabel lblStamina = new JLabel("Stamina - INJURED");
-		lblStamina.setHorizontalAlignment(SwingConstants.CENTER);
-		lblStamina.setFont(new Font("Dialog", Font.PLAIN, 18));
-		lblStamina.setBounds(12, 287, 440, 44);
-		frmStadium.getContentPane().add(lblStamina);
+		JLabel lblStamina1 = new JLabel(displayStaminaInfo(0));
+		lblStamina1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblStamina1.setFont(new Font("Dialog", Font.PLAIN, 18));
+		lblStamina1.setBounds(12, 287, 440, 44);
+		frmStadium.getContentPane().add(lblStamina1);
 		
-		JLabel lblStamina_1 = new JLabel("Stamina");
-		lblStamina_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblStamina_1.setFont(new Font("Dialog", Font.PLAIN, 18));
-		lblStamina_1.setBounds(12, 357, 440, 44);
-		frmStadium.getContentPane().add(lblStamina_1);
+		JLabel lblStamina2 = new JLabel(displayStaminaInfo(1));
+		lblStamina2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblStamina2.setFont(new Font("Dialog", Font.PLAIN, 18));
+		lblStamina2.setBounds(12, 357, 440, 44);
+		frmStadium.getContentPane().add(lblStamina2);
 		
-		JLabel lblStamina_1_1 = new JLabel("Stamina");
-		lblStamina_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblStamina_1_1.setFont(new Font("Dialog", Font.PLAIN, 18));
-		lblStamina_1_1.setBounds(12, 427, 440, 44);
-		frmStadium.getContentPane().add(lblStamina_1_1);
+		JLabel lblStamina3 = new JLabel(displayStaminaInfo(2));
+		lblStamina3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblStamina3.setFont(new Font("Dialog", Font.PLAIN, 18));
+		lblStamina3.setBounds(12, 427, 440, 44);
+		frmStadium.getContentPane().add(lblStamina3);
 		
-		JLabel lblStamina_1_2 = new JLabel("Stamina");
-		lblStamina_1_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblStamina_1_2.setFont(new Font("Dialog", Font.PLAIN, 18));
-		lblStamina_1_2.setBounds(12, 497, 440, 44);
-		frmStadium.getContentPane().add(lblStamina_1_2);
+		JLabel lblStamina4 = new JLabel(displayStaminaInfo(3));
+		lblStamina4.setHorizontalAlignment(SwingConstants.CENTER);
+		lblStamina4.setFont(new Font("Dialog", Font.PLAIN, 18));
+		lblStamina4.setBounds(12, 497, 440, 44);
+		frmStadium.getContentPane().add(lblStamina4);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 		panel.setBounds(448, 201, 3, 350);
 		frmStadium.getContentPane().add(panel);
 		
-		JLabel lblMoneyGained = new JLabel("Money Gained: %s".formatted(moneyGained));
+		JLabel lblMoneyGained = new JLabel("Money Gained: $%s".formatted(moneyGained));
 		lblMoneyGained.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMoneyGained.setFont(new Font("Dialog", Font.BOLD, 18));
 		lblMoneyGained.setBounds(12, 94, 534, 44);
@@ -189,6 +189,16 @@ public class MatchWindow {
 			label.setText("Match lost...");
 			label.setForeground(new Color(255, 0, 0));
 			moneyGained = gui.game.matchManager.lossMoney();
+		}
+	}
+	
+	String displayStaminaInfo(int athleteIndex) {
+		int staminaValue = gui.game.playerTeam.getAthleteAtIndex(athleteIndex).getStamina();
+		int maxStaminaValue = gui.game.playerTeam.getAthleteAtIndex(athleteIndex).getMaxStamina();
+		if (staminaValue > 0) {
+			return "Stamina: %s/%s".formatted(staminaValue,maxStaminaValue);
+		} else {
+			return "Stamina: %s/%s - INJURED".formatted(staminaValue,maxStaminaValue);
 		}
 	}
 	
