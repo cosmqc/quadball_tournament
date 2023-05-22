@@ -48,6 +48,10 @@ public class RandomManager {
 		return random.nextInt(Math.max(stat-1, 1), Math.min(stat+1, 9));
 	}
 	
+	public int randomMoneyValue(int min, int max) {
+		return random.nextInt(min, max);
+	}
+	
 	int generateNum(int lower, int upper) {
 		int stat = new Random().nextInt(lower, upper);
 		return stat;
