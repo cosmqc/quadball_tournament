@@ -8,23 +8,18 @@ import java.util.Arrays;
 import exceptions.TeamFullException;
 import exceptions.InvalidSwapException;
 
-enum Position {
-	CHASER, BEATER, KEEPER, SEEKER
-}
-
 public class Team {
 	GameEnvironment game;
 	String name;
-	Object[] athletes;
+	Athlete[] athletes;
 	List<Athlete> subs;
-	Map<Position, Athlete> positionState;
 
 	// completely random - for enemy team creation.
 	public Team(GameEnvironment game) {
 		this.game = game;
 		this.name = generateValidName();
-		this.athletes = generatePlayers(game.numPlayers).toArray();
-		this.subs = generatePlayers(game.numBench);
+		this.athletes = generatePlayers(game.numPlayers);
+		this.subs = Arrays.asList(generatePlayers(game.numBench));
 	}
 
 	// with given values - for player team creation.
@@ -59,6 +54,10 @@ public class Team {
 
 	public Athlete[] getAthletes() {
 		return (Athlete[]) athletes;
+	}
+	
+	public List<Athlete> getAthletesList() {
+		return Arrays.asList(getAthletes());
 	}
 
 	public List<Athlete> getSubs() {
@@ -170,10 +169,10 @@ public class Team {
 		return country + " " + team;
 	}
 
-	List<Athlete> generatePlayers(int numPlayers) {
-		ArrayList<Athlete> players = new ArrayList<Athlete>();
+	Athlete[] generatePlayers(int numPlayers) {
+		Athlete[] players = new Athlete[numPlayers];
 		for (int i = 0; i < numPlayers; i++) {
-			players.add(new Athlete(game));
+			players[i] = new Athlete(game);
 		}
 		return players;
 	}

@@ -1,12 +1,15 @@
 package gui;
 
 import base.*;
+
+import java.awt.Component;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -62,6 +65,7 @@ public class StadiumWindow {
 		
 		JList<Athlete> athleteTeamList = new JList<Athlete>(athleteTeamModel);
 		athleteTeamList.setBounds(10, 228, 360, 285);
+		athleteTeamList.setCellRenderer(new StadiumListCellRenderer());
 		frmStadium.getContentPane().add(athleteTeamList);
 		
 		JLabel lblAthleteTeam = new JLabel("Current Team");
@@ -175,5 +179,13 @@ public class StadiumWindow {
 	
 	public void closeWindow() {
 		frmStadium.dispose();
+	}
+}
+
+class StadiumListCellRenderer extends DefaultListCellRenderer {
+	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+		JLabel c = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+		c.setText(((Athlete) value).toExtendedString());
+		return c;
 	}
 }

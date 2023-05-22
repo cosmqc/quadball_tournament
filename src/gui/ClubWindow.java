@@ -3,6 +3,8 @@ package gui;
 import base.*;
 import exceptions.InvalidSwapException;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -16,6 +18,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.naming.directory.InvalidAttributesException;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -24,6 +27,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
+import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 
 public class ClubWindow {
@@ -208,9 +212,10 @@ public class ClubWindow {
 		itemButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Item item = selectedAthlete.unequipItem();
+				Athlete temp = selectedAthlete;
 				gui.game.itemsInInventory.add(item);
 				refreshItemButton();
-				txtpnInfo.setText(selectedAthlete.toClubString());
+				reselectSelected(temp, athleteTeamList, athleteReserveList);
 			}
 		});
 		viewPanel.add(itemButton);
@@ -226,10 +231,11 @@ public class ClubWindow {
 						nick = null;
 					}
 					selectedAthlete.setNickname(nick);
+					Athlete temp = selectedAthlete;
 					refreshNickButton();
 					refreshAthleteList(athleteTeamModel);
 					refreshSubList(athleteReserveModel);
-					txtpnInfo.setText("No Athlete Selected");
+					reselectSelected(temp, athleteTeamList, athleteReserveList);
 				}
 			}
 		});
@@ -361,7 +367,23 @@ public class ClubWindow {
 		list.addAll(gui.game.itemsInInventory);
 		frmClub.repaint();
 	}
-
+	
+	public void reselectSelected(Athlete athlete, JList<Athlete> teamList, JList<Athlete> subList) {
+		selectedAthlete = athlete;
+		if (Arrays.asList(gui.game.playerTeam.getAthletes()).contains(athlete)) {
+			DefaultListModel<Athlete> model = (DefaultListModel<Athlete>) teamList.getModel();
+			int athleteIndex = model.indexOf(athlete);
+			teamList.setSelectedIndex(athleteIndex);
+		} else if (gui.game.playerTeam.getSubs().contains(athlete)) {
+			DefaultListModel<Athlete> model = (DefaultListModel<Athlete>) subList.getModel();
+			int subIndex = model.indexOf(athlete);
+			subList.setSelectedIndex(subIndex);
+		} else {
+			throw new IllegalArgumentException("Player not in any team");
+			
+		}
+	}
+	
 	public void closeWindow() {
 		frmClub.dispose();
 	}

@@ -11,7 +11,6 @@ public class Athlete extends Purchasable {
 	String firstName;
 	String nickName;
 	String lastName;
-	Position position;
 	int offence;
 	int defence;
 	int speed;
@@ -60,9 +59,6 @@ public class Athlete extends Purchasable {
 	
 	public void setNickname(String nickName) {
 		this.nickName = nickName;
-	}
-	public Position getPosition() {
-		return position;
 	}
 
 	public int getRawOffence() {
@@ -196,7 +192,7 @@ public class Athlete extends Purchasable {
 		if (equippedItem != null) {
 			text += "\n\nEquipped Item: " + equippedItem.name;
 			text += "\n" + equippedItem.description;
-		}
+		}	
 		return text;
 	}
 	
@@ -212,18 +208,10 @@ public class Athlete extends Purchasable {
 		}
 		return text;
 	}
-	
-	public String toDebugString() {
-		if (position != null) {
-			return String.format("Athlete %s in position %s with stats (%d, %d, %d, %d)", getName(), position, offence,
-					defence, speed, stamina);
-		} else {
-			return String.format("Athlete %s without a position with stats (%d, %d, %d, %d)", getName(), offence, defence,
-					speed, stamina);
-		}
+	public String toExtendedString() {
+		return String.format("%s OFF%d DEF%d SPE%d STA%d", getName(), getOffence(), getDefence(), getSpeed(), getStamina());
 	}
-
 	public String toString() {
-		return String.format("%s OFF%d DEF%d SPE%d STA%d", getName(), offence, defence, speed, stamina);
+		return getName();
 	}
 }
