@@ -119,6 +119,7 @@ public class RestWeekWindow {
 					if (comboBox.getSelectedIndex() != 0) {
 						((Athlete) comboBox.getSelectedItem()).boostStats();
 					}
+					gui.game.resetTeamStamina(gui.game.playerTeam);
 					gui.game.nextWeek(10);
 					gui.closeRestWeekWindow(selfRef);
 				}

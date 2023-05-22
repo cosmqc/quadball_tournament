@@ -44,6 +44,14 @@ public class RandomManager {
 		return text;
 	}
 	
+	public int randomStaminaLoss(boolean athleteWon) {
+		if (athleteWon) {
+			return random.nextInt(1,3);
+		} else {
+			return random.nextInt(2,4);
+		}
+	}
+	
 	public int randomResult(int stat) {
 		return random.nextInt(Math.max(stat-1, 1), Math.min(stat+1, 9));
 	}
