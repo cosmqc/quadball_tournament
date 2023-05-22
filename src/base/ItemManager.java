@@ -33,7 +33,6 @@ public class ItemManager {
 		items[19] = new Item(game, "Spin Attack", new int[]{1, -1, 1, 0}, 5, "Unleash a spinning offensive!");
 		items[20] = new Item(game, "Healing Potion", new int[]{0, 1, -1, 1}, 6, "Restore your health instantly!");
 		items[21] = new Item(game, "Speed Burst", new int[]{0, 0, 2, -1}, 7, "Experience a sudden burst of speed!");
-		items[22] = new Item(game, "Teleportation Device", new int[]{1, 1, 0, -1}, 9, "Transport to a different location!");
 		items[23] = new Item(game, "Iron Fist", new int[]{2, 0, -1, 0}, 8, "Deliver devastating punches!");
 		items[24] = new Item(game, "Boosted Shield", new int[]{0, 2, -1, 0}, 7, "Fortify your defense!");
 		items[25] = new Item(game, "Precision Boots", new int[]{0, 0, 1, 1}, 4, "Enhance your footwork!");

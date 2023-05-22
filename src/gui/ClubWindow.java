@@ -111,13 +111,13 @@ public class ClubWindow {
 		athleteReserveList.setBounds(10, 356, 300, 150);
 		viewPanel.add(athleteReserveList);
 
-		JTextPane txtpnInfo = new JTextPane();
-		txtpnInfo.setEditable(false);
-		txtpnInfo.setFont(new Font("Dialog", Font.PLAIN, 18));
-		txtpnInfo.setBounds(550, 53, 300, 250);
-		viewPanel.add(txtpnInfo);
-		txtpnInfo.setText("No Athlete Selected");
-		
+		JTextPane athleteInfo = new JTextPane();
+		athleteInfo.setEditable(false);
+		athleteInfo.setFont(new Font("Dialog", Font.PLAIN, 18));
+		athleteInfo.setBounds(550, 53, 300, 250);
+		viewPanel.add(athleteInfo);
+		athleteInfo.setText("No Athlete Selected");
+
 		athleteTeamList.addListSelectionListener(new ListSelectionListener() {
 
 			public void valueChanged(ListSelectionEvent selection) {
@@ -126,7 +126,7 @@ public class ClubWindow {
 				if (!selection.getValueIsAdjusting()) {
 					selectedAthlete = athleteTeamList.getSelectedValue();
 					if (selectedAthlete != null) {
-						txtpnInfo.setText(selectedAthlete.toClubString());
+						athleteInfo.setText(selectedAthlete.toClubString());
 					}
 				}
 				refreshNickButton();
@@ -141,7 +141,7 @@ public class ClubWindow {
 				if (!selection.getValueIsAdjusting()) {
 					selectedAthlete = athleteReserveList.getSelectedValue();
 					if (selectedAthlete != null) {
-						txtpnInfo.setText(selectedAthlete.toClubString());
+						athleteInfo.setText(selectedAthlete.toClubString());
 					}
 				}
 				refreshNickButton();
@@ -161,9 +161,11 @@ public class ClubWindow {
 			public void actionPerformed(ActionEvent e) {
 				if (selectedAthlete != null) {
 					try {
+						Athlete temp = selectedAthlete;
 						gui.game.playerTeam.swapUp(selectedAthlete);
 						refreshAthleteList(athleteTeamModel);
 						refreshSubList(athleteReserveModel);
+						reselectSelected(temp, athleteTeamList, athleteReserveList, athleteInfo);
 					} catch (IllegalArgumentException error) {
 						System.out.println(error);
 						JOptionPane.showMessageDialog(frmClub, error.getMessage(), "No Athlete Selected",
@@ -172,7 +174,6 @@ public class ClubWindow {
 						JOptionPane.showMessageDialog(frmClub, error.getMessage(), "Cannot move Athlete",
 								JOptionPane.ERROR_MESSAGE);
 					}
-					txtpnInfo.setText("No Athlete selected");
 				}
 			}
 		});
@@ -185,9 +186,11 @@ public class ClubWindow {
 			public void actionPerformed(ActionEvent e) {
 				if (selectedAthlete != null) {
 					try {
+						Athlete temp = selectedAthlete;
 						gui.game.playerTeam.swapDown(selectedAthlete);
 						refreshAthleteList(athleteTeamModel);
 						refreshSubList(athleteReserveModel);
+						reselectSelected(temp, athleteTeamList, athleteReserveList, athleteInfo);
 					} catch (IllegalArgumentException error) {
 						System.out.println(error);
 						JOptionPane.showMessageDialog(frmClub, error.getMessage(), "No Athlete Selected",
@@ -196,7 +199,6 @@ public class ClubWindow {
 						JOptionPane.showMessageDialog(frmClub, error.getMessage(), "Cannot move Athlete",
 								JOptionPane.ERROR_MESSAGE);
 					}
-					txtpnInfo.setText("No Athlete selected");
 				}
 			}
 		});
@@ -211,7 +213,7 @@ public class ClubWindow {
 				Athlete temp = selectedAthlete;
 				gui.game.itemsInInventory.add(item);
 				refreshItemButton();
-				reselectSelected(temp, athleteTeamList, athleteReserveList);
+				reselectSelected(temp, athleteTeamList, athleteReserveList, athleteInfo);
 			}
 		});
 		viewPanel.add(itemButton);
@@ -231,7 +233,7 @@ public class ClubWindow {
 					refreshNickButton();
 					refreshAthleteList(athleteTeamModel);
 					refreshSubList(athleteReserveModel);
-					reselectSelected(temp, athleteTeamList, athleteReserveList);
+					reselectSelected(temp, athleteTeamList, athleteReserveList, athleteInfo);
 				}
 			}
 		});
@@ -321,7 +323,6 @@ public class ClubWindow {
 				refreshItemList(inventoryModel);
 			}
 		});
-
 	}
 
 	public void refreshNickButton() {
@@ -363,23 +364,25 @@ public class ClubWindow {
 		list.addAll(gui.game.itemsInInventory);
 		frmClub.repaint();
 	}
-	
-	public void reselectSelected(Athlete athlete, JList<Athlete> teamList, JList<Athlete> subList) {
+
+	public void reselectSelected(Athlete athlete, JList<Athlete> teamList, JList<Athlete> subList,
+			JTextPane athleteInfo) {
 		selectedAthlete = athlete;
 		if (Arrays.asList(gui.game.playerTeam.getAthletes()).contains(athlete)) {
 			DefaultListModel<Athlete> model = (DefaultListModel<Athlete>) teamList.getModel();
 			int athleteIndex = model.indexOf(athlete);
 			teamList.setSelectedIndex(athleteIndex);
+			athleteInfo.setText(selectedAthlete.toClubString());
 		} else if (gui.game.playerTeam.getSubs().contains(athlete)) {
 			DefaultListModel<Athlete> model = (DefaultListModel<Athlete>) subList.getModel();
 			int subIndex = model.indexOf(athlete);
 			subList.setSelectedIndex(subIndex);
 		} else {
 			throw new IllegalArgumentException("Player not in any team");
-			
 		}
+		frmClub.repaint();
 	}
-	
+
 	public void closeWindow() {
 		frmClub.dispose();
 	}

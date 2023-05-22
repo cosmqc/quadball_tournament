@@ -88,7 +88,9 @@ public class Team {
 		}
 		// if one team, one bench
 		subs.remove(athlete);
-		game.itemsInInventory.add(getAthleteAtIndex(game.numPlayers - 1).unequipItem());
+		if (getAthleteAtIndex(game.numPlayers - 1).getEquippedItem() != null) {
+			game.itemsInInventory.add(getAthleteAtIndex(game.numPlayers - 1).unequipItem());
+		}
 		subs.add(getAthleteAtIndex(game.numPlayers - 1));
 		athletes[game.numPlayers - 1] = athlete;
 	}
@@ -109,7 +111,9 @@ public class Team {
 			return;
 		}
 		// if one team, one bench
-		game.itemsInInventory.add(athlete.unequipItem());
+		if (athlete.getEquippedItem() != null) {
+			game.itemsInInventory.add(athlete.unequipItem());
+		}
 		athletes[game.numPlayers - 1] = subs.remove(0);
 		subs.add(athlete);
 	}
