@@ -4,6 +4,7 @@ import base.*;
 import exceptions.NotEnoughMoneyException;
 import exceptions.TeamFullException;
 
+import java.awt.Component;
 import java.awt.EventQueue;
 
 import javax.swing.DefaultListModel;
@@ -13,6 +14,8 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -20,12 +23,11 @@ import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JTextPane;
 
 public class ShopWindow {
 
-	// TODO: Clear selection when switching lists, there shouldn't be a selection in
-	// both Item and Athlete lists
-
+	Object selectedPurchase;
 	JFrame frmShop;
 	GUI gui;
 	ShopWindow selfRef;
@@ -85,78 +87,58 @@ public class ShopWindow {
 		JLabel lblAthletesForSale = new JLabel("Athletes For Sale");
 		lblAthletesForSale.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAthletesForSale.setFont(new Font("Dialog", Font.BOLD, 18));
-		lblAthletesForSale.setBounds(10, 12, 357, 44);
+		lblAthletesForSale.setBounds(20, 12, 250, 44);
 		buyPanel.add(lblAthletesForSale);
 
 		JLabel lblItemsForSale = new JLabel("Items For Sale");
 		lblItemsForSale.setHorizontalAlignment(SwingConstants.CENTER);
 		lblItemsForSale.setFont(new Font("Dialog", Font.BOLD, 18));
-		lblItemsForSale.setBounds(377, 12, 357, 44);
+		lblItemsForSale.setBounds(280, 12, 250, 44);
 		buyPanel.add(lblItemsForSale);
 
 		DefaultListModel<Athlete> buyAthleteListModel = new DefaultListModel<>();
 		buyAthleteListModel.addAll(game.shopManager.athletesInShop);
 		JList<Athlete> athleteBuyList = new JList<Athlete>(buyAthleteListModel);
-		athleteBuyList.setBounds(20, 55, 357, 355);
+		athleteBuyList.setBounds(20, 55, 250, 355);
 		buyPanel.add(athleteBuyList);
-
-		JButton btnBuyAthlete = new JButton("Buy Athlete");
-		btnBuyAthlete.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (athleteBuyList.getSelectedValue() == null) {
-					JOptionPane.showMessageDialog(frmShop, "Please select an athlete to buy", "No Athlete Selected",
-							JOptionPane.ERROR_MESSAGE);
-				} else {
-					int choice = JOptionPane.showConfirmDialog(frmShop, "Are You Sure?", "Buy Athlete",
-							JOptionPane.YES_NO_OPTION);
-					if (choice == JOptionPane.YES_OPTION) {
-						try {
-							athleteBuyList.getSelectedValue().buy();
-							refreshBuyAthlete(buyAthleteListModel);
-						} catch (TeamFullException error) {
-							JOptionPane.showMessageDialog(frmShop, "Your team and bench are full.", "Team Full",
-									JOptionPane.ERROR_MESSAGE);
-						} catch (NotEnoughMoneyException error) {
-							JOptionPane.showMessageDialog(frmShop, error.getMessage(), "Not enough money",
-									JOptionPane.ERROR_MESSAGE);
-						}
-
-					}
-				}
-			}
-		});
-		btnBuyAthlete.setBounds(95, 420, 176, 44);
-		buyPanel.add(btnBuyAthlete);
 
 		DefaultListModel<Item> buyItemListModel = new DefaultListModel<>();
 		buyItemListModel.addAll(game.shopManager.itemsInShop);
 		JList<Item> itemBuyList = new JList<Item>(buyItemListModel);
-		itemBuyList.setBounds(387, 55, 357, 355);
+		itemBuyList.setBounds(280, 55, 250, 355);
 		buyPanel.add(itemBuyList);
 
-		JButton btnBuyItem = new JButton("Buy Item");
-		btnBuyItem.addActionListener(new ActionListener() {
+		JButton btnPurchase = new JButton("Purchase");
+		btnPurchase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (itemBuyList.getSelectedValue() == null) {
-					JOptionPane.showMessageDialog(frmShop, "Please select an item to buy", "No Item Selected",
+				if (itemBuyList.getSelectedValue() == null && athleteBuyList.getSelectedValue() == null) {
+					JOptionPane.showMessageDialog(frmShop, "Please select an athlete or item to buy", "Nothing Selected",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
-					int choice = JOptionPane.showConfirmDialog(frmShop, "Are You Sure?", "Buy Item",
+					int choice = JOptionPane.showConfirmDialog(frmShop, "Are You Sure?", "Confirm Purchase",
 							JOptionPane.YES_NO_OPTION);
 					if (choice == JOptionPane.YES_OPTION) {
 						try {
-							itemBuyList.getSelectedValue().buy();
-							refreshBuyItem(buyItemListModel);
+							if (itemBuyList.getSelectedValue() != null) {
+								itemBuyList.getSelectedValue().buy();
+								refreshBuyItem(buyItemListModel);
+							} else {
+								athleteBuyList.getSelectedValue().buy();
+								refreshBuyAthlete(buyAthleteListModel);
+							}
 						} catch (NotEnoughMoneyException error) {
 							JOptionPane.showMessageDialog(frmShop, error.getMessage(), "Not enough money",
+									JOptionPane.ERROR_MESSAGE);
+						} catch (TeamFullException error) {
+							JOptionPane.showMessageDialog(frmShop, error.getMessage(), "Team Full",
 									JOptionPane.ERROR_MESSAGE);
 						}
 					}
 				}
 			}
 		});
-		btnBuyItem.setBounds(496, 420, 176, 44);
-		buyPanel.add(btnBuyItem);
+		btnPurchase.setBounds(551, 366, 176, 44);
+		buyPanel.add(btnPurchase);
 
 		lblBuyMoneyDisplay = new JLabel(String.format("Money: $%d", game.playerMoney));
 		lblBuyMoneyDisplay.setFont(new Font("Dialog", Font.BOLD, 18));
@@ -170,75 +152,130 @@ public class ShopWindow {
 		JLabel lblAthletesOwned = new JLabel("Athletes Owned");
 		lblAthletesOwned.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAthletesOwned.setFont(new Font("Dialog", Font.BOLD, 18));
-		lblAthletesOwned.setBounds(10, 10, 357, 44);
+		lblAthletesOwned.setBounds(10, 10, 250, 44);
 		sellPanel.add(lblAthletesOwned);
 
 		DefaultListModel<Athlete> sellAthleteListModel = new DefaultListModel<>();
 		sellAthleteListModel.addAll(game.playerTeam.getAllPlayers());
 		JList<Athlete> athleteSellList = new JList<Athlete>(sellAthleteListModel);
-		athleteSellList.setBounds(20, 53, 357, 355);
+		athleteSellList.setBounds(20, 53, 250, 355);
 		sellPanel.add(athleteSellList);
 
 		DefaultListModel<Item> sellItemListModel = new DefaultListModel<>();
 		sellItemListModel.addAll(game.itemsInInventory);
 		JList<Item> itemSellList = new JList<Item>(sellItemListModel);
-		itemSellList.setBounds(387, 53, 357, 355);
+		itemSellList.setBounds(280, 53, 250, 355);
 		sellPanel.add(itemSellList);
 
 		JLabel lblItemsOwned = new JLabel("Items Owned");
 		lblItemsOwned.setHorizontalAlignment(SwingConstants.CENTER);
 		lblItemsOwned.setFont(new Font("Dialog", Font.BOLD, 18));
-		lblItemsOwned.setBounds(377, 10, 357, 44);
+		lblItemsOwned.setBounds(280, 10, 250, 44);
 		sellPanel.add(lblItemsOwned);
+		
+		JTextPane purchaseInfoBox = new JTextPane();
+		purchaseInfoBox.setText("Select an athlete or item to view info.");
+		purchaseInfoBox.setFont(new Font("Dialog", Font.PLAIN, 18));
+		purchaseInfoBox.setEditable(false);
+		purchaseInfoBox.setBounds(551, 55, 300, 281);
+		buyPanel.add(purchaseInfoBox);
+		
+		athleteBuyList.addListSelectionListener(new ListSelectionListener() {
 
-		JButton btnSellAthlete = new JButton("Sell Athlete");
-		btnSellAthlete.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Athlete athlete = athleteSellList.getSelectedValue();
-				if (athlete == null) {
-					JOptionPane.showMessageDialog(frmShop, "Please select an athlete to sell", "No Athlete Selected",
-							JOptionPane.ERROR_MESSAGE);
-				} else {
-					String message = "Are you sure?";
-					if ((game.playerMoney + athlete.getPrice() < game.maxAthletePrice) && game.playerTeam.getNumTotal() <= 4) {
-						message += " If you sell this athlete, you may not be able to buy any more.";
-					}
-					int choice = JOptionPane.showConfirmDialog(frmShop, message, "Sell Athlete",
-							JOptionPane.YES_NO_OPTION);
-					if (choice == JOptionPane.YES_OPTION) {
-						athleteSellList.getSelectedValue().sell();
-						refreshSellAthlete(sellAthleteListModel);
+			public void valueChanged(ListSelectionEvent selection) {
+				// removes selection from the other list
+				itemBuyList.clearSelection();
+				if (!selection.getValueIsAdjusting()) {
+					selectedPurchase = athleteBuyList.getSelectedValue();
+					if (selectedPurchase != null) {
+						purchaseInfoBox.setText(((Athlete) selectedPurchase).toClubString());
 					}
 				}
+				frmShop.repaint();
 			}
 		});
-		btnSellAthlete.setBounds(95, 418, 176, 44);
-		sellPanel.add(btnSellAthlete);
+		
+		itemBuyList.addListSelectionListener(new ListSelectionListener() {
 
-		JButton btnSellItem = new JButton("Sell Item");
-		btnSellItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Item item = itemSellList.getSelectedValue();
-				if (item == null) {
-					JOptionPane.showMessageDialog(frmShop, "Please select an item to sell", "No Item Selected",
-							JOptionPane.ERROR_MESSAGE);
-				} else {
-					int choice = JOptionPane.showConfirmDialog(frmShop, String.format("Sell %s for $%d?", item.getName(), item.getPrice()), "Sell Item",
-							JOptionPane.YES_NO_OPTION);
-					if (choice == JOptionPane.YES_OPTION) {
-						item.sell();
-						refreshSellItem(sellItemListModel);
+			public void valueChanged(ListSelectionEvent selection) {
+				// removes selection from the other list
+				athleteBuyList.clearSelection();
+				if (!selection.getValueIsAdjusting()) {
+					selectedPurchase = itemBuyList.getSelectedValue();
+					if (selectedPurchase != null) {
+						purchaseInfoBox.setText(((Item) selectedPurchase).getClubString());
 					}
 				}
+				frmShop.repaint();
 			}
 		});
-		btnSellItem.setBounds(496, 418, 176, 44);
-		sellPanel.add(btnSellItem);
 
 		lblSellMoneyDisplay = new JLabel(String.format("Money: $%d", game.playerMoney));
 		lblSellMoneyDisplay.setFont(new Font("Dialog", Font.BOLD, 18));
 		lblSellMoneyDisplay.setBounds(20, 509, 161, 38);
 		sellPanel.add(lblSellMoneyDisplay);
+		
+		JTextPane sellInfoBox = new JTextPane();
+		sellInfoBox.setText("Select an athlete or item to view info.");
+		sellInfoBox.setFont(new Font("Dialog", Font.PLAIN, 18));
+		sellInfoBox.setEditable(false);
+		sellInfoBox.setBounds(551, 53, 300, 281);
+		sellPanel.add(sellInfoBox);
+		
+		athleteSellList.addListSelectionListener(new ListSelectionListener() {
+
+			public void valueChanged(ListSelectionEvent selection) {
+				// removes selection from the other list
+				itemSellList.clearSelection();
+				if (!selection.getValueIsAdjusting()) {
+					selectedPurchase = athleteSellList.getSelectedValue();
+					if (selectedPurchase != null) {
+						sellInfoBox.setText(((Athlete) selectedPurchase).toClubString());
+					}
+				}
+				frmShop.repaint();
+			}
+		});
+		
+		itemSellList.addListSelectionListener(new ListSelectionListener() {
+
+			public void valueChanged(ListSelectionEvent selection) {
+				// removes selection from the other list
+				athleteSellList.clearSelection();
+				if (!selection.getValueIsAdjusting()) {
+					selectedPurchase = itemSellList.getSelectedValue();
+					if (selectedPurchase != null) {
+						sellInfoBox.setText(((Item) selectedPurchase).getClubString());
+					}
+				}
+				frmShop.repaint();
+			}
+		});
+		
+		JButton btnSell = new JButton("Sell");
+		btnSell.setBounds(551, 364, 176, 44);
+		sellPanel.add(btnSell);
+		btnSell.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (itemSellList.getSelectedValue() == null && athleteSellList.getSelectedValue() == null) {
+					JOptionPane.showMessageDialog(frmShop, "Please select an athlete or item to sell", "Nothing Selected",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+					int choice = JOptionPane.showConfirmDialog(frmShop, "Are You Sure?", "Confirm Sale",
+							JOptionPane.YES_NO_OPTION);
+					if (choice == JOptionPane.YES_OPTION) {
+						if (itemSellList.getSelectedValue() != null) {
+							itemSellList.getSelectedValue().sell();
+							refreshSellItem(sellItemListModel);
+						} else {
+							athleteSellList.getSelectedValue().sell();
+							refreshSellAthlete(sellAthleteListModel);
+						}
+					}
+				}
+			}
+		});
+		
 
 		// refreshes all lists and selections on tab change.
 		tabbedPane.addChangeListener(new ChangeListener() {
