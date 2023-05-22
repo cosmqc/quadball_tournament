@@ -57,11 +57,6 @@ public class GameEnvironment {
 		return difficulty;
 	}
 	
-	public boolean matchWon() {
-		return false;
-		//TODO: calculate stats to decide match winner
-	}
-	
 	public void resetTeamStamina(Team team) {
 		for (Athlete athlete: team.athletes) {
 			athlete.resetStamina();
