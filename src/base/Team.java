@@ -15,7 +15,7 @@ enum Position {
 public class Team {
 	GameEnvironment game;
 	String name;
-	Object[] athletes;
+	Athlete[] athletes;
 	List<Athlete> subs;
 	Map<Position, Athlete> positionState;
 
@@ -23,8 +23,8 @@ public class Team {
 	public Team(GameEnvironment game) {
 		this.game = game;
 		this.name = generateValidName();
-		this.athletes = generatePlayers(game.numPlayers).toArray();
-		this.subs = generatePlayers(game.numBench);
+		this.athletes = generatePlayers(game.numPlayers);
+		this.subs = Arrays.asList(generatePlayers(game.numBench));
 	}
 
 	// with given values - for player team creation.
@@ -61,6 +61,10 @@ public class Team {
 		return (Athlete[]) athletes;
 	}
 
+	public List<Athlete> getAthletesList() {
+		return Arrays.asList(getAthletes());
+	}
+	
 	public List<Athlete> getSubs() {
 		return subs;
 	}
@@ -170,12 +174,12 @@ public class Team {
 		return country + " " + team;
 	}
 
-	List<Athlete> generatePlayers(int numPlayers) {
-		ArrayList<Athlete> players = new ArrayList<Athlete>();
-		for (int i = 0; i < numPlayers; i++) {
-			players.add(new Athlete(game));
-		}
-		return players;
-	}
+	Athlete[] generatePlayers(int numPlayers) {
+        Athlete[] players = new Athlete[numPlayers];
+        for (int i = 0; i < numPlayers; i++) {
+            players[i] = new Athlete(game);
+        }
+        return players;
+    }
 
 }

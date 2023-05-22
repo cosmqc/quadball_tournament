@@ -38,6 +38,7 @@ public class GUI {
 	public void closeGameOptions(GameOptionsWindow gameOptionWindow) {
 		gameOptionWindow.closeWindow();
 		game.shopManager.refreshShop(game);
+		game.matchManager.refreshMatches(game);
 		launchBaseWindow();
 	}
 
@@ -88,6 +89,11 @@ public class GUI {
 	public void launchMatchWindow(StadiumWindow stadiumWindow) {
 		stadiumWindow.closeWindow();
 		MatchWindow matchWindow = new MatchWindow(this);
+	}
+	
+	public void closeMatchWindow(MatchWindow matchWindow) {
+		matchWindow.closeWindow();
+		launchBaseWindow();
 	}
 
 	public static void main(String[] args) {

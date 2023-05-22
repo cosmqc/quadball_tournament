@@ -12,6 +12,7 @@ public class GameEnvironment {
 	public RandomManager randomManager = new RandomManager(this);
 	public ItemManager itemManager = new ItemManager(this);
 	public ShopManager shopManager = new ShopManager(this);
+	public MatchManager matchManager = new MatchManager(this);
 	
 	// hardcoded game options
 	boolean isRunning = true;
@@ -19,6 +20,7 @@ public class GameEnvironment {
 	public int numBench = 2;
 	public int numShopAthleteSlots = 6;
 	public int numShopItemSlots = 6;
+	public int numMatches = 5;
 
 	// variable game options
 	String difficulty;

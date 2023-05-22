@@ -62,7 +62,7 @@ public class RestWeekWindow {
 		frmRestWeek.getContentPane().add(lblWeek);
 		
 		DefaultListModel<Athlete> athleteTeamModel = new DefaultListModel<>();
-		athleteTeamModel.addAll(gui.game.playerTeam.getAthletes());
+		athleteTeamModel.addAll(gui.game.playerTeam.getAllPlayers());
 		
 		DefaultListModel<Athlete> opposingTeamModel = new DefaultListModel<>();
 		opposingTeamModel.addAll(gui.game.playerTeam.getSubs());
@@ -108,7 +108,7 @@ public class RestWeekWindow {
 		
 		ArrayList<Object> trainingOptions = new ArrayList<Object>();
 		trainingOptions.add("Skip Training");
-		trainingOptions.addAll(gui.game.playerTeam.getAthletes());
+		trainingOptions.addAll(gui.game.playerTeam.getAllPlayers());
 		Object[] trainingOptionsDisplay = trainingOptions.toArray();
 		JComboBox comboBox = new JComboBox(trainingOptionsDisplay);
 		comboBox.setBounds(22, 360, 450, 44);

@@ -8,6 +8,8 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MatchWindow {
 	private GUI gui;
@@ -39,60 +41,17 @@ public class MatchWindow {
 	 */
 	private void initialize() {
 		frmStadium = new JFrame();
-		frmStadium.setTitle("Team Setup");
+		frmStadium.setTitle("Match Results");
 		frmStadium.setResizable(false);
 		frmStadium.setBounds(gui.x, gui.y, 900, 650);
 		frmStadium.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmStadium.getContentPane().setLayout(null);
 		
-		JLabel lblWeek = new JLabel("How will you organise your team?");
+		JLabel lblWeek = new JLabel("Match Results");
 		lblWeek.setHorizontalAlignment(SwingConstants.LEFT);
 		lblWeek.setFont(new Font("Dialog", Font.BOLD, 18));
 		lblWeek.setBounds(12, 0, 534, 44);
 		frmStadium.getContentPane().add(lblWeek);
-		
-		
-		JLabel lblChaser = new JLabel("Chaser");
-		lblChaser.setHorizontalAlignment(SwingConstants.CENTER);
-		lblChaser.setFont(new Font("Dialog", Font.BOLD, 18));
-		lblChaser.setBounds(12, 124, 203, 44);
-		frmStadium.getContentPane().add(lblChaser);
-		
-		JLabel lblBeater = new JLabel("Beater");
-		lblBeater.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBeater.setFont(new Font("Dialog", Font.BOLD, 18));
-		lblBeater.setBounds(12, 200, 203, 44);
-		frmStadium.getContentPane().add(lblBeater);
-		
-		JLabel lblKeeper = new JLabel("Keeper");
-		lblKeeper.setHorizontalAlignment(SwingConstants.CENTER);
-		lblKeeper.setFont(new Font("Dialog", Font.BOLD, 18));
-		lblKeeper.setBounds(12, 308, 203, 44);
-		frmStadium.getContentPane().add(lblKeeper);
-		
-		JLabel lblSeeker = new JLabel("Seeker");
-		lblSeeker.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSeeker.setFont(new Font("Dialog", Font.BOLD, 18));
-		lblSeeker.setBounds(12, 416, 203, 44);
-		frmStadium.getContentPane().add(lblSeeker);
-		
-		JLabel lblOffensive = new JLabel("OFFENSIVE:");
-		lblOffensive.setHorizontalAlignment(SwingConstants.CENTER);
-		lblOffensive.setFont(new Font("Dialog", Font.BOLD, 18));
-		lblOffensive.setBounds(350, 70, 200, 44);
-		frmStadium.getContentPane().add(lblOffensive);
-		
-		JLabel lblDefens = new JLabel("DEFENSIVE:");
-		lblDefens.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDefens.setFont(new Font("Dialog", Font.BOLD, 18));
-		lblDefens.setBounds(350, 254, 200, 44);
-		frmStadium.getContentPane().add(lblDefens);
-		
-		JLabel lblSpeed = new JLabel("SPEED:");
-		lblSpeed.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSpeed.setFont(new Font("Dialog", Font.BOLD, 18));
-		lblSpeed.setBounds(350, 362, 200, 44);
-		frmStadium.getContentPane().add(lblSpeed);
 
 
 //		JComboBox comboBox = new JComboBox(gui.game.playerTeam.getAthletes().toArray());
@@ -112,9 +71,86 @@ public class MatchWindow {
 //		frmStadium.getContentPane().add(comboBox_3);
 
 		
-		JButton btnBegin = new JButton("Begin!");
+		JButton btnBegin = new JButton("Return Home");
+		btnBegin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				gui.closeMatchWindow(selfRef);
+			}
+		});
 		btnBegin.setBounds(695, 559, 176, 44);
 		frmStadium.getContentPane().add(btnBegin);
+		
+		JLabel lblChasers = new JLabel("Chasers:");
+		lblChasers.setHorizontalAlignment(SwingConstants.CENTER);
+		lblChasers.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblChasers.setBounds(350, 56, 200, 44);
+		frmStadium.getContentPane().add(lblChasers);
+		
+		JLabel lblChaser = new JLabel(gui.game.playerTeam.getAthleteAtIndex(0).getName());
+		lblChaser.setHorizontalAlignment(SwingConstants.CENTER);
+		lblChaser.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblChaser.setBounds(10, 112, 440, 44);
+		frmStadium.getContentPane().add(lblChaser);
+		
+		JLabel lblChaser_1 = new JLabel("AAA");
+		lblChaser_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblChaser_1.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblChaser_1.setBounds(460, 112, 418, 44);
+		frmStadium.getContentPane().add(lblChaser_1);
+		
+		JLabel lblChaser_1_1 = new JLabel("AAA");
+		lblChaser_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblChaser_1_1.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblChaser_1_1.setBounds(462, 224, 418, 44);
+		frmStadium.getContentPane().add(lblChaser_1_1);
+		
+		JLabel lblBeaters = new JLabel("Beaters:");
+		lblBeaters.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBeaters.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblBeaters.setBounds(352, 168, 200, 44);
+		frmStadium.getContentPane().add(lblBeaters);
+		
+		JLabel lblChaser_2 = new JLabel(gui.game.playerTeam.getAthleteAtIndex(1).getName());
+		lblChaser_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblChaser_2.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblChaser_2.setBounds(12, 224, 440, 44);
+		frmStadium.getContentPane().add(lblChaser_2);
+		
+		JLabel lblChaser_1_2 = new JLabel("AAA");
+		lblChaser_1_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblChaser_1_2.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblChaser_1_2.setBounds(462, 336, 418, 44);
+		frmStadium.getContentPane().add(lblChaser_1_2);
+		
+		JLabel lblKeepers = new JLabel("Keepers:");
+		lblKeepers.setHorizontalAlignment(SwingConstants.CENTER);
+		lblKeepers.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblKeepers.setBounds(352, 280, 200, 44);
+		frmStadium.getContentPane().add(lblKeepers);
+		
+		JLabel lblChaser_3 = new JLabel(gui.game.playerTeam.getAthleteAtIndex(2).getName());
+		lblChaser_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblChaser_3.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblChaser_3.setBounds(12, 336, 440, 44);
+		frmStadium.getContentPane().add(lblChaser_3);
+		
+		JLabel lblChaser_1_3 = new JLabel("AAA");
+		lblChaser_1_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblChaser_1_3.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblChaser_1_3.setBounds(460, 448, 418, 44);
+		frmStadium.getContentPane().add(lblChaser_1_3);
+		
+		JLabel lblSeekers = new JLabel("Seekers:");
+		lblSeekers.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSeekers.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblSeekers.setBounds(350, 392, 200, 44);
+		frmStadium.getContentPane().add(lblSeekers);
+		
+		JLabel lblChaser_4 = new JLabel(gui.game.playerTeam.getAthleteAtIndex(3).getName());
+		lblChaser_4.setHorizontalAlignment(SwingConstants.CENTER);
+		lblChaser_4.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblChaser_4.setBounds(10, 448, 440, 44);
+		frmStadium.getContentPane().add(lblChaser_4);
 		
 	}
 	

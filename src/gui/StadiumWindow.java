@@ -82,8 +82,7 @@ public class StadiumWindow {
 		lblOpposingTeam.setBounds(514, 174, 357, 44);
 		frmStadium.getContentPane().add(lblOpposingTeam);
 		
-		DefaultListModel<Athlete> opposingTeamModel = new DefaultListModel<>();
-		opposingTeamModel.addAll(gui.game.playerTeam.getSubs());
+		DefaultListModel<Athlete> opposingTeamModel = new DefaultListModel<Athlete>();
 		
 		JList<Athlete> opposingTeamList = new JList<Athlete>(opposingTeamModel);
 		opposingTeamList.setBounds(514, 228, 360, 285);
@@ -93,8 +92,7 @@ public class StadiumWindow {
 		btnAthlete3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				opposingTeamModel.clear();
-				Athlete test = new Athlete(game);
-				opposingTeamModel.addElement(test);
+				opposingTeamModel.addAll(gui.game.matchManager.matchOptions.get(0).getAthletesList());
 			}
 		});
 		btnAthlete3.setBounds(55, 54, 150, 110);
@@ -105,8 +103,7 @@ public class StadiumWindow {
 		btnAthlete3_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				opposingTeamModel.clear();
-				Athlete test = new Athlete(game);
-				opposingTeamModel.addElement(test);
+				opposingTeamModel.addAll(gui.game.matchManager.matchOptions.get(1).getAthletesList());
 			}
 		});
 		btnAthlete3_1.setText("Match 2");
@@ -117,8 +114,7 @@ public class StadiumWindow {
 		btnAthlete3_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				opposingTeamModel.clear();
-				Athlete test = new Athlete(game);
-				opposingTeamModel.addElement(test);
+				opposingTeamModel.addAll(gui.game.matchManager.matchOptions.get(2).getAthletesList());
 			}
 		});
 		btnAthlete3_2.setText("Match 3");
@@ -129,8 +125,7 @@ public class StadiumWindow {
 		btnAthlete3_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				opposingTeamModel.clear();
-				Athlete test = new Athlete(game);
-				opposingTeamModel.addElement(test);
+				opposingTeamModel.addAll(gui.game.matchManager.matchOptions.get(3).getAthletesList());
 			}
 		});
 		btnAthlete3_3.setText("Match 4");
@@ -141,15 +136,14 @@ public class StadiumWindow {
 		btnAthlete3_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				opposingTeamModel.clear();
-				Athlete test = new Athlete(game);
-				opposingTeamModel.addElement(test);
+				opposingTeamModel.addAll(gui.game.matchManager.matchOptions.get(4).getAthletesList());
 			}
 		});
 		btnAthlete3_4.setText("Match 5");
 		btnAthlete3_4.setBounds(695, 54, 150, 110);
 		frmStadium.getContentPane().add(btnAthlete3_4);
 		
-		JButton btnBegin = new JButton("Prepare For Battle!");
+		JButton btnBegin = new JButton("Begin!");
 		btnBegin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int choice = JOptionPane.showConfirmDialog(frmStadium, "Are You Sure?\nYou can't turn back after this", "Confirm Match",
