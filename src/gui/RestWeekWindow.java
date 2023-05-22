@@ -97,7 +97,7 @@ public class RestWeekWindow {
 		JLabel lblEveryAthlete_1_1_1 = new JLabel("- You may also choose an athlete to train to improve their stats (optional)");
 		lblEveryAthlete_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblEveryAthlete_1_1_1.setFont(new Font("Dialog", Font.PLAIN, 18));
-		lblEveryAthlete_1_1_1.setBounds(12, 228, 612, 44);
+		lblEveryAthlete_1_1_1.setBounds(12, 228, 730, 44);
 		frmRestWeek.getContentPane().add(lblEveryAthlete_1_1_1);
 		
 		JLabel lblWouldYouLike = new JLabel("Would you like to train an athlete?");

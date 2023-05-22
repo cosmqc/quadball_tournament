@@ -58,6 +58,7 @@ public class MatchWindow {
 		JButton btnBegin = new JButton("Return Home");
 		btnBegin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				gui.game.nextWeek();
 				gui.closeMatchWindow(selfRef);
 			}
 		});
