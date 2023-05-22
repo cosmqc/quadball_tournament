@@ -32,6 +32,7 @@ public class GameEnvironment {
 	public int playerMoney = 10000;
 	public int playerPoints = 0;
 	public Team playerTeam = new Team(this);
+	public Team enemyTeam;
 	
 	// inventory state
 	public List<Item> itemsInInventory = new ArrayList<Item>();
@@ -56,6 +57,11 @@ public class GameEnvironment {
 		return difficulty;
 	}
 	
+	public boolean matchWon() {
+		return false;
+		//TODO: calculate stats to decide match winner
+	}
+	
 	public void nextWeek() {
 		currentWeek += 1;
 		if (currentWeek > totalWeeks) {
@@ -63,6 +69,7 @@ public class GameEnvironment {
 		}
 		playerMoney += 1000;
 		shopManager.refreshShop(this);		
+		matchManager.refreshMatches(this);
 	}
 
 }
