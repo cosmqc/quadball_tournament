@@ -12,6 +12,7 @@ public class GameEnvironment {
 	public RandomManager randomManager = new RandomManager(this);
 	public ItemManager itemManager = new ItemManager(this);
 	public ShopManager shopManager = new ShopManager(this);
+	public MatchManager matchManager = new MatchManager(this);
 	
 	// hardcoded game options
 	boolean isRunning = true;
@@ -19,6 +20,7 @@ public class GameEnvironment {
 	public int numBench = 2;
 	public int numShopAthleteSlots = 6;
 	public int numShopItemSlots = 6;
+	public int numMatches = 5;
 
 	// variable game options
 	String difficulty;
@@ -30,6 +32,7 @@ public class GameEnvironment {
 	public int playerMoney = 10000;
 	public int playerPoints = 0;
 	public Team playerTeam = new Team(this);
+	public Team enemyTeam;
 	
 	// inventory state
 	public List<Item> itemsInInventory = new ArrayList<Item>();
@@ -54,6 +57,12 @@ public class GameEnvironment {
 		return difficulty;
 	}
 	
+	public void resetTeamStamina(Team team) {
+		for (Athlete athlete: team.athletes) {
+			athlete.resetStamina();
+		}
+	}
+	
 	public void nextWeek() {
 		currentWeek += 1;
 		if (currentWeek > totalWeeks) {
@@ -61,6 +70,7 @@ public class GameEnvironment {
 		}
 		playerMoney += 1000;
 		shopManager.refreshShop(this);		
+		matchManager.refreshMatches(this);
 	}
 
 }

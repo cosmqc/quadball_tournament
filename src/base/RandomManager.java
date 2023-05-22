@@ -37,6 +37,10 @@ public class RandomManager {
 		return text;
 	}
 	
+	public int randomResult(int stat) {
+		return random.nextInt(Math.max(stat-1, 1), Math.min(stat+1, 9));
+	}
+	
 	int generateNum(int lower, int upper) {
 		int stat = new Random().nextInt(lower, upper);
 		return stat;

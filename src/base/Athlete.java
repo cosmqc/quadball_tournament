@@ -129,6 +129,18 @@ public class Athlete extends Purchasable {
 	public void resetStamina() {
 		stamina = maxStamina;
 	}
+	
+	public void boostStats() {
+		if (offence < 9) {
+			offence += 1;
+		}
+		if (defence < 9) {
+			defence += 1;
+		}
+		if (speed < 9) {
+			speed += 1;
+		}
+	}
 
 	public Item getEquippedItem() {
 		return equippedItem;

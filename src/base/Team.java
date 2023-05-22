@@ -59,7 +59,7 @@ public class Team {
 	public List<Athlete> getAthletesList() {
 		return Arrays.asList(getAthletes());
 	}
-
+	
 	public List<Athlete> getSubs() {
 		return subs;
 	}
