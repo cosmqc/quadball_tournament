@@ -121,31 +121,14 @@ public class ClubWindow {
 		athleteTeamList.addListSelectionListener(new ListSelectionListener() {
 
 			public void valueChanged(ListSelectionEvent selection) {
-				// removes selection from the other list
-				athleteReserveList.clearSelection();
-				if (!selection.getValueIsAdjusting()) {
-					selectedAthlete = athleteTeamList.getSelectedValue();
-					if (selectedAthlete != null) {
-						athleteInfo.setText(selectedAthlete.toClubString());
-					}
-				}
-				refreshNickButton();
-				refreshItemButton();
+				selectAthlete(selection, athleteTeamList, athleteReserveList, athleteInfo);
 			}
 		});
 
 		athleteReserveList.addListSelectionListener(new ListSelectionListener() {
 
 			public void valueChanged(ListSelectionEvent selection) {
-				athleteTeamList.clearSelection();
-				if (!selection.getValueIsAdjusting()) {
-					selectedAthlete = athleteReserveList.getSelectedValue();
-					if (selectedAthlete != null) {
-						athleteInfo.setText(selectedAthlete.toClubString());
-					}
-				}
-				refreshNickButton();
-				refreshItemButton();
+				selectAthlete(selection, athleteReserveList, athleteTeamList, athleteInfo);
 			}
 		});
 
@@ -390,7 +373,17 @@ public class ClubWindow {
 		}
 		frmClub.repaint();
 	}
-
+	
+	public void selectAthlete(ListSelectionEvent event, JList<Athlete> clickedList, JList<Athlete> otherList, JTextPane athleteInfo) {
+		// removes selection from the other list
+		if (clickedList.getSelectedValue() != null) {
+			otherList.clearSelection();
+			selectedAthlete = clickedList.getSelectedValue();
+			athleteInfo.setText(selectedAthlete.toClubString());
+		}
+		refreshNickButton();
+		refreshItemButton();
+	}
 	public void closeWindow() {
 		frmClub.dispose();
 	}
