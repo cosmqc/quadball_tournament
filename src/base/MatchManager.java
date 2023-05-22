@@ -20,6 +20,7 @@ public class MatchManager {
 	}
 	
 	public boolean matchWon(Team yourTeam, Team enemyTeam) {
+		/* Calculates the winner based on one stat per player, with a small random element */
 		int points = 0;
 		int yourChaserValue = yourTeam.getAthleteAtIndex(0).getOffence();
 		yourChaserValue = game.randomManager.randomResult(yourChaserValue);
@@ -30,6 +31,36 @@ public class MatchManager {
 		} else if (yourChaserValue < enemyChaserValue) {
 			points -= 1;
 		}
-		return true;
+		int yourBeaterValue = yourTeam.getAthleteAtIndex(0).getOffence();
+		yourBeaterValue = game.randomManager.randomResult(yourBeaterValue);
+		int enemyBeaterValue = enemyTeam.getAthleteAtIndex(0).getOffence();
+		enemyBeaterValue = game.randomManager.randomResult(enemyBeaterValue);
+		if (yourBeaterValue > enemyBeaterValue) {
+			points += 1;
+		} else if (yourBeaterValue < enemyBeaterValue) {
+			points -= 1;
+		}
+		int yourKeeperValue = yourTeam.getAthleteAtIndex(0).getDefence();
+		yourKeeperValue = game.randomManager.randomResult(yourKeeperValue);
+		int enemyKeeperValue = enemyTeam.getAthleteAtIndex(0).getDefence();
+		enemyKeeperValue = game.randomManager.randomResult(enemyKeeperValue);
+		if (yourKeeperValue > enemyKeeperValue) {
+			points += 1;
+		} else if (yourKeeperValue < enemyKeeperValue) {
+			points -= 1;
+		}
+		int yourSeekerValue = yourTeam.getAthleteAtIndex(0).getSpeed();
+		yourSeekerValue = game.randomManager.randomResult(yourSeekerValue);
+		int enemySeekerValue = enemyTeam.getAthleteAtIndex(0).getSpeed();
+		enemySeekerValue = game.randomManager.randomResult(enemySeekerValue);
+		if (yourSeekerValue > enemySeekerValue) {
+			points += 1;
+		} else if (yourSeekerValue < enemySeekerValue) {
+			points -= 1;
+		}
+		if (points >= 0) {
+			return true;
+		}
+		return false;
 	}
 }

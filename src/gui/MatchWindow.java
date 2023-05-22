@@ -170,6 +170,7 @@ public class MatchWindow {
 	void displayMatchInfo(JLabel label) {
 		if (gui.game.matchManager.matchWon(gui.game.playerTeam,gui.game.enemyTeam)) {
 			label.setText("MATCH WON!");
+			System.out.println("HIII");
 			label.setForeground(new Color(38, 162, 105));
 		} else {
 			label.setText("Match lost...");
