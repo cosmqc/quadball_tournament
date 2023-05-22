@@ -261,7 +261,7 @@ public class ClubWindow {
 				if (!clickedItem.getValueIsAdjusting()) {
 					selectedItem = itemList.getSelectedValue();
 					if (selectedItem != null) {
-						txtpnItemInfo.setText(selectedItem.getClubString());
+						txtpnItemInfo.setText(selectedItem.toShopString());
 					}
 				}
 			}

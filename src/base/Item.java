@@ -45,11 +45,32 @@ public class Item extends Purchasable {
 		return name;
 	}
 
-	public String getClubString() {
-		return String.format("Name: %s \n%s \nEffects: \nOffence: %s\nDefence: %s\nSpeed: %s\nStamina: %s", name,
-				description, offence, defence, speed, stamina);
+	public String toShopString() {
+		String text = "";
+		text += "Name: " + getName();
+		text += "\n" + getDescription();
+		text += "\n\nEffects: ";
+		text += formatStat("Offence", offence);
+		text += formatStat("Defence", defence);
+		text += formatStat("Speed", speed);
+		text += formatStat("Stamina", stamina);
+		return text;
 	}
 
+//	+2 Offence
+	
+	String formatStat(String statString, int stat) {
+		String text = "";
+		if (stat != 0) {
+			text += "\n";
+			if (stat > 0) {
+				text += "+";
+			}
+			text += stat + " " + statString;
+		}
+		return text;
+	}
+	
 	public void buy() throws NotEnoughMoneyException {
 		if (game.playerMoney >= getPrice()) {
 			game.itemsInInventory.add(this);

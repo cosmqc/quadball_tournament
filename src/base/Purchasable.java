@@ -11,4 +11,8 @@ public class Purchasable {
 	public int getPrice() {
 		return price;
 	}
+	
+	public String toShopString() {
+		return String.format("Name: %s \nPrice:%d", getName(), getPrice()); 
+	}
 }

@@ -196,7 +196,17 @@ public class Athlete extends Purchasable {
 		game.playerTeam.removeAthlete(this);
 		game.playerMoney += getPrice();
 	}
-
+	
+	public String toShopString() {
+		String text = "";
+		text += String.format("%s $%d\n", getName(), getPrice());
+		text += formatStat("Offence", getOffence(), getRawOffence());
+		text += formatStat("Defence", getDefence(), getRawDefence());
+		text += formatStat("Speed", getSpeed(), getRawSpeed());
+		text += formatStat("Stamina", getStamina(), getRawStamina());
+		return text;
+	}
+	
 	public String toClubString() {
 		String text = "";
 		text += "Name: " + getName();
@@ -236,7 +246,7 @@ public class Athlete extends Purchasable {
 		return String.format("OFF%d DEF%d SPE%d STA%d/%d", getOffence(), getDefence(), getSpeed(), getStamina(), getMaxStamina());
 	}
 	
-	public String toShopString() {
+	public String toShopListString() {
 		return String.format("%s - $%d", getName(), getPrice());
 	}
 	

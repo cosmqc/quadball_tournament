@@ -27,12 +27,13 @@ public class ItemManager {
 		items[13] = new Item(game, "Super Whistle", new int[]{1, 1, -1, 0}, 5, "Command ultimate attention!");
 		items[14] = new Item(game, "Stealth Cloak", new int[]{0, 0, 0, 2}, 7, "Become invisible to the opponent!");
 		items[15] = new Item(game, "Power Shot", new int[]{2, -1, 0, 0}, 8, "Unleash a powerful shot!");
-		items[16] = new Item(game, "Reflective Shield", new int[]{-1, 2, 0, 0}, 9, "Reflect incoming attacks!");
+		items[16] = new Item(game, "Uno Reverse Card", new int[]{-1, 2, 0, 0}, 9, "Reflect incoming attacks!");
 		items[17] = new Item(game, "Quickstep Shoes", new int[]{0, 0, 1, 1}, 4, "Step swiftly with agility!");
 		items[18] = new Item(game, "Double Jump", new int[]{0, 0, 1, 1}, 3, "Take your jumps to new heights!");
 		items[19] = new Item(game, "Spin Attack", new int[]{1, -1, 1, 0}, 5, "Unleash a spinning offensive!");
 		items[20] = new Item(game, "Healing Potion", new int[]{0, 1, -1, 1}, 6, "Restore your health instantly!");
 		items[21] = new Item(game, "Speed Burst", new int[]{0, 0, 2, -1}, 7, "Experience a sudden burst of speed!");
+		items[22] = new Item(game, "Dora Plaster", new int[]{0, 1, 0, 2}, 8, "Relive your childhood with this dora-themed plaster!");
 		items[23] = new Item(game, "Iron Fist", new int[]{2, 0, -1, 0}, 8, "Deliver devastating punches!");
 		items[24] = new Item(game, "Boosted Shield", new int[]{0, 2, -1, 0}, 7, "Fortify your defense!");
 		items[25] = new Item(game, "Precision Boots", new int[]{0, 0, 1, 1}, 4, "Enhance your footwork!");

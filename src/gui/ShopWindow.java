@@ -27,7 +27,7 @@ import javax.swing.JTextPane;
 
 public class ShopWindow {
 
-	Object selectedPurchase;
+	Purchasable selectedPurchase;
 	JFrame frmShop;
 	GUI gui;
 	ShopWindow selfRef;
@@ -183,30 +183,14 @@ public class ShopWindow {
 		athleteBuyList.addListSelectionListener(new ListSelectionListener() {
 
 			public void valueChanged(ListSelectionEvent selection) {
-				// removes selection from the other list
-				itemBuyList.clearSelection();
-				if (!selection.getValueIsAdjusting()) {
-					selectedPurchase = athleteBuyList.getSelectedValue();
-					if (selectedPurchase != null) {
-						purchaseInfoBox.setText(((Athlete) selectedPurchase).toClubString());
-					}
-				}
-				frmShop.repaint();
+				selectPurchasable(selection, athleteBuyList, itemBuyList, purchaseInfoBox);
 			}
 		});
 		
 		itemBuyList.addListSelectionListener(new ListSelectionListener() {
 
 			public void valueChanged(ListSelectionEvent selection) {
-				// removes selection from the other list
-				athleteBuyList.clearSelection();
-				if (!selection.getValueIsAdjusting()) {
-					selectedPurchase = itemBuyList.getSelectedValue();
-					if (selectedPurchase != null) {
-						purchaseInfoBox.setText(((Item) selectedPurchase).getClubString());
-					}
-				}
-				frmShop.repaint();
+				selectPurchasable(selection, itemBuyList, athleteBuyList, purchaseInfoBox);
 			}
 		});
 
@@ -223,35 +207,17 @@ public class ShopWindow {
 		sellPanel.add(sellInfoBox);
 		
 		athleteSellList.addListSelectionListener(new ListSelectionListener() {
-
 			public void valueChanged(ListSelectionEvent selection) {
-				// removes selection from the other list
-				itemSellList.clearSelection();
-				if (!selection.getValueIsAdjusting()) {
-					selectedPurchase = athleteSellList.getSelectedValue();
-					if (selectedPurchase != null) {
-						sellInfoBox.setText(((Athlete) selectedPurchase).toClubString());
-					}
-				}
-				frmShop.repaint();
+				selectPurchasable(selection, athleteSellList, itemSellList, sellInfoBox);
 			}
 		});
 		
 		itemSellList.addListSelectionListener(new ListSelectionListener() {
-
 			public void valueChanged(ListSelectionEvent selection) {
-				// removes selection from the other list
-				athleteSellList.clearSelection();
-				if (!selection.getValueIsAdjusting()) {
-					selectedPurchase = itemSellList.getSelectedValue();
-					if (selectedPurchase != null) {
-						sellInfoBox.setText(((Item) selectedPurchase).getClubString());
-					}
-				}
-				frmShop.repaint();
+				selectPurchasable(selection, itemSellList, athleteSellList, sellInfoBox);
 			}
 		});
-		
+
 		JButton btnSell = new JButton("Sell");
 		btnSell.setBounds(551, 364, 176, 44);
 		sellPanel.add(btnSell);
@@ -324,5 +290,14 @@ public class ShopWindow {
 	public void refreshMoneyLabels() {
 		lblBuyMoneyDisplay.setText(String.format("Money: $%d", game.playerMoney));
 		lblSellMoneyDisplay.setText(String.format("Money: $%d", game.playerMoney));
+	}
+	
+	public void selectPurchasable(ListSelectionEvent event, JList<? extends Purchasable> clickedList, JList<? extends Purchasable> otherList, JTextPane purchaseInfoBox) {
+		// removes selection from the other list
+		if (clickedList.getSelectedValue() != null) {
+			otherList.clearSelection();
+			selectedPurchase = clickedList.getSelectedValue();
+			purchaseInfoBox.setText(selectedPurchase.toShopString());
+		}
 	}
 }
