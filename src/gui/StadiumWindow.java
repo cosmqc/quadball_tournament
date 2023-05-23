@@ -130,11 +130,16 @@ public class StadiumWindow {
 		JButton btnBegin = new JButton("Begin!");
 		btnBegin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int choice = JOptionPane.showConfirmDialog(frmStadium, "Are You Sure?\nYou can't turn back after this", "Confirm Match",
-						JOptionPane.YES_NO_OPTION);
-				if (choice == JOptionPane.YES_OPTION) {
-					gui.game.enemyTeam = buttonTeamMap.get(selectedMatch);
-					gui.launchMatchWindow(selfRef);
+				if (buttonTeamMap.get(selectedMatch) == null) {
+					JOptionPane.showMessageDialog(frmStadium, "Please select a match first", "No Match Selected",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+					int choice = JOptionPane.showConfirmDialog(frmStadium, "Are You Sure?\nYou can't turn back after this", "Confirm Match",
+							JOptionPane.YES_NO_OPTION);
+					if (choice == JOptionPane.YES_OPTION) {
+						gui.game.enemyTeam = buttonTeamMap.get(selectedMatch);
+						gui.launchMatchWindow(selfRef);
+					}
 				}
 			}
 		});

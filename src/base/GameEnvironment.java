@@ -15,8 +15,9 @@ public class GameEnvironment {
 	public int numMatches = 5;
 	public int minAthletePrice = 10;
 	public int maxAthletePrice = 20;
-	public int maxTeamNameLength = 18; // dependant on size of boxes in Stadium
-	public int maxAthleteNameLength = 12; // dependant on size of box in GameOptions
+	public int maxTeamNameLength = 18; // dependent on size of boxes in Stadium
+	public int maxAthleteNameLength = 12; // dependent on size of box in GameOptions
+	public String gameOver;
 	
 	// variable game options
 	Difficulty difficulty;
@@ -89,9 +90,6 @@ public class GameEnvironment {
 	
 	public void nextWeek(int moneyGained) {
 		currentWeek += 1;
-		if (currentWeek > totalWeeks) {
-			// TODO: End of game!!
-		}
 		playerMoney += moneyGained;
 		shopManager.refreshShop(this);		
 		matchManager.refreshMatches(this);

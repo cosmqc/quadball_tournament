@@ -38,14 +38,31 @@ public class FinalWindow {
 		frmFinal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmFinal.getContentPane().setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("GAME OVER");
-		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 40));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(60, 25, 740, 231);
-		frmFinal.getContentPane().add(lblNewLabel);
+		JLabel lblPoints = new JLabel("Points: %s".formatted(gui.game.playerPoints));
+		lblPoints.setFont(new Font("Dialog", Font.BOLD, 30));
+		lblPoints.setBounds(12, 264, 876, 102);
+		frmFinal.getContentPane().add(lblPoints);
 		
-		JLabel lblNewLabel_1 = new JLabel("Money");
-		lblNewLabel_1.setBounds(217, 154, 146, 102);
-		frmFinal.getContentPane().add(lblNewLabel_1);
+		JLabel lblGameOver = new JLabel("GAME OVER");
+		lblGameOver.setFont(new Font("Dialog", Font.BOLD, 40));
+		lblGameOver.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGameOver.setBounds(12, 12, 888, 150);
+		frmFinal.getContentPane().add(lblGameOver);
+		
+		JLabel lblMoneyRemaining = new JLabel("Money Remaining: $%s".formatted(gui.game.playerMoney));
+		lblMoneyRemaining.setFont(new Font("Dialog", Font.BOLD, 30));
+		lblMoneyRemaining.setBounds(12, 378, 876, 102);
+		frmFinal.getContentPane().add(lblMoneyRemaining);
+		
+		JLabel lblSeasonLength = new JLabel("Season Length: %s Weeks".formatted(gui.game.getTotalWeeks()));
+		lblSeasonLength.setFont(new Font("Dialog", Font.BOLD, 30));
+		lblSeasonLength.setBounds(12, 492, 876, 102);
+		frmFinal.getContentPane().add(lblSeasonLength);
+		
+		JLabel lblEndingMessage = new JLabel(gui.game.gameOver);
+		lblEndingMessage.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEndingMessage.setFont(new Font("Dialog", Font.BOLD, 30));
+		lblEndingMessage.setBounds(12, 129, 876, 102);
+		frmFinal.getContentPane().add(lblEndingMessage);
 	}
 }
