@@ -25,6 +25,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class ClubWindow {
 	GUI gui;
@@ -229,6 +231,11 @@ public class ClubWindow {
 		});
 		nickButton.setBounds(555, 313, 140, 37);
 		viewPanel.add(nickButton);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new LineBorder(new Color(0, 0, 0), 3));
+		panel_1.setBounds(367, 51, 50, 3);
+		viewPanel.add(panel_1);
 		refreshNickButton();
 
 		JPanel inventoryPanel = new JPanel();
