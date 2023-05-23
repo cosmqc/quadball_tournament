@@ -37,11 +37,7 @@ public class Item extends Purchasable {
 		return effect;
 	}
 
-	// TODO: Item string in Shop needs to show all the info in the commented string.
-	// needs button design?
 	public String toString() {
-		// return String.format("%s (%s, %s, %s, %s) %d %s", name, effect[0], effect[1],
-		// effect[2], effect[3], price, description);
 		return name;
 	}
 

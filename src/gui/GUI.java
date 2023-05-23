@@ -21,20 +21,6 @@ public class GUI {
 		GameOptionsWindow gameOptionWindow = new GameOptionsWindow(this);
 	}
 
-	public void closeGameOptions(GameOptionsWindow gameOptionWindow, String foo) {
-		gameOptionWindow.closeWindow();
-		launchDebugWindow();
-	}
-
-	public void launchDebugWindow() {
-		DebugWindow debugWindow = new DebugWindow(this);
-	}
-
-	public void closeDebugWindow(DebugWindow debugWindow) {
-		debugWindow.closeWindow();
-		launchGameOptions();
-	}
-
 	public void closeGameOptions(GameOptionsWindow gameOptionWindow) {
 		gameOptionWindow.closeWindow();
 		game.shopManager.refreshShop(game);

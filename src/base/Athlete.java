@@ -17,8 +17,27 @@ public class Athlete extends Purchasable {
 	int stamina;
 	int maxStamina;
 	Item equippedItem;
+	boolean wasInjuredPreviously = false;
 
 	// randomly generated
+	public Athlete(GameEnvironment game, Difficulty difficulty) {
+		this.game = game;
+		
+		// ensures length of full name will fit on a line
+		this.firstName = game.randomManager.randomValidName("src/resources/firstnames", game.namesInUse);
+		this.lastName = game.randomManager.randomValidName("src/resources/lastnames", game.namesInUse);
+		while (getRawName().length() > game.maxAthleteNameLength) {
+			this.firstName = game.randomManager.randomValidName("src/resources/firstnames", game.namesInUse);
+			this.lastName = game.randomManager.randomValidName("src/resources/lastnames", game.namesInUse);
+		}
+		this.offence = game.randomManager.generateNum(game.difficulty.playerAvgStat-2, game.difficulty.playerAvgStat+2);
+		this.defence = game.randomManager.generateNum(game.difficulty.playerAvgStat-2, game.difficulty.playerAvgStat+2);
+		this.speed = game.randomManager.generateNum(game.difficulty.playerAvgStat-2, game.difficulty.playerAvgStat+2);
+		this.stamina = this.maxStamina = Math.max(0, Math.min(10, game.randomManager.generateNum(game.difficulty.playerAvgStat-2, game.difficulty.playerAvgStat+2)));
+		this.price = game.randomManager.generateNum(game.minAthletePrice, game.maxAthletePrice);
+
+	}
+	
 	public Athlete(GameEnvironment game) {
 		this.game = game;
 		
@@ -29,10 +48,10 @@ public class Athlete extends Purchasable {
 			this.firstName = game.randomManager.randomValidName("src/resources/firstnames", game.namesInUse);
 			this.lastName = game.randomManager.randomValidName("src/resources/lastnames", game.namesInUse);
 		}
-		this.offence = game.randomManager.generateNum(1, 10);
-		this.defence = game.randomManager.generateNum(1, 10);
-		this.speed = game.randomManager.generateNum(1, 10);
-		this.stamina = this.maxStamina = game.randomManager.generateNum(5, 10);
+		this.offence = game.randomManager.generateNum(1,10);
+		this.defence = game.randomManager.generateNum(1,10);
+		this.speed = game.randomManager.generateNum(1,10);
+		this.stamina = this.maxStamina = game.randomManager.generateNum(5,10);
 		this.price = game.randomManager.generateNum(game.minAthletePrice, game.maxAthletePrice);
 
 	}
@@ -139,8 +158,9 @@ public class Athlete extends Purchasable {
 		return Math.max(0, getRawMaxStamina() + item_val);
 	}
 
-	public void decreaseStamina(int staminaLoss) {
-		stamina -= staminaLoss;
+	public void decreaseStamina(boolean hasWon) {
+		int staminaLoss = game.randomManager.randomStaminaLoss(hasWon);
+		stamina = Math.max(0,  stamina - staminaLoss);
 	}
 
 	public void resetStamina() {

@@ -20,7 +20,8 @@ public class MatchWindow {
 	private JFrame frmStadium;
 	public GameEnvironment game;
 	private int moneyGained;
-
+	private int pointsGained;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -28,6 +29,7 @@ public class MatchWindow {
 		this.gui = gui;
 		this.selfRef = this;
 		this.game = gui.game;
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -170,7 +172,7 @@ public class MatchWindow {
 		lblMoneyGained.setBounds(12, 504, 534, 44);
 		frmStadium.getContentPane().add(lblMoneyGained);
 		
-		JLabel lblMoneyGained_1 = new JLabel("Points Gained: ");
+		JLabel lblMoneyGained_1 = new JLabel("Points Gained: %s".formatted(pointsGained));
 		lblMoneyGained_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMoneyGained_1.setFont(new Font("Dialog", Font.BOLD, 18));
 		lblMoneyGained_1.setBounds(12, 558, 534, 44);
@@ -181,15 +183,18 @@ public class MatchWindow {
 	}
 	
 	void displayMatchInfo(JLabel label) {
-		if (gui.game.matchManager.matchWon(gui.game.playerTeam,gui.game.enemyTeam)) {
+		int pointsBefore = game.playerPoints;
+		int moneyBefore = game.playerMoney;
+		if (gui.game.matchManager.matchWon(gui.game.enemyTeam)) {
 			label.setText("MATCH WON!");
 			label.setForeground(new Color(38, 162, 105));
-			moneyGained = gui.game.matchManager.winMoney();
+			
 		} else {
 			label.setText("Match lost...");
 			label.setForeground(new Color(255, 0, 0));
-			moneyGained = gui.game.matchManager.lossMoney();
 		}
+		moneyGained = game.playerMoney - moneyBefore;
+		pointsGained = game.playerPoints - pointsBefore;
 	}
 	
 	String displayStaminaInfo(int athleteIndex) {

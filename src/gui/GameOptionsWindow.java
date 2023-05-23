@@ -107,9 +107,9 @@ public class GameOptionsWindow {
 		lblDifficulty.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblDifficulty.setBounds(10, 177, 448, 26);
 		frmSportsManager.getContentPane().add(lblDifficulty);
-		
+
 		ButtonGroup difficultyButtonGroup = new ButtonGroup();
-		
+
 		JRadioButton rdbtnEasy = new JRadioButton("Easy");
 		rdbtnEasy.setFont(new Font("Dialog", Font.BOLD, 12));
 		rdbtnEasy.setActionCommand("easy");
@@ -133,15 +133,6 @@ public class GameOptionsWindow {
 		});
 		frmSportsManager.getContentPane().add(submitButton);
 
-		JButton debugButton = new JButton("Debug ( im lazy :) )");
-		debugButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				gui.closeGameOptions(selfRef, "foo");
-			}
-		});
-		debugButton.setBounds(491, 559, 198, 44);
-		frmSportsManager.getContentPane().add(debugButton);
-
 		JLabel lblPleaseChooseFour = new JLabel("Please choose FOUR athletes to start with:");
 		lblPleaseChooseFour.setVerticalAlignment(SwingConstants.TOP);
 		lblPleaseChooseFour.setHorizontalAlignment(SwingConstants.LEFT);
@@ -155,7 +146,7 @@ public class GameOptionsWindow {
 		athleteInfoBox.setEditable(false);
 		athleteInfoBox.setBounds(554, 244, 300, 281);
 		frmSportsManager.getContentPane().add(athleteInfoBox);
-		
+
 		JButton btnAthlete1 = new JButton();
 		setupAthleteButton(btnAthlete1);
 		btnAthlete1.setBounds(10, 284, 150, 110);
@@ -186,7 +177,7 @@ public class GameOptionsWindow {
 		btnAthlete6.setBounds(330, 405, 150, 110);
 		frmSportsManager.getContentPane().add(btnAthlete6);
 	}
-	
+
 	void setupAthleteButton(JButton button) {
 		Athlete athlete = new Athlete(gui.game);
 		buttonAthleteMap.put(button, athlete);
@@ -215,7 +206,7 @@ public class GameOptionsWindow {
 			}
 		});
 	}
-	
+
 	void validateOptions(JTextField teamNameField, JSlider weekSlider, ButtonGroup difficultyButtons) {
 		String teamName = teamNameField.getText();
 		if (!teamName.matches("[a-zA-Z0-9 ]{3,15}")) {
@@ -229,13 +220,14 @@ public class GameOptionsWindow {
 			return;
 		}
 		if (selectedButtons.size() != 4) {
-			JOptionPane.showMessageDialog(frmSportsManager, "Please select exactly four athletes", "Not Enough Athletes",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(frmSportsManager, "Please select exactly four athletes",
+					"Not Enough Athletes", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
 		gui.game.setTotalWeeks(weekSlider.getValue());
 		gui.game.setDifficulty(difficultyButtons.getSelection().getActionCommand());
+		System.out.println(gui.game.getDifficulty());
 		Athlete[] selectedAthletes = new Athlete[gui.game.numPlayers];
 		int i = 0;
 		for (JButton button : selectedButtons) {
@@ -245,7 +237,7 @@ public class GameOptionsWindow {
 		gui.game.playerTeam = new Team(gui.game, teamNameField.getText(), selectedAthletes, new ArrayList<Athlete>());
 		gui.closeGameOptions(selfRef);
 	}
-	
+
 	public void closeWindow() {
 		frmSportsManager.dispose();
 	}

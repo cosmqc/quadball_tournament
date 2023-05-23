@@ -250,7 +250,8 @@ public class ShopWindow {
 				refreshBuyItem(buyItemListModel);
 				refreshSellAthlete(sellAthleteListModel);
 				refreshSellItem(sellItemListModel);
-
+				purchaseInfoBox.setText("");
+				sellInfoBox.setText("");
 			}
 		});
 	}

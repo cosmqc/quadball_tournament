@@ -27,76 +27,58 @@ public class MatchManager {
 		return game.randomManager.randomMoneyValue(3, 7);
 	}
 	
-	public boolean matchWon(Team yourTeam, Team enemyTeam) {
-		/* Calculates the winner based on one stat per player, with a small random element 
-		 * Also updates the stamina of each player in yourTeam
-		 */
-		int points = 0;
-		Athlete yourChaser = yourTeam.getAthleteAtIndex(0);
-		Athlete yourBeater = yourTeam.getAthleteAtIndex(1);
-		Athlete yourKeeper = yourTeam.getAthleteAtIndex(2);
-		Athlete yourSeeker = yourTeam.getAthleteAtIndex(3);
-		
-		int yourChaserValue = game.randomManager.randomResult(yourChaser.getOffence());
-		int yourBeaterValue = game.randomManager.randomResult(yourBeater.getOffence());
-		int yourKeeperValue = game.randomManager.randomResult(yourKeeper.getDefence());
-		int yourSeekerValue = game.randomManager.randomResult(yourSeeker.getSpeed());
-		
-		Athlete enemyChaser = enemyTeam.getAthleteAtIndex(0);
-		Athlete enemyBeater = enemyTeam.getAthleteAtIndex(1);
-		Athlete enemyKeeper = enemyTeam.getAthleteAtIndex(2);
-		Athlete enemySeeker = enemyTeam.getAthleteAtIndex(3);
-		
-		int enemyChaserValue = game.randomManager.randomResult(enemyChaser.getOffence());
-		int enemyBeaterValue = game.randomManager.randomResult(enemyBeater.getOffence());
-		int enemyKeeperValue = game.randomManager.randomResult(enemyKeeper.getDefence());
-		int enemySeekerValue = game.randomManager.randomResult(enemySeeker.getSpeed());	
-		
-		
-		if (yourChaserValue > enemyChaserValue) {
-			points += 1;
-			yourChaser.decreaseStamina(game.randomManager.randomStaminaLoss(true));
-		} else if (yourChaserValue < enemyChaserValue) {
-			points -= 1;
-			yourChaser.decreaseStamina(game.randomManager.randomStaminaLoss(false));
-		} else {
-			yourChaser.decreaseStamina(game.randomManager.randomStaminaLoss(true));
+	public boolean matchWon(Team enemyTeam) {
+		int[] playerScores = new int[game.numPlayers];
+		int[] enemyScores = new int[game.numPlayers];
+		for (int i = 0; i < game.numPlayers; i++) {
+			Athlete playerAthlete = game.playerTeam.getAthleteAtIndex(i);
+			Athlete enemyAthlete = enemyTeam.getAthleteAtIndex(i);
+			int playerScore;
+			int enemyScore;
+			if (i == 0 || i == 1) {
+				playerScore = game.randomManager.randomResult(playerAthlete.getOffence());
+				enemyScore = game.randomManager.randomResult(enemyAthlete.getOffence());
+			} else if (i == 2) {
+				playerScore = game.randomManager.randomResult(playerAthlete.getDefence());
+				enemyScore = game.randomManager.randomResult(enemyAthlete.getDefence());
+			} else {
+				playerScore = game.randomManager.randomResult(playerAthlete.getSpeed());
+				enemyScore = game.randomManager.randomResult(enemyAthlete.getSpeed());
+			}
+			playerScores[i] = playerScore;
+			enemyScores[i] = enemyScore;
+
+			playerAthlete.decreaseStamina(playerScore >= enemyScore);
 		}
 		
-		if (yourBeaterValue > enemyBeaterValue) {
-			points += 1;
-			yourBeater.decreaseStamina(game.randomManager.randomStaminaLoss(true));
-		} else if (yourBeaterValue < enemyBeaterValue) {
-			points -= 1;
-			yourBeater.decreaseStamina(game.randomManager.randomStaminaLoss(false));
-		} else {
-			yourBeater.decreaseStamina(game.randomManager.randomStaminaLoss(true));
+		
+		boolean allInjured = true;
+		for (Athlete athlete : game.playerTeam.getAthletesList()) {
+			if (athlete.getStamina() > 0) {
+				allInjured = false;
+			}
 		}
 		
-		if (yourKeeperValue > enemyKeeperValue) {
-			points += 1;
-			yourKeeper.decreaseStamina(game.randomManager.randomStaminaLoss(true));
-			
-		} else if (yourKeeperValue < enemyKeeperValue) {
-			points -= 1;
-			yourKeeper.decreaseStamina(game.randomManager.randomStaminaLoss(false));
-		} else {
-			yourKeeper.decreaseStamina(game.randomManager.randomStaminaLoss(true));
+		int playerWins = 0;
+		int enemyWins = 0;
+		for (int i = 0; i < game.numPlayers; i++) {
+			if (playerScores[i] >= enemyScores[i]) {
+				playerWins++;
+			} else {
+				enemyWins++;
+			}
 		}
 		
-		if (yourSeekerValue > enemySeekerValue) {
-			points += 1;
-			yourSeeker.decreaseStamina(game.randomManager.randomStaminaLoss(true));
-		} else if (yourSeekerValue < enemySeekerValue) {
-			points -= 1;
-			yourSeeker.decreaseStamina(game.randomManager.randomStaminaLoss(false));
-		} else {
-			yourSeeker.decreaseStamina(game.randomManager.randomStaminaLoss(true));
+		if (!allInjured) {
+			if (playerWins >= enemyWins) {
+				game.playerMoney += game.difficulty.moneyOnWin;
+				game.playerPoints += game.difficulty.pointsOnWin;
+			} else {
+				game.playerMoney += game.difficulty.moneyOnLoss;
+				game.playerPoints += game.difficulty.pointsOnLoss;
+			}
 		}
 		
-		if (points >= 0) {
-			return true;
-		}
-		return false;
+		return playerWins >= enemyWins;
 	}
 }

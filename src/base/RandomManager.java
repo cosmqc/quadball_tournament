@@ -26,8 +26,6 @@ public class RandomManager {
 		return name;
 	}
 
-	
-	// TODO: Needs to be thoroughly tested, closing system is a bit scuffed.
 	String randomName(String filePath) {
 		Stream<String> file = null;
 		String text = "";
@@ -46,13 +44,14 @@ public class RandomManager {
 	
 	public int randomStaminaLoss(boolean athleteWon) {
 		if (athleteWon) {
-			return random.nextInt(1,3);
+			return random.nextInt(game.difficulty.staminaLossOnWin-1,game.difficulty.staminaLossOnWin+1);
 		} else {
-			return random.nextInt(2,4);
+			return random.nextInt(game.difficulty.staminaLossOnLoss-1,game.difficulty.staminaLossOnLoss+1);
 		}
 	}
 	
 	public int randomResult(int stat) {
+		System.out.println(stat);
 		return random.nextInt(Math.max(stat-1, 1), Math.min(stat+1, 9));
 	}
 	
@@ -63,5 +62,23 @@ public class RandomManager {
 	int generateNum(int lower, int upper) {
 		int stat = new Random().nextInt(lower, upper);
 		return stat;
+	}
+	
+	public String getRandomEvent() {
+		String eventMessage = "";
+		if (generateNum(1, 25) == 1) {
+			int freeSlots = game.numBench - game.playerTeam.getNumBenched();
+			if (generateNum(1, 15 * (game.playerTeam.getNumBenched()+1)) == 1) {
+				if (game.playerTeam.getNumBenched() != game.numBench) {
+					Athlete newAthlete = newReserveJoins();
+					eventMessage = newAthlete.getName() + " has decided to join your team. They've been added to your bench.";
+				}
+			}
+		}
+		return eventMessage;
+	}
+	
+	Athlete newReserveJoins() {
+		return new Athlete(game);
 	}
 }
