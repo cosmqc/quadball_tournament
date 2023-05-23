@@ -59,7 +59,7 @@ public class BaseWindow {
 				gui.launchShopWindow(selfRef);
 			}
 		});
-		btnGoToShop.setBounds(12, 552, 176, 44);
+		btnGoToShop.setBounds(12, 552, 150, 110);
 		frmMainScreen.getContentPane().add(btnGoToShop);
 		
 		JButton btnGoToClub = new JButton("Go To Club");
@@ -88,10 +88,21 @@ public class BaseWindow {
 		});
 		btnTakeABye.setBounds(576, 552, 176, 44);
 		frmMainScreen.getContentPane().add(btnTakeABye);
+		
+		JLabel lblMoney = new JLabel("Money: $");
+		lblMoney.setHorizontalAlignment(SwingConstants.LEFT);
+		lblMoney.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblMoney.setBounds(12, 54, 534, 44);
+		frmMainScreen.getContentPane().add(lblMoney);
+		
+		JLabel lblPoints = new JLabel("Points: ");
+		lblPoints.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPoints.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblPoints.setBounds(12, 110, 534, 44);
+		frmMainScreen.getContentPane().add(lblPoints);
 	}
 	
 	public void closeWindow() {
 		frmMainScreen.dispose();
 	}
-	
 }
