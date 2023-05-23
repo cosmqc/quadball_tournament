@@ -20,20 +20,19 @@ public class RandomManager {
 		this.random = new Random();
 	}
 	
-	public String randomValidName(String filePath, List<String> containingList) {
-		String name = randomName(filePath);
+	public String randomValidName(String filePath, int fileLength, List<String> containingList) {
+		String name = randomName(filePath, fileLength);
 		while (containingList.contains(name)) {
-			name = randomName(filePath);
+			name = randomName(filePath, fileLength);
 		}
 		containingList.add(name);
 		return name;
 	}
 
-	String randomName(String filePath) {
+	String randomName(String filePath, int fileLength) {
 		Stream<String> file = null;
 		String text = "";
 		try {
-			int fileLength = (int) Files.lines(Paths.get(filePath)).count();
 			file = Files.lines(Paths.get(filePath));
 			text = file.skip(new Random().nextInt(fileLength)).findFirst().get();
 		} catch (NoSuchElementException | IOException e) {
