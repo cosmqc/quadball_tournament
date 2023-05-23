@@ -81,6 +81,11 @@ public class GUI {
 		matchWindow.closeWindow();
 		launchBaseWindow();
 	}
+	
+	public void launchFinalWindow(BaseWindow baseWindow) {
+		baseWindow.closeWindow();
+		FinalWindow finalWindow = new FinalWindow(this);
+	}
 
 	public static void main(String[] args) {
 		// creates objects to save state, and to handle window management

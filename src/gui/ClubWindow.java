@@ -96,7 +96,7 @@ public class ClubWindow {
 		viewPanel.add(lblAthletesInTeam);
 
 		JList<Athlete> athleteTeamList = new JList<Athlete>(athleteTeamModel);
-		athleteTeamList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		athleteTeamList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		athleteTeamList.setBounds(10, 53, 300, 250);
 		viewPanel.add(athleteTeamList);
 
@@ -110,6 +110,7 @@ public class ClubWindow {
 		viewPanel.add(lblAthletesInReserve);
 
 		JList<Athlete> athleteReserveList = new JList<Athlete>(athleteReserveModel);
+		athleteReserveList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		athleteReserveList.setBounds(10, 356, 300, 150);
 		viewPanel.add(athleteReserveList);
 
@@ -311,6 +312,7 @@ public class ClubWindow {
 		inventoryModel.addAll(gui.game.itemsInInventory);
 
 		JList<Item> itemList = new JList<Item>(inventoryModel);
+		itemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		itemList.setBounds(10, 51, 300, 250);
 		inventoryPanel.add(itemList);
 

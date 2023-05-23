@@ -209,7 +209,7 @@ public class GameOptionsWindow {
 
 	void validateOptions(JTextField teamNameField, JSlider weekSlider, ButtonGroup difficultyButtons) {
 		String teamName = teamNameField.getText();
-		if (!teamName.matches("[a-zA-Z0-9 ]{3,15}")) {
+		if (!teamName.matches("[a-zA-Z0-9]{3,15}")) {
 			JOptionPane.showMessageDialog(frmSportsManager, "Your team name is invalid", "Invalid Team Name",
 					JOptionPane.ERROR_MESSAGE);
 			return;

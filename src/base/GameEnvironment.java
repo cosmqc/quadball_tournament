@@ -35,7 +35,7 @@ public class GameEnvironment {
 	
 	/** The max athlete price. */
 	public int maxAthletePrice = 20;
-	
+
 	/** The max team name length. */
 	public int maxTeamNameLength = 18; // dependant on size of boxes in Stadium
 	
@@ -170,9 +170,6 @@ public GameEnvironment() {
 	 */
 	public void nextWeek(int moneyGained) {
 		currentWeek += 1;
-		if (currentWeek > totalWeeks) {
-			// TODO: End of game!!
-		}
 		playerMoney += moneyGained;
 		shopManager.refreshShop(this);		
 		matchManager.refreshMatches(this);

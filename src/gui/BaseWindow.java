@@ -42,6 +42,8 @@ public class BaseWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		checkIfGameOver();
+		
 		frmMainScreen = new JFrame();
 		frmMainScreen.setTitle("Main Screen");
 		frmMainScreen.setResizable(false);
@@ -130,8 +132,19 @@ public class BaseWindow {
 		frmMainScreen.getContentPane().add(lblOutOfMoney);
 		
 		JButton btnBack = new JButton("Declare Bankruptcy");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				gui.launchFinalWindow(selfRef);				
+			}
+		});
 		btnBack.setBounds(702, 568, 176, 44);
 		frmMainScreen.getContentPane().add(btnBack);
+	}
+	
+	public void checkIfGameOver() {
+		if (game.getCurrentWeek() > game.getTotalWeeks()) {
+			gui.launchFinalWindow(selfRef);
+		}
 	}
 	
 	public void closeWindow() {
