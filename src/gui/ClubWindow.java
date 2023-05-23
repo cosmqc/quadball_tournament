@@ -234,8 +234,67 @@ public class ClubWindow {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(new Color(0, 0, 0), 3));
-		panel_1.setBounds(367, 51, 50, 3);
+		panel_1.setBounds(333, 45, 20, 3);
 		viewPanel.add(panel_1);
+		
+		JLabel label = new JLabel("/");
+		label.setFont(new Font("Dialog", Font.BOLD, 30));
+		label.setBounds(327, 46, 70, 15);
+		viewPanel.add(label);
+		
+		JPanel panel_1_1 = new JPanel();
+		panel_1_1.setBorder(new LineBorder(new Color(0, 0, 0), 3));
+		panel_1_1.setBounds(310, 58, 20, 3);
+		viewPanel.add(panel_1_1);
+		
+		JLabel lblChaser = new JLabel("Chaser");
+		lblChaser.setHorizontalAlignment(SwingConstants.LEFT);
+		lblChaser.setFont(new Font("Dialog", Font.PLAIN, 18));
+		lblChaser.setBounds(356, 27, 150, 44);
+		viewPanel.add(lblChaser);
+		
+		JPanel panel_1_2 = new JPanel();
+		panel_1_2.setBorder(new LineBorder(new Color(0, 0, 0), 3));
+		panel_1_2.setBounds(310, 76, 41, 3);
+		viewPanel.add(panel_1_2);
+		
+		JLabel lblChaser_1 = new JLabel("Beater");
+		lblChaser_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblChaser_1.setFont(new Font("Dialog", Font.PLAIN, 18));
+		lblChaser_1.setBounds(356, 54, 150, 44);
+		viewPanel.add(lblChaser_1);
+		
+		JPanel panel_1_2_1 = new JPanel();
+		panel_1_2_1.setBorder(new LineBorder(new Color(0, 0, 0), 3));
+		panel_1_2_1.setBounds(310, 93, 41, 3);
+		viewPanel.add(panel_1_2_1);
+		
+		JLabel lblChaser_1_1 = new JLabel("Keeper");
+		lblChaser_1_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblChaser_1_1.setFont(new Font("Dialog", Font.PLAIN, 18));
+		lblChaser_1_1.setBounds(356, 75, 150, 44);
+		viewPanel.add(lblChaser_1_1);
+		
+		JPanel panel_1_1_1 = new JPanel();
+		panel_1_1_1.setBorder(new LineBorder(new Color(0, 0, 0), 3));
+		panel_1_1_1.setBounds(310, 109, 20, 3);
+		viewPanel.add(panel_1_1_1);
+		
+		JPanel panel_1_1_2 = new JPanel();
+		panel_1_1_2.setBorder(new LineBorder(new Color(0, 0, 0), 3));
+		panel_1_1_2.setBounds(333, 121, 20, 3);
+		viewPanel.add(panel_1_1_2);
+		
+		JLabel label_1 = new JLabel("\\");
+		label_1.setFont(new Font("Dialog", Font.BOLD, 30));
+		label_1.setBounds(327, 109, 70, 15);
+		viewPanel.add(label_1);
+		
+		JLabel lblChaser_1_1_1 = new JLabel("Seeker");
+		lblChaser_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblChaser_1_1_1.setFont(new Font("Dialog", Font.PLAIN, 18));
+		lblChaser_1_1_1.setBounds(356, 103, 150, 44);
+		viewPanel.add(lblChaser_1_1_1);
 		refreshNickButton();
 
 		JPanel inventoryPanel = new JPanel();
