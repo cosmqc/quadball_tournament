@@ -63,8 +63,8 @@ public class Athlete extends Purchasable {
 		this.game = game;
 		
 		// ensures length of full name will fit on a line
-		this.firstName = game.randomManager.randomValidName("src/resources/firstnames", 685, game.namesInUse);
-		this.lastName = game.randomManager.randomValidName("src/resources/lastnames", 502, game.namesInUse);
+		this.firstName = game.randomManager.randomValidName("/resources/firstnames", 685, game.namesInUse);
+		this.lastName = game.randomManager.randomValidName("/resources/lastnames", 502, game.namesInUse);
 		this.offence = game.randomManager.generateNum(game.difficulty.playerAvgStat-2, game.difficulty.playerAvgStat+2);
 		this.defence = game.randomManager.generateNum(game.difficulty.playerAvgStat-2, game.difficulty.playerAvgStat+2);
 		this.speed = game.randomManager.generateNum(game.difficulty.playerAvgStat-2, game.difficulty.playerAvgStat+2);

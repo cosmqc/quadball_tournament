@@ -82,7 +82,11 @@ public class GUI {
 		launchBaseWindow();
 	}
 	
-	public void launchFinalWindow(BaseWindow baseWindow) {
+	public void closeBaseWindow() {
+		FinalWindow finalWindow = new FinalWindow(this);
+	}
+	
+	public void closeBaseWindow(BaseWindow baseWindow) {
 		baseWindow.closeWindow();
 		FinalWindow finalWindow = new FinalWindow(this);
 	}

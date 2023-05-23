@@ -92,7 +92,6 @@ public class RandomManager {
 	 * @return the int
 	 */
 	public int randomResult(int stat) {
-		System.out.println(stat);
 		return random.nextInt(Math.max(stat-1, 1), Math.min(stat+1, 9));
 	}
 	
