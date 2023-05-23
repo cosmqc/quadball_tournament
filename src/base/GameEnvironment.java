@@ -21,7 +21,7 @@ public class GameEnvironment {
 	// variable game options
 	Difficulty difficulty;
 	int totalWeeks;
-
+	String gameOverMessage;
 	// keeps track of which player names and team names have been used so they don't repeat
 	public List<String> namesInUse = new ArrayList<String>();
 	public List<String> teamsInUse = new ArrayList<String>();
