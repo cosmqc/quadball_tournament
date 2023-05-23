@@ -7,12 +7,30 @@ import java.util.Arrays;
 import exceptions.TeamFullException;
 import exceptions.InvalidSwapException;
 
+/**
+ * The Class Team.
+ * @author Jake Dalton
+ * @author Leo Black
+ */
 public class Team {
+	
+	/** The game. */
 	GameEnvironment game;
+	
+	/** The name. */
 	String name;
+	
+	/** The athletes. */
 	Athlete[] athletes;
+	
+	/** The subs. */
 	List<Athlete> subs;
 
+	/**
+	 * Instantiates a new team.
+	 *
+	 * @param game the game
+	 */
 	// completely random - for enemy team creation.
 	public Team(GameEnvironment game) {
 		this.game = game;
@@ -21,6 +39,14 @@ public class Team {
 		this.subs = Arrays.asList(generatePlayers(game.numBench));
 	}
 
+	/**
+	 * Instantiates a new team.
+	 *
+	 * @param game the game
+	 * @param name the name
+	 * @param athletes the athletes
+	 * @param subs the subs
+	 */
 	// with given values - for player team creation.
 	public Team(GameEnvironment game, String name, Athlete[] athletes, List<Athlete> subs) {
 		this.game = game;
@@ -29,10 +55,20 @@ public class Team {
 		this.subs = subs;
 	}
 
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Gets the num active.
+	 *
+	 * @return the num active
+	 */
 	public int getNumActive() {
 		int num = 0;
 		for (Athlete athlete : getAthletes()) {
@@ -43,26 +79,56 @@ public class Team {
 		return num;
 	}
 
+	/**
+	 * Gets the num benched.
+	 *
+	 * @return the num benched
+	 */
 	public int getNumBenched() {
 		return subs.size();
 	}
 
+	/**
+	 * Gets the num total.
+	 *
+	 * @return the num total
+	 */
 	public int getNumTotal() {
 		return getNumActive() + getNumBenched();
 	}
 
+	/**
+	 * Gets the athletes.
+	 *
+	 * @return the athletes
+	 */
 	public Athlete[] getAthletes() {
 		return (Athlete[]) athletes;
 	}
 
+	/**
+	 * Gets the athletes list.
+	 *
+	 * @return the athletes list
+	 */
 	public List<Athlete> getAthletesList() {
 		return Arrays.asList(getAthletes());
 	}
 
+	/**
+	 * Gets the subs.
+	 *
+	 * @return the subs
+	 */
 	public List<Athlete> getSubs() {
 		return subs;
 	}
 
+	/**
+	 * Gets the all players.
+	 *
+	 * @return the all players
+	 */
 	public List<Athlete> getAllPlayers() {
 		List<Athlete> total = new ArrayList<Athlete>();
 		total.addAll(Arrays.asList(getAthletes()));
@@ -70,6 +136,12 @@ public class Team {
 		return total;
 	}
 
+	/**
+	 * Swap up.
+	 *
+	 * @param athlete the athlete
+	 * @throws InvalidSwapException the invalid swap exception
+	 */
 	public void swapUp(Athlete athlete) throws InvalidSwapException {
 		int athleteIndex = getAthleteIndex(athlete);
 		if (athleteIndex == -1 && !subs.contains(athlete)) {
@@ -95,6 +167,12 @@ public class Team {
 		athletes[game.numPlayers - 1] = athlete;
 	}
 
+	/**
+	 * Swap down.
+	 *
+	 * @param athlete the athlete
+	 * @throws InvalidSwapException the invalid swap exception
+	 */
 	public void swapDown(Athlete athlete) throws InvalidSwapException {
 		int athleteIndex = getAthleteIndex(athlete);
 		if (athleteIndex == -1 && !subs.contains(athlete)) {
@@ -118,6 +196,13 @@ public class Team {
 		subs.add(athlete);
 	}
 
+	/**
+	 * Gets the athlete at index.
+	 *
+	 * @param index the index
+	 * @return the athlete at index
+	 * @throws IndexOutOfBoundsException the index out of bounds exception
+	 */
 	public Athlete getAthleteAtIndex(int index) throws IndexOutOfBoundsException {
 		if (0 <= index && index < game.numPlayers) {
 			return (Athlete) athletes[index];
@@ -126,10 +211,22 @@ public class Team {
 		}
 	}
 
+	/**
+	 * Gets the athlete index.
+	 *
+	 * @param athlete the athlete
+	 * @return the athlete index
+	 */
 	public int getAthleteIndex(Athlete athlete) {
 		return Arrays.asList(athletes).indexOf(athlete);
 	}
 
+	/**
+	 * Adds the athlete.
+	 *
+	 * @param athlete the athlete
+	 * @throws TeamFullException the team full exception
+	 */
 	public void addAthlete(Athlete athlete) throws TeamFullException {
 		// try adding to empty slot on field
 		for (int i = 0; i < game.numPlayers; i++) {
@@ -147,6 +244,11 @@ public class Team {
 		throw new TeamFullException(game);
 	}
 
+	/**
+	 * Removes the athlete.
+	 *
+	 * @param athlete the athlete
+	 */
 	public void removeAthlete(Athlete athlete) {
 		if (Arrays.asList(athletes).contains(athlete)) {
 			// if the sold athlete is on the field
@@ -166,6 +268,11 @@ public class Team {
 		}
 	}
 
+	/**
+	 * Generate valid name.
+	 *
+	 * @return the string
+	 */
 	String generateValidName() {
 		String country = game.randomManager.randomValidName("src/resources/countrynames", 198, game.teamsInUse);
 		String team = game.randomManager.randomValidName("src/resources/teamnames", 93, game.teamsInUse);
@@ -176,6 +283,12 @@ public class Team {
 		return country + " " + team;
 	}
 
+	/**
+	 * Generate players.
+	 *
+	 * @param numPlayers the num players
+	 * @return the athlete[]
+	 */
 	Athlete[] generatePlayers(int numPlayers) {
 		Athlete[] players = new Athlete[numPlayers];
 		for (int i = 0; i < numPlayers; i++) {

@@ -227,7 +227,6 @@ public class GameOptionsWindow {
 
 		gui.game.setTotalWeeks(weekSlider.getValue());
 		gui.game.setDifficulty(difficultyButtons.getSelection().getActionCommand());
-		System.out.println(gui.game.getDifficulty());
 		Athlete[] selectedAthletes = new Athlete[gui.game.numPlayers];
 		int i = 0;
 		for (JButton button : selectedButtons) {

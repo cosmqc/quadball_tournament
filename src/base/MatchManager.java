@@ -3,15 +3,34 @@ package base;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Class MatchManager.
+ * @author Jake Dalton
+ * @author Leo Black
+ */
 public class MatchManager {
+	
+	/** The game. */
 	public GameEnvironment game;
+	
+	/** The match options. */
 	public List<Team> matchOptions = new ArrayList<Team>();
 
+	/**
+	 * Instantiates a new match manager.
+	 *
+	 * @param game the game
+	 */
 	public MatchManager(GameEnvironment game) {
 		this.game = game;
 		refreshMatches(game);
 	}
 
+	/**
+	 * Refresh matches.
+	 *
+	 * @param game the game
+	 */
 	public void refreshMatches(GameEnvironment game) {
 		matchOptions.removeAll(matchOptions);
 		for (int i = 0; i <= game.numMatches; i++) {
@@ -19,14 +38,30 @@ public class MatchManager {
 		}
 	}
 
+	/**
+	 * Win money.
+	 *
+	 * @return the int
+	 */
 	public int winMoney() {
 		return game.randomManager.randomMoneyValue(15, 20);
 	}
 
+	/**
+	 * Loss money.
+	 *
+	 * @return the int
+	 */
 	public int lossMoney() {
 		return game.randomManager.randomMoneyValue(3, 7);
 	}
 
+	/**
+	 * Match won.
+	 *
+	 * @param enemyTeam the enemy team
+	 * @return true, if successful
+	 */
 	public boolean matchWon(Team enemyTeam) {
 		int[] playerScores = new int[game.numPlayers];
 		int[] enemyScores = new int[game.numPlayers];

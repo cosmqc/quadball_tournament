@@ -16,16 +16,34 @@ import java.awt.Color;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MatchWindow.
+ */
 public class MatchWindow {
+	
+	/** The gui. */
 	private GUI gui;
+	
+	/** The self ref. */
 	private MatchWindow selfRef;
+	
+	/** The frm stadium. */
 	private JFrame frmStadium;
+	
+	/** The game. */
 	public GameEnvironment game;
+	
+	/** The money gained. */
 	private int moneyGained;
+	
+	/** The points gained. */
 	private int pointsGained;
 	
 	/**
 	 * Launch the application.
+	 *
+	 * @param gui the gui
 	 */
 	public MatchWindow(GUI gui) {
 		this.gui = gui;
@@ -189,6 +207,11 @@ public class MatchWindow {
 		
 	}
 	
+	/**
+	 * Display match info.
+	 *
+	 * @param label the label
+	 */
 	void displayMatchInfo(JLabel label) {
 		int pointsBefore = game.playerPoints;
 		int moneyBefore = game.playerMoney;
@@ -204,6 +227,12 @@ public class MatchWindow {
 		pointsGained = game.playerPoints - pointsBefore;
 	}
 	
+	/**
+	 * Display stamina info.
+	 *
+	 * @param athleteIndex the athlete index
+	 * @return the string
+	 */
 	String displayStaminaInfo(int athleteIndex) {
 		int staminaValue = gui.game.playerTeam.getAthleteAtIndex(athleteIndex).getStamina();
 		int maxStaminaValue = gui.game.playerTeam.getAthleteAtIndex(athleteIndex).getMaxStamina();
@@ -214,6 +243,9 @@ public class MatchWindow {
 		}
 	}
 	
+	/**
+	 * Close window.
+	 */
 	public void closeWindow() {
 		frmStadium.dispose();
 	}

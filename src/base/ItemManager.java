@@ -2,10 +2,24 @@ package base;
 
 import java.util.Random;
 
+/**
+ * The Class ItemManager.
+ * @author Jake Dalton
+ * @author Leo Black
+ */
 public class ItemManager {
+	
+	/** The items. */
 	public Item[] items;
+	
+	/** The game. */
 	GameEnvironment game;
 
+	/**
+	 * Instantiates a new item manager.
+	 *
+	 * @param game the game
+	 */
 	public ItemManager(GameEnvironment game) {
 		this.game = game;
 		
@@ -77,6 +91,11 @@ public class ItemManager {
 		items[63] = new Item(game, "Stealth Helm", new int[]{0, 0, 0, 2}, 9, "Become stealthy with a specialized helmet!");
 	}
 
+	/**
+	 * Random item.
+	 *
+	 * @return the item
+	 */
 	public Item randomItem() {
 		int n = new Random().nextInt(items.length);
 		return items[n];
