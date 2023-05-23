@@ -84,7 +84,7 @@ public class ShopWindow {
 		tabbedPane.addTab("Buy", null, buyPanel, null);
 		buyPanel.setLayout(null);
 
-		JLabel lblAthletesForSale = new JLabel("Athletes For Sale");
+		JLabel lblAthletesForSale = new JLabel("Available Athletes");
 		lblAthletesForSale.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAthletesForSale.setFont(new Font("Dialog", Font.BOLD, 18));
 		lblAthletesForSale.setBounds(20, 12, 250, 44);
@@ -149,7 +149,7 @@ public class ShopWindow {
 		tabbedPane.addTab("Sell", null, sellPanel, null);
 		sellPanel.setLayout(null);
 
-		JLabel lblAthletesOwned = new JLabel("Athletes Owned");
+		JLabel lblAthletesOwned = new JLabel("Contracted Athletes");
 		lblAthletesOwned.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAthletesOwned.setFont(new Font("Dialog", Font.BOLD, 18));
 		lblAthletesOwned.setBounds(10, 10, 250, 44);

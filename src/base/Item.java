@@ -43,7 +43,8 @@ public class Item extends Purchasable {
 
 	public String toShopString() {
 		String text = "";
-		text += "Name: " + getName();
+		text += "$" + getPrice();
+		text += "\n" + getName();
 		text += "\n" + getDescription();
 		text += "\n\nEffects: ";
 		text += formatStat("Offence", offence);

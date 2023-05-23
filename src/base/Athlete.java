@@ -219,7 +219,8 @@ public class Athlete extends Purchasable {
 	
 	public String toShopString() {
 		String text = "";
-		text += String.format("%s $%d\n", getName(), getPrice());
+		text += "$" + getPrice();
+		text += "\n" + getName();
 		text += formatStat("Offence", getOffence(), getRawOffence());
 		text += formatStat("Defence", getDefence(), getRawDefence());
 		text += formatStat("Speed", getSpeed(), getRawSpeed());
