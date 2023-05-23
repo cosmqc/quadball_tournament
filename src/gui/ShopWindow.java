@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
+import javax.swing.ListSelectionModel;
 
 public class ShopWindow {
 
@@ -99,12 +100,14 @@ public class ShopWindow {
 		DefaultListModel<Athlete> buyAthleteListModel = new DefaultListModel<>();
 		buyAthleteListModel.addAll(game.shopManager.athletesInShop);
 		JList<Athlete> athleteBuyList = new JList<Athlete>(buyAthleteListModel);
+		athleteBuyList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		athleteBuyList.setBounds(20, 55, 250, 355);
 		buyPanel.add(athleteBuyList);
 
 		DefaultListModel<Item> buyItemListModel = new DefaultListModel<>();
 		buyItemListModel.addAll(game.shopManager.itemsInShop);
 		JList<Item> itemBuyList = new JList<Item>(buyItemListModel);
+		itemBuyList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		itemBuyList.setBounds(280, 55, 250, 355);
 		buyPanel.add(itemBuyList);
 
@@ -158,12 +161,14 @@ public class ShopWindow {
 		DefaultListModel<Athlete> sellAthleteListModel = new DefaultListModel<>();
 		sellAthleteListModel.addAll(game.playerTeam.getAllPlayers());
 		JList<Athlete> athleteSellList = new JList<Athlete>(sellAthleteListModel);
+		athleteSellList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		athleteSellList.setBounds(20, 53, 250, 355);
 		sellPanel.add(athleteSellList);
 
 		DefaultListModel<Item> sellItemListModel = new DefaultListModel<>();
 		sellItemListModel.addAll(game.itemsInInventory);
 		JList<Item> itemSellList = new JList<Item>(sellItemListModel);
+		itemSellList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		itemSellList.setBounds(280, 53, 250, 355);
 		sellPanel.add(itemSellList);
 
