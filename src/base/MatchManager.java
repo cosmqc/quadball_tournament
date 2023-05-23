@@ -6,7 +6,7 @@ import java.util.List;
 public class MatchManager {
 	public GameEnvironment game;
 	public List<Team> matchOptions = new ArrayList<Team>();
-	
+
 	public MatchManager(GameEnvironment game) {
 		this.game = game;
 		refreshMatches(game);
@@ -18,15 +18,15 @@ public class MatchManager {
 			matchOptions.add(new Team(game));
 		}
 	}
-	
+
 	public int winMoney() {
 		return game.randomManager.randomMoneyValue(15, 20);
 	}
-	
+
 	public int lossMoney() {
 		return game.randomManager.randomMoneyValue(3, 7);
 	}
-	
+
 	public boolean matchWon(Team enemyTeam) {
 		int[] playerScores = new int[game.numPlayers];
 		int[] enemyScores = new int[game.numPlayers];
@@ -50,15 +50,14 @@ public class MatchManager {
 
 			playerAthlete.decreaseStamina(playerScore >= enemyScore);
 		}
-		
-		
+
 		boolean allInjured = true;
 		for (Athlete athlete : game.playerTeam.getAthletesList()) {
 			if (athlete.getStamina() > 0) {
 				allInjured = false;
 			}
 		}
-		
+
 		int playerWins = 0;
 		int enemyWins = 0;
 		for (int i = 0; i < game.numPlayers; i++) {
@@ -68,7 +67,7 @@ public class MatchManager {
 				enemyWins++;
 			}
 		}
-		
+
 		if (!allInjured) {
 			if (playerWins >= enemyWins) {
 				game.playerMoney += game.difficulty.moneyOnWin;
@@ -78,7 +77,7 @@ public class MatchManager {
 				game.playerPoints += game.difficulty.pointsOnLoss;
 			}
 		}
-		
+
 		return playerWins >= enemyWins;
 	}
 }

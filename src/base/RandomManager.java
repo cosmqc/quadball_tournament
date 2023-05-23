@@ -6,6 +6,9 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Stream;
+
+import exceptions.TeamFullException;
+
 import java.util.Random;
 public class RandomManager {
 	
@@ -67,18 +70,38 @@ public class RandomManager {
 	public String getRandomEvent() {
 		String eventMessage = "";
 		if (generateNum(1, 25) == 1) {
-			int freeSlots = game.numBench - game.playerTeam.getNumBenched();
-			if (generateNum(1, 15 * (game.playerTeam.getNumBenched()+1)) == 1) {
-				if (game.playerTeam.getNumBenched() != game.numBench) {
-					Athlete newAthlete = newReserveJoins();
-					eventMessage = newAthlete.getName() + " has decided to join your team. They've been added to your bench.";
+			// reserve joins randomly
+			if (generateNum(1, 2 * (game.playerTeam.getNumBenched()+1)) == 1) {
+				Athlete newAthlete = newReserveJoins();
+				if (newAthlete != null) {
+					return newAthlete.getName() + " has decided to join your team. They've been added to your bench.";
 				}
+			}
+			
+			// athlete quits randomly if injured
+			Athlete possRemovedAthlete = game.playerTeam.getAthleteAtIndex(generateNum(0,game.playerTeam.getNumActive()));
+			if (possRemovedAthlete.wasInjuredPreviously) {
+				game.playerTeam.removeAthlete(possRemovedAthlete);
+				return possRemovedAthlete.getName() + "has decided to quit after being injured last game.";
+			}
+			
+			// athlete stat increase
+			Athlete possStatIncreaseAthlete = game.playerTeam.getAthleteAtIndex(generateNum(0,game.playerTeam.getNumActive()));
+			if (!possStatIncreaseAthlete.wasInjuredPreviously) {
+				possStatIncreaseAthlete.boostStats();
+				return possRemovedAthlete.getName() + "learnt a new technique and their stats got boosted.";
 			}
 		}
 		return eventMessage;
 	}
 	
 	Athlete newReserveJoins() {
-		return new Athlete(game);
+		Athlete newReserve = new Athlete(game);
+		try {
+			game.playerTeam.addAthlete(newReserve);
+		} catch (TeamFullException e) {
+			return null;
+		}
+		return newReserve;
 	}
 }
